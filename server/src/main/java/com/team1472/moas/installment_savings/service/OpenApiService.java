@@ -89,4 +89,10 @@ public class OpenApiService {
 
         return interestRateList;
     }
+
+    // 적금, 이자 정보 데이터 전부 삭제
+    public void deleteAllData() {
+        interestRateRepository.deleteAllInBatch();
+        installmentSavingsRepository.deleteAllInBatch();
+    }
 }
