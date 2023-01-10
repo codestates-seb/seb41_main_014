@@ -37,4 +37,8 @@ public class InterestRate {
     @JoinColumn(name = "INSTALLMENTSAVINGS_ID")
     private InstallmentSavings installmentSavings;
 
+    public void addInstallmentSavings(InstallmentSavings installmentSavings) {
+        this.installmentSavings = installmentSavings;
+    }
+
 }
