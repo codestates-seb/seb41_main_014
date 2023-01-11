@@ -35,9 +35,9 @@ public class GoalService{
     }
 
     //목표 수정
-    public Goal updateGoal(Goal goal, long id) {
+    public Goal updateGoal(Goal goal, long goalId) {
         //Goal findGoal = findVerifiedGoal(goal.getId());
-        Goal findGoal = findVerifiedGoal(id);
+        Goal findGoal = findVerifiedGoal(goalId);
 
         //리팩토링 필요
         Optional.ofNullable(goal.getGoalName()).ifPresent(goalName -> findGoal.setGoalName(goalName));
@@ -56,8 +56,8 @@ public class GoalService{
     }
 
     //목표 상세 조회
-    public Goal findGoal(long id) {
-        return findVerifiedGoal(id);
+    public Goal findGoal(long goalId) {
+        return findVerifiedGoal(goalId);
     }
 
     //목표 전체 조회 (List)
@@ -66,15 +66,15 @@ public class GoalService{
     }
 
     //목표 삭제
-    public void deleteGoal(long id) {
-        Goal findGoal = findVerifiedGoal(id);
+    public void deleteGoal(long goalId) {
+        Goal findGoal = findVerifiedGoal(goalId);
         goalRepository.delete(findGoal);
     }
 
     //id로 특정 목표가 존재하는지 찾아서 리턴
     //존재하지 않을 시 에러 메세지 띄움
-    private Goal findVerifiedGoal(long id) {
-        Optional<Goal> optionalGoal = goalRepository.findById(id);
+    private Goal findVerifiedGoal(long goalId) {
+        Optional<Goal> optionalGoal = goalRepository.findById(goalId);
         Goal findGoal = optionalGoal.orElseThrow(() -> new BusinessLogicException(ExceptionCode.GOAL_NOT_FOUND));
         return findGoal;
     }
