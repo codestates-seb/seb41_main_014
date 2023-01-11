@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { getLOCALE_MONEY } from '../helper/unitHelper';
 import PropTypes from 'prop-types';
+import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import {
   ROUTE_PATH_GOAL_CREATE,
@@ -13,7 +14,7 @@ const Goal = ({ goal, handleDelete }) => {
     <li>
       <p>이름: {goal.goal_name}</p>
       <p>가격: {getLOCALE_MONEY(goal.price)}</p>
-      <button onClick={() => handleDelete(goal.goal_id)}>삭제</button>
+      <Button onClick={() => handleDelete(goal.goal_id)}>삭제</Button>
       <Link to={ROUTE_PATH_GOAL_EDIT}>수정</Link>
       <Link to={ROUTE_PATH_GOAL_DETAIL}>상세</Link>
     </li>
