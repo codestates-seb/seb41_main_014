@@ -6,6 +6,7 @@ import com.team1472.moas.goal.entity.Goal;
 import com.team1472.moas.goal.mapper.GoalMapper;
 import com.team1472.moas.goal.repository.GoalRepository;
 import com.team1472.moas.goal.service.GoalService;
+import com.team1472.moas.member.entity.Member;
 import com.team1472.moas.member.service.MemberService;
 import com.team1472.moas.response.MultiResponse;
 import com.team1472.moas.response.SingleResponse;
@@ -42,11 +43,11 @@ public class GoalController {
     }
 
     //목표 수정
-    @PatchMapping("/{member-id}")
+    @PatchMapping("/{member-id}/{goal-id}")
     public ResponseEntity patchGoal(@PathVariable("member-id") @Positive long memberId,
+                                    @PathVariable("goal-id") @Positive long id,
                                     @Valid @RequestBody GoalPatchRes goalPatchRes) {
-        goalPatchRes.setMemberId(memberId);
-        Goal goal = goalService.updateGoal(mapper.goalPatchDtoToGoal(goalPatchRes));
+        Goal goal = goalService.updateGoal(mapper.goalPatchDtoToGoal(goalPatchRes),id);
 
         return new ResponseEntity<>(
                 new SingleResponse<>(mapper.goalToGoalResponseDto(goal)),

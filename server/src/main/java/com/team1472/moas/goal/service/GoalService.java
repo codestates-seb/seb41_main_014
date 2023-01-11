@@ -18,7 +18,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class GoalService {
+public class GoalService{
     private final MemberRepository memberRepository;
     private final GoalRepository goalRepository;
 
@@ -27,12 +27,17 @@ public class GoalService {
         Member member = memberRepository.findById(memberId);
         goal.setMember(member);
 
+        //납입 기간(단위: 월) = {(목표금액 - 원금)/월 납입금}
+        int period = (int) Math.ceil((goal.getPrice() - goal.getPrinciple()) / goal.getMonthlyPayment());
+        goal.setPeriod(period);
+
         return goalRepository.save(goal);
     }
 
     //목표 수정
-    public Goal updateGoal(Goal goal) {
-        Goal findGoal = findVerifiedGoal(goal.getId());
+    public Goal updateGoal(Goal goal, long id) {
+        //Goal findGoal = findVerifiedGoal(goal.getId());
+        Goal findGoal = findVerifiedGoal(id);
 
         //리팩토링 필요
         Optional.ofNullable(goal.getGoalName()).ifPresent(goalName -> findGoal.setGoalName(goalName));
