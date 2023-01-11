@@ -44,7 +44,10 @@ public class GoalService{
         Optional.ofNullable(goal.getPrice()).ifPresent(price -> findGoal.setPrice(price));
         Optional.ofNullable(goal.getMonthlyPayment()).ifPresent(monthlyPayment -> findGoal.setMonthlyPayment(monthlyPayment));
         Optional.ofNullable(goal.getPaymentStart()).ifPresent(paymentStart -> findGoal.setPaymentStart(paymentStart));
-        Optional.ofNullable(goal.getPeriod()).ifPresent(period -> findGoal.setPeriod(period));
+
+        int period = (int) Math.ceil((goal.getPrice() - goal.getPrinciple()) / goal.getMonthlyPayment());
+        goal.setPeriod(period);
+
         //상태 변경 어떻게?
         Optional.ofNullable(goal.getStatus()).ifPresent(status -> findGoal.setStatus(status));
         Optional.ofNullable(goal.getUrl()).ifPresent(url -> findGoal.setUrl(url));
