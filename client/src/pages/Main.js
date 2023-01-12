@@ -3,8 +3,8 @@ import Button from '@mui/material/Button';
 import { getACCESS_TOKEN } from '../helper/cookieHelper';
 
 const StyledButton = styled(Button)`
-  padding: ${(props) => props.theme.basic.getDistance(100)};
-  background-color: ${(props) => props.theme.colors.mainMiddle};
+  padding: ${(props) => props.theme.spacing(2)};
+  margin: ${(props) => props.theme.spacing(1)};
 `;
 
 const Main = () => {

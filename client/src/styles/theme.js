@@ -7,9 +7,7 @@ const STANDARD_MAGNIFICATION = 4;
 const calcRem = (px) => `${px / STANDARD_FONT_PX}rem`;
 
 export const theme = createTheme({
-  basic: {
-    getDistance: (distance = 1) => distance * STANDARD_MAGNIFICATION,
-  },
+  spacing: STANDARD_MAGNIFICATION,
   fontSizes: {
     small: calcRem(8),
     base: calcRem(10),
