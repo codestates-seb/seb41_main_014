@@ -9,7 +9,10 @@ const GoalCreate = () => {
   };
   const handleSearch = () => {
     console.log(search);
-    console.log(process.env.REACT_APP_NAVER_SEARCH_ENDPOINT);
+    console.log(process.env.REACT_APP_NAVER_SEARCH_URL);
+    console.log(process.env.REACT_APP_NAVER_API_CLIENT_ID);
+    console.log(process.env.REACT_APP_NAVER_API_CLIENT_SECRET);
+    console.log(process.env.REACT_APP_EP_SIGNUP);
     axios({
       method: 'get',
       url: process.env.REACT_APP_NAVER_SEARCH_ENDPOINT,
@@ -19,10 +22,6 @@ const GoalCreate = () => {
       },
       params: {
         query: search,
-      },
-      proxy: {
-        protocol: 'https',
-        host: 'openapi.naver.com',
       },
     })
       .then((response) => {

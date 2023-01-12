@@ -1,7 +1,7 @@
 {
   "name": "Moas",
   "version": "0.1.0",
-  "homepage": "https://codestates-seb.github.io/seb41_main_014/",
+  "homepage": "https://codestates-seb.github.io/seb41_main_014",
   "private": false,
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -54,7 +54,7 @@
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.11",
-    "eslint-plugin-react-hooks": "^4.6.0"
-  },
-  "proxy": "http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080"
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "http-proxy-middleware": "^2.0.6"
+  }
 }
