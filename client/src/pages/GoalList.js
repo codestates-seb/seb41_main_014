@@ -8,16 +8,21 @@ import {
   ROUTE_PATH_GOAL_DETAIL,
   ROUTE_PATH_GOAL_EDIT,
 } from '../store/routerStore';
+import styled from '@emotion/styled';
 
 const Goal = ({ goal, handleDelete }) => {
   return (
-    <li>
-      <p>이름: {goal.goal_name}</p>
-      <p>가격: {getLOCALE_MONEY(goal.price)}</p>
-      <Button onClick={() => handleDelete(goal.goal_id)}>삭제</Button>
-      <Link to={ROUTE_PATH_GOAL_EDIT}>수정</Link>
-      <Link to={ROUTE_PATH_GOAL_DETAIL}>상세</Link>
-    </li>
+    <>
+      <Tempbox>
+        <li className="tempstyle">
+          <p>이름: {goal.goal_name}</p>
+          <p>가격: {getLOCALE_MONEY(goal.price)}</p>
+          <Button onClick={() => handleDelete(goal.goal_id)}>삭제</Button>
+          <Link to={ROUTE_PATH_GOAL_EDIT}>수정</Link>
+          <Link to={ROUTE_PATH_GOAL_DETAIL}>상세</Link>
+        </li>
+      </Tempbox>
+    </>
   );
 };
 
@@ -45,8 +50,12 @@ const GoalList = () => {
 
   return (
     <>
-      {/* 등록 시 useNavigte navigate에 값을 전달하여 처리하든 nestedRoute를 사용하여 처리하든 선택임. */}
-      <Link to={ROUTE_PATH_GOAL_CREATE}>등록하기</Link>
+      <div style={{ display: 'flex' }}>
+        {<h3>💜 총 {goals.length} 개의 목표가 있습니다 💜</h3>}
+        {/* 등록 시 useNavigte navigate에 값을 전달하여 처리하든 nestedRoute를 사용하여 처리하든 선택임. */}
+        {<Link to={ROUTE_PATH_GOAL_CREATE}>등록하기</Link>}
+      </div>
+
       {goals.length === 0 ? (
         <p>없어요</p>
       ) : (
@@ -61,3 +70,15 @@ const GoalList = () => {
 };
 
 export default GoalList;
+
+const Tempbox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  .tempstyle {
+    background-color: aquamarine;
+    width: 584px;
+  }
+`;
