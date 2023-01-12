@@ -50,12 +50,15 @@ const GoalList = () => {
 
   return (
     <>
-      <div style={{ display: 'flex' }}>
-        {<h3>💜 총 {goals.length} 개의 목표가 있습니다 💜</h3>}
-        {/* 등록 시 useNavigte navigate에 값을 전달하여 처리하든 nestedRoute를 사용하여 처리하든 선택임. */}
-        {<Link to={ROUTE_PATH_GOAL_CREATE}>등록하기</Link>}
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <TempGoalTitle>
+          <div style={{ display: 'flex' }}>
+            {<h3>💜 총 {goals.length} 개의 목표가 있습니다 💜</h3>}
+            {/* 등록 시 useNavigte navigate에 값을 전달하여 처리하든 nestedRoute를 사용하여 처리하든 선택임. */}
+            {<Link to={ROUTE_PATH_GOAL_CREATE}>등록하기</Link>}
+          </div>
+        </TempGoalTitle>
       </div>
-
       {goals.length === 0 ? (
         <p>없어요</p>
       ) : (
@@ -71,14 +74,33 @@ const GoalList = () => {
 
 export default GoalList;
 
+// const TempPageStyle = styled.div`
+//   justify-content:center;
+// `
+
+const TempGoalTitle = styled.div`
+  margin-top: 20px;
+  background-color: pink;
+  width: 600px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+`;
+
 const Tempbox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
+  margin-top: 20px;
+  list-style: none;
   .tempstyle {
-    background-color: aquamarine;
-    width: 584px;
+    background-color: #eef1ff;
+    width: 568px;
+    height: 167px;
+    border-radius: 6px;
   }
 `;
