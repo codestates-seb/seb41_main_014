@@ -1,10 +1,12 @@
+import { createTheme } from '@mui/material';
+
 //TODO 표준 변경원할 때
 const STANDARD_FONT_PX = 10;
 const STANDARD_MAGNIFICATION = 4;
 
 const calcRem = (px) => `${px / STANDARD_FONT_PX}rem`;
 
-export const theme = {
+export const theme = createTheme({
   basic: {
     getDistance: (distance = 1) => distance * STANDARD_MAGNIFICATION,
   },
@@ -32,4 +34,4 @@ export const theme = {
     white: 'white',
     black: 'black',
   },
-};
+});

@@ -11,9 +11,10 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.2",
-    "dotenv": "^16.0.3",
     "react": "^18.2.0",
+    "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
+    "react-google-button": "^0.7.2",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
@@ -51,5 +52,6 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0"
-  }
+  },
+  "proxy": "http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080"
 }
