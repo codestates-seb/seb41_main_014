@@ -4,8 +4,9 @@ const StyeldFooter = styled.footer`
   width: 100%;
   height: 200px;
   background-color: #b1b2ff;
-  position: absolute;
+  position: relative;
   bottom: 0;
+  transform: translatY(-100%);
 `;
 
 const Footer = () => {
