@@ -24,18 +24,18 @@ import FixedSaving from './pages/FixedSaving';
 
 import Footer from './components/Footer';
 import Header from './components/Header';
-import { RouteContainer } from './styles/common';
+import { ColumnCenterContainer } from './styles/common';
 
 // TODO theme사용예시, theme의경우 typeScript ts, tsx설정안되면
 // 단순 theme interface(명세)라 자동완성안되니 style/theme.js 참조
-const StyledApp = styled(RouteContainer)(({ theme }) => ({
+const StyledApp = styled(ColumnCenterContainer)(({ theme }) => ({
   fontSize: theme.fontSizes.base,
   height: '100vh',
   /* TODO */
   backgroundColor: 'yellow',
 }));
 
-const ContentContainer = styled(RouteContainer)`
+const ContentContainer = styled(ColumnCenterContainer)`
   width: ${(props) => props.theme.spacing(150)};
   /* TODO */
   background-color: aliceblue;
@@ -64,3 +64,11 @@ function App() {
 }
 
 export default App;
+
+/* 
+0. figma 글씨크기
+1. 없어요 처리
+2. typescript
+3. 기능별
+4. commonjs 사용여부
+*/

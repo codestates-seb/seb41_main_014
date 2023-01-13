@@ -114,7 +114,6 @@ const TempGoalTitle = styled.div`
   width: 600px;
   height: 50px;
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: space-around;
 `;
@@ -140,7 +139,6 @@ const Tempbox = styled.div`
     margin-left: 20px;
   }
   .SettingInput {
-    box-sizing: border-box;
     text-align: center;
     background-color: transparent;
     width: 400px;

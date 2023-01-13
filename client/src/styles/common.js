@@ -10,7 +10,7 @@ export const RowContainer = styled(Container)`
   flex-direction: row;
 `;
 
-export const RouteContainer = styled(ColumnContainer)`
+export const ColumnCenterContainer = styled(ColumnContainer)`
   align-items: center;
 `;
 

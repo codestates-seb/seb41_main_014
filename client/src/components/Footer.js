@@ -1,16 +1,14 @@
-import styled from '@emotion/styled';
+import { styled } from '@mui/material';
+import { RowCenterContainer } from '../styles/common';
 
-const StyeldFooter = styled.footer`
-  width: 100%;
-  height: 200px;
-  background-color: #b1b2ff;
-  position: relative;
-  bottom: 0;
-  transform: translatY(-100%);
-`;
+const StyeldFooter = styled(RowCenterContainer)(({ theme }) => ({
+  width: '100vw',
+  height: theme.spacing(50),
+  backgroundColor: theme.colors.mainHeavy,
+}));
 
 const Footer = () => {
-  return <StyeldFooter>푸터푸터푸터</StyeldFooter>;
+  return <StyeldFooter as="footer">푸터푸터푸터</StyeldFooter>;
 };
 
 export default Footer;

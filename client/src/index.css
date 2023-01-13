@@ -12,11 +12,13 @@
 > ## reference
 > - http://html5doctor.com/html-5-reset-stylesheet/
 > - https://blog.naver.com/mongnme/220628347446
-> - 
+box-sizing> - 
 */
 
+/* TODO 전역설정 */
 :root {
     font-size: 10px;
+    box-sizing: border-box;
 }
 
 html, body, div, span, object, iframe,
