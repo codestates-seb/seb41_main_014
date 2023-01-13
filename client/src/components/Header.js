@@ -16,13 +16,31 @@ const StyeldHeader = styled(RowCenterContainer)(({ theme }) => ({
   /* TODO */
   backgroundColor: 'bisque',
 }));
+const StyeldHeader = styled.header`
+  display: flex;
+  flex-direction: row;
+  background-color: yellow;
+  height: 30px;
+  font-size: large;
+  justify-content: space-around;
+  .divUl {
+    //임시 ~~~~ 나중에 지우셈
+    display: flex;
+    flex-direction: row;
+    margin-left: 12px;
+    list-style: none;
+  }
+`;
 
+// 참고 : divUl 은 추후에 지울 겁니다. 편하게 보려고 해놓음
 const Header = () => {
   return (
     <StyeldHeader as="header">
       <div>
+    <StyeldHeader>
+      <div className="divUl">
         <p>비로그인</p>
-        <ul>
+        <ul className="divUl">
           <li>
             <Link to={ROUTE_PATH_BASE}>로고(메인)</Link>
           </li>
@@ -34,9 +52,9 @@ const Header = () => {
           </li>
         </ul>
       </div>
-      <div>
+      <div className="divUl">
         <p>로그인</p>
-        <ul>
+        <ul className="divUl">
           <li>
             <Link to={ROUTE_PATH_GOAL_LIST}>로고(희망목록)</Link>
           </li>
