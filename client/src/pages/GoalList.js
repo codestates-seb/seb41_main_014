@@ -105,6 +105,7 @@ const GoalList = () => {
 
 export default GoalList;
 
+
 // const TempPageStyle = styled.div`
 //   justify-content:center;
 // `
@@ -118,6 +119,7 @@ const TempGoalTitle = styled.div`
   align-items: center;
   justify-content: space-around;
 `;
+
 
 const Tempbox = styled.div`
   display: flex;
@@ -150,7 +152,6 @@ const Tempbox = styled.div`
     border: none;
     border-radius: 6px;
     border-bottom: solid 2px #b1b2ff;
-
     margin-top: 20px;
     color: grey;
     &:focus {
@@ -180,4 +181,8 @@ const ButtonSet = styled.div`
   justify-content: center;
   align-items: center;
   margin: 50px 0 100px 0;
+  .tempstyle {
+    background-color: aquamarine;
+    width: 584px;
+  }
 `;
