@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 public class SimpleMemberResponseDto {
 
-    private Long memberId;
+    private Long id;
 
     private String email;
 
