@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
+@Setter
 @Entity
 public class Goal extends Auditable {
     @Id
@@ -21,22 +22,22 @@ public class Goal extends Auditable {
     private String goalName; //목표명
 
     @Column(nullable = false)
-    private long price; //가격
+    private long price; //목표 금액
 
     @Column(nullable = false)
     private long principle; //원금
 
     @Column(nullable = false)
-    private long monthly_payment; //월 납입금
+    private long monthlyPayment; //월 납입금
 
-    @Column(nullable = false)
-    private LocalDateTime payment_start; //납입 시작일
+    @Column()
+    private LocalDateTime paymentStart; //납입 시작일
 
-    @Column(nullable = false)
-    private int period; //납입 기간
+    @Column()
+    private int period; //납입 기간 = (목표금액 - 원금)/월 납입금
 
     @Column(length = 1000)
-    private String url;
+    private String url; //이미지 url
 
     @Enumerated(value = EnumType.STRING)
     private GoalStatus status = GoalStatus.PROGRESS; //진행중이 기본값
