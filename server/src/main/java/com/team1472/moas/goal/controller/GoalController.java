@@ -1,5 +1,6 @@
 package com.team1472.moas.goal.controller;
 
+
 import com.team1472.moas.goal.dto.GoalPatchReq;
 import com.team1472.moas.goal.dto.GoalPostReq;
 import com.team1472.moas.goal.entity.Goal;
