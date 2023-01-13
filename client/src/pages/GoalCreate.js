@@ -1,142 +1,5 @@
-
-import styled from '@emotion/styled';
 import { Button } from '@mui/material';
-// import { TextField } from '@mui/material';
-
-const GoalCreate = () => {
-  return (
-    <CreatePage>
-      <ComponentContain>
-        <br />
-        <div className="SettingLine">
-          <Header>나의 목표</Header>
-
-          <input
-            className="SettingInput"
-            placeholder="제네시스 GV80"
-            type="text"
-          />
-        </div>
-        <div className="SettingLine">
-          <Header>목표 금액</Header>
-          <input
-            className="SettingInput"
-            placeholder="61,360,000원"
-            type="number"
-          />
-          <Header style={{ color: '#b1b2ff' }}>원</Header>
-        </div>
-        <div className="SettingLine">
-          <Header>목표 기간</Header>
-          <input className="SettingInput" placeholder="72개월" type="number" />
-          <Header style={{ color: '#b1b2ff' }}>개월</Header>
-        </div>
-
-        <SavingCal>
-          <div style={{ display: 'flex' }}>
-            매달 &nbsp; <span style={{ color: 'red' }}>XX원</span> &nbsp;씩
-            모아야 해요!
-          </div>
-        </SavingCal>
-
-        <div className="buttonSet">
-          <Button
-            className="SubmitBox
-        "
-          >
-            <p>등록하기</p>
-          </Button>
-        </div>
-      </ComponentContain>
-    </CreatePage>
-
-import {
-  Button,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
-  Input,
-} from '@mui/material';
-import { getLOCALE_MONEY } from '../helper/unitHelper';
-import { useState } from 'react';
-import axios from 'axios';
-
-const GoalCreate = () => {
-  const [search, setSearch] = useState('');
-  const [wishs, setWishes] = useState([]);
-
-  const handleSearchInput = (e) => {
-    setSearch(e.target.value);
-  };
-  const handleSearch = () => {
-    axios({
-      method: 'get',
-      url: process.env.REACT_APP_NAVER_SEARCH_ENDPOINT,
-      headers: {
-        'X-Naver-Client-Id': process.env.REACT_APP_NAVER_API_CLIENT_ID,
-        'X-Naver-Client-Secret': process.env.REACT_APP_NAVER_API_CLIENT_SECRET,
-      },
-      params: {
-        query: search,
-      },
-    })
-      .then((response) => {
-        console.log(response.data.items);
-        // console.log(setWishes);
-        setWishes(response.data.items);
-        console.log(search);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  /* 
-NaverAPI data
-brand: ""
-category1: "패션의류"
-category2: "여성의류"
-category3: "원피스"
-category4: ""
-hprice: ""
-image: "https://shopping-phinf.pstatic.net/main_3326815/33268151232.20220704083440.jpg"
-link: "https://search.shopping.naver.com/gate.nhn?id=33268151232"
-lprice: "27400"
-maker: ""
-mallName: "네이버"
-productId: "33268151232"
-productType: "1"
-title: "웬디즈갤러리 조안나 워싱 프릴 원피스 FOP<b>123</b>"
-*/
-  return (
-    <>
-      <Input onChange={handleSearchInput} />
-      <Button onClick={handleSearch}>api</Button>
-      <ImageList sx={{ width: 500, height: 450 }}>
-        {wishs.length === 0 ? (
-          <p>없어</p>
-        ) : (
-          wishs.map((wish) => (
-            <ImageListItem key={wish.image}>
-              <img
-                src={`${wish.image}?w=248&fit=crop&auto=format`}
-                srcSet={`${wish.link}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                alt={search}
-                loading="lazy"
-              />
-              <ImageListItemBar
-                title={search}
-                subtitle={<span>by: {getLOCALE_MONEY(wish.lprice)}</span>}
-                position="below"
-              />
-            </ImageListItem>
-          ))
-        )}
-      </ImageList>
-    </>
-  );
-};
-
-export default GoalCreate;
+import styled from '@emotion/styled';
 
 const CreatePage = styled.div`
   display: flex;
@@ -219,3 +82,141 @@ const SavingCal = styled.div`
   margin-top: 20px;
   font-size: 16px;
 `;
+
+const GoalCreate = () => {
+  return (
+    <CreatePage>
+      <ComponentContain>
+        <br />
+        <div className="SettingLine">
+          <Header>나의 목표</Header>
+
+          <input
+            className="SettingInput"
+            placeholder="제네시스 GV80"
+            type="text"
+          />
+        </div>
+        <div className="SettingLine">
+          <Header>목표 금액</Header>
+          <input
+            className="SettingInput"
+            placeholder="61,360,000원"
+            type="number"
+          />
+          <Header style={{ color: '#b1b2ff' }}>원</Header>
+        </div>
+        <div className="SettingLine">
+          <Header>목표 기간</Header>
+          <input className="SettingInput" placeholder="72개월" type="number" />
+          <Header style={{ color: '#b1b2ff' }}>개월</Header>
+        </div>
+
+        <SavingCal>
+          <div style={{ display: 'flex' }}>
+            매달 &nbsp; <span style={{ color: 'red' }}>XX원</span> &nbsp;씩
+            모아야 해요!
+          </div>
+        </SavingCal>
+
+        <div className="buttonSet">
+          <Button
+            className="SubmitBox
+        "
+          >
+            <p>등록하기</p>
+          </Button>
+        </div>
+      </ComponentContain>
+    </CreatePage>
+  );
+};
+
+export default GoalCreate;
+
+//TODO Material UI ImageList사용예시 + NaverAPI 로컬연결
+// import {
+//   Button,
+//   ImageList,
+//   ImageListItem,
+//   ImageListItemBar,
+//   Input,
+// } from '@mui/material';
+// import { getLOCALE_MONEY } from '../helper/unitHelper';
+// import { useState } from 'react';
+// import axios from 'axios';
+
+// const GoalCreate = () => {
+//   const [search, setSearch] = useState('');
+//   const [wishs, setWishes] = useState([]);
+
+//   const handleSearchInput = (e) => {
+//     setSearch(e.target.value);
+//   };
+//   const handleSearch = () => {
+//     axios({
+//       method: 'get',
+//       url: process.env.REACT_APP_NAVER_SEARCH_ENDPOINT,
+//       headers: {
+//         'X-Naver-Client-Id': process.env.REACT_APP_NAVER_API_CLIENT_ID,
+//         'X-Naver-Client-Secret': process.env.REACT_APP_NAVER_API_CLIENT_SECRET,
+//       },
+//       params: {
+//         query: search,
+//       },
+//     })
+//       .then((response) => {
+//         console.log(response.data.items);
+//         // console.log(setWishes);
+//         setWishes(response.data.items);
+//         console.log(search);
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   };
+//   /*
+// NaverAPI data
+// brand: ""
+// category1: "패션의류"
+// category2: "여성의류"
+// category3: "원피스"
+// category4: ""
+// hprice: ""
+// image: "https://shopping-phinf.pstatic.net/main_3326815/33268151232.20220704083440.jpg"
+// link: "https://search.shopping.naver.com/gate.nhn?id=33268151232"
+// lprice: "27400"
+// maker: ""
+// mallName: "네이버"
+// productId: "33268151232"
+// productType: "1"
+// title: "웬디즈갤러리 조안나 워싱 프릴 원피스 FOP<b>123</b>"
+// */
+//   return (
+//     <>
+//       <Input onChange={handleSearchInput} />
+//       <Button onClick={handleSearch}>api</Button>
+//       <ImageList sx={{ width: 500, height: 450 }}>
+//         {wishs.length === 0 ? (
+//           <p>없어</p>
+//         ) : (
+//           wishs.map((wish) => (
+//             <ImageListItem key={wish.image}>
+//               <img
+//                 src={`${wish.image}?w=248&fit=crop&auto=format`}
+//                 srcSet={`${wish.link}?w=248&fit=crop&auto=format&dpr=2 2x`}
+//                 alt={search}
+//                 loading="lazy"
+//               />
+//               <ImageListItemBar
+//                 title={search}
+//                 subtitle={<span>by: {getLOCALE_MONEY(wish.lprice)}</span>}
+//                 position="below"
+//               />
+//             </ImageListItem>
+//           ))
+//         )}
+//       </ImageList>
+//     </>
+//   );
+// };

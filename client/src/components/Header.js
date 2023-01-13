@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import {
   ROUTE_PATH_BASE,
@@ -13,34 +13,25 @@ import { RowCenterContainer } from '../styles/common';
 const StyeldHeader = styled(RowCenterContainer)(({ theme }) => ({
   width: '100vw',
   height: theme.spacing(15),
+  fontSize: theme.fontSizes.xxxxl,
+  justifyContent: 'space-around',
   /* TODO */
   backgroundColor: 'bisque',
-}));
-const StyeldHeader = styled.header`
-  display: flex;
-  flex-direction: row;
-  background-color: yellow;
-  height: 30px;
-  font-size: large;
-  justify-content: space-around;
-  .divUl {
+  ul: {
     //임시 ~~~~ 나중에 지우셈
-    display: flex;
-    flex-direction: row;
-    margin-left: 12px;
-    list-style: none;
-  }
-`;
+    display: 'flex',
+    flexDirection: 'row',
+    marginLeft: theme.spacing(3),
+  },
+}));
 
 // 참고 : divUl 은 추후에 지울 겁니다. 편하게 보려고 해놓음
 const Header = () => {
   return (
     <StyeldHeader as="header">
       <div>
-    <StyeldHeader>
-      <div className="divUl">
         <p>비로그인</p>
-        <ul className="divUl">
+        <ul>
           <li>
             <Link to={ROUTE_PATH_BASE}>로고(메인)</Link>
           </li>
@@ -52,9 +43,9 @@ const Header = () => {
           </li>
         </ul>
       </div>
-      <div className="divUl">
+      <div>
         <p>로그인</p>
-        <ul className="divUl">
+        <ul>
           <li>
             <Link to={ROUTE_PATH_GOAL_LIST}>로고(희망목록)</Link>
           </li>
