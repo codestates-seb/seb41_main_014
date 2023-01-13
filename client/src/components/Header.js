@@ -8,12 +8,18 @@ import {
   ROUTE_PATH_MEMBER,
   ROUTE_PATH_SIGNUP,
 } from '../store/routerStore';
+import { RowCenterContainer } from '../styles/common';
 
-const StyeldHeader = styled.header``;
+const StyeldHeader = styled(RowCenterContainer)(({ theme }) => ({
+  width: '100vw',
+  height: theme.spacing(15),
+  /* TODO */
+  backgroundColor: 'bisque',
+}));
 
 const Header = () => {
   return (
-    <StyeldHeader>
+    <StyeldHeader as="header">
       <div>
         <p>비로그인</p>
         <ul>

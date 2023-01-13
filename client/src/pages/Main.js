@@ -1,4 +1,4 @@
-import { Container, styled } from '@mui/material';
+import { styled } from '@mui/material';
 import Button from '@mui/material/Button';
 import { getACCESS_TOKEN } from '../helper/cookieHelper';
 
@@ -10,9 +10,9 @@ const StyledButton = styled(Button)`
 const Main = () => {
   console.log(getACCESS_TOKEN());
   return (
-    <Container>
+    <>
       <StyledButton variant="contained">하하하</StyledButton>
-    </Container>
+    </>
   );
 };
 

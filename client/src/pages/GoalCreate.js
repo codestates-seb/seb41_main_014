@@ -1,6 +1,5 @@
 import {
   Button,
-  Container,
   ImageList,
   ImageListItem,
   ImageListItemBar,
@@ -57,7 +56,7 @@ productType: "1"
 title: "웬디즈갤러리 조안나 워싱 프릴 원피스 FOP<b>123</b>"
 */
   return (
-    <Container>
+    <>
       <Input onChange={handleSearchInput} />
       <Button onClick={handleSearch}>api</Button>
       <ImageList sx={{ width: 500, height: 450 }}>
@@ -81,7 +80,7 @@ title: "웬디즈갤러리 조안나 워싱 프릴 원피스 FOP<b>123</b>"
           ))
         )}
       </ImageList>
-    </Container>
+    </>
   );
 };
 

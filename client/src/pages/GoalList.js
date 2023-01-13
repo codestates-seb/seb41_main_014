@@ -10,6 +10,18 @@ import {
 } from '../store/routerStore';
 import styled from '@emotion/styled';
 
+const Tempbox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  .tempstyle {
+    background-color: aquamarine;
+    width: 584px;
+  }
+`;
+
 const Goal = ({ goal, handleDelete }) => {
   return (
     <>
@@ -70,15 +82,3 @@ const GoalList = () => {
 };
 
 export default GoalList;
-
-const Tempbox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-  .tempstyle {
-    background-color: aquamarine;
-    width: 584px;
-  }
-`;

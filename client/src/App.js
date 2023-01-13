@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import styled from '@emotion/styled';
+import { styled } from '@mui/material/styles';
 
 import {
   ROUTE_PATH_BASE,
@@ -24,28 +24,40 @@ import FixedSaving from './pages/FixedSaving';
 
 import Footer from './components/Footer';
 import Header from './components/Header';
+import { RouteContainer } from './styles/common';
 
 // TODO theme사용예시, theme의경우 typeScript ts, tsx설정안되면
 // 단순 theme interface(명세)라 자동완성안되니 style/theme.js 참조
-const StyledApp = styled.div`
-  font-size: ${(props) => props.theme.fontSizes.base};
+const StyledApp = styled(RouteContainer)(({ theme }) => ({
+  fontSize: theme.fontSizes.base,
+  height: '100vh',
+  /* TODO */
+  backgroundColor: 'yellow',
+}));
+
+const ContentContainer = styled(RouteContainer)`
+  width: ${(props) => props.theme.spacing(150)};
+  /* TODO */
+  background-color: aliceblue;
 `;
 
 function App() {
   return (
     <StyledApp>
       <Header />
-      <Routes>
-        <Route path={ROUTE_PATH_BASE} element={<Main />} />
-        <Route path={ROUTE_PATH_LOGIN} element={<Login />} />
-        <Route path={ROUTE_PATH_SIGNUP} element={<Signup />} />
-        <Route path={ROUTE_PATH_MEMBER} element={<Member />} />
-        <Route path={ROUTE_PATH_GOAL_CREATE} element={<GoalCreate />} />
-        <Route path={ROUTE_PATH_GOAL_LIST} element={<GoalList />} />
-        <Route path={ROUTE_PATH_GOAL_DETAIL} element={<GoalDetail />} />
-        <Route path={ROUTE_PATH_GOAL_EDIT} element={<GoalEdit />} />
-        <Route path={ROUTE_PATH_FIXED_SAVING} element={<FixedSaving />} />
-      </Routes>
+      <ContentContainer>
+        <Routes>
+          <Route path={ROUTE_PATH_BASE} element={<Main />} />
+          <Route path={ROUTE_PATH_LOGIN} element={<Login />} />
+          <Route path={ROUTE_PATH_SIGNUP} element={<Signup />} />
+          <Route path={ROUTE_PATH_MEMBER} element={<Member />} />
+          <Route path={ROUTE_PATH_GOAL_CREATE} element={<GoalCreate />} />
+          <Route path={ROUTE_PATH_GOAL_LIST} element={<GoalList />} />
+          <Route path={ROUTE_PATH_GOAL_DETAIL} element={<GoalDetail />} />
+          <Route path={ROUTE_PATH_GOAL_EDIT} element={<GoalEdit />} />
+          <Route path={ROUTE_PATH_FIXED_SAVING} element={<FixedSaving />} />
+        </Routes>
+      </ContentContainer>
       <Footer />
     </StyledApp>
   );
