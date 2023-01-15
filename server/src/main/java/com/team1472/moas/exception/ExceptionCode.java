@@ -4,7 +4,9 @@ import lombok.Getter;
 
 @Getter
 public enum ExceptionCode {
-    ;
+    NAME_ALREADY_EXISTS(402, "중복된 닉네임입니다."),
+    MEMBER_NOT_EXISTS(404, "멤버가 존재하지 않습니다"),
+    EMAIL_ALREADY_EXISTS(404, "중복된 이메일입니다.");;
 
     private int status;
     private String message;
