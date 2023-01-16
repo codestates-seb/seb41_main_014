@@ -32,6 +32,7 @@ public class JwtTokenizer {
 
     private final TokenRepository tokenRepository;
 
+    //generateAccessToken메서드 (사용자 email, role 넣은 엑세스 토큰 발급)
     public String generateAccessToken(Map<String, Object> claims,
                                       String subject,
                                       Date expiration,
@@ -48,6 +49,8 @@ public class JwtTokenizer {
                 .compact();
     }
 
+    //generateRefreshToken 메서드 (리프레시 토큰 발급)
+
     public String generateRefreshToken(String subject,
                                        Date expiration,
                                        Key secretkey) {
@@ -60,6 +63,7 @@ public class JwtTokenizer {
                 .compact();
     }
 
+    // getTokenExpiration 메서드 (토큰 만료시간을 가져오는 메서드)
     public Date getTokenExpiration(int expirationMinutes) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, expirationMinutes);
@@ -69,10 +73,12 @@ public class JwtTokenizer {
     }
 
 
+    // getUserEmail 메서드 (토큰에서 email 가져오는 메서드)
     public String getUserEmail(String token) {
         return Jwts.parser().setSigningKey(secretKey.getBytes()).parseClaimsJws(token).getBody().getSubject();
     }
 
+    // validateToken 메서드 (토큰 유효성, 만료일자 확인 메서드)
     // 토큰의 유효성 + 만료일자 확인
     public boolean validateToken(String jwtToken) {
         try {
@@ -83,11 +89,14 @@ public class JwtTokenizer {
         }
     }
 
+
+    //existsRefreshToken 메서드 (리프레시 토큰 존재유무 확인 메서드)
     // RefreshToken 존재유무 확인
     public boolean existsRefreshToken(String refreshToken) {
         return tokenRepository.existsByRefreshToken(refreshToken);
     }
 
+    //getSecretKeyFromPlainSecretKey 메서드 (시크릿 키 조회 메서드(토큰의 시크릿 키))
     public Key getSecretKeyFromPlainSecretKey() {
 
 
@@ -96,6 +105,7 @@ public class JwtTokenizer {
         return key;
     }
 
+    //createNewToken 메서드 (멤버 서비스에서 리프레시 기능을 사용할 때 엑세스 토큰을 재발큽 해주기 위한 엑세스 토큰 생성 메서드)
     // Access Token 생성.
     public String createNewToken(String email, List<GrantedAuthority> authorities) {
         Map<String, Object> claims = new HashMap<>();

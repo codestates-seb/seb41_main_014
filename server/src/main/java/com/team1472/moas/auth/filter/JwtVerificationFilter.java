@@ -27,6 +27,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     private final CustomAuthorityUtil customAuthorityUtil;
 
 
+    //doFilterInternal 메서드 (토큰 유효성 검증)
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
@@ -55,6 +56,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    //shouldNotFilter 메서드 (토큰이 bearer 으로 시작하는지 안하는지 )
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String authorization = request.getHeader("Authorization");
@@ -62,6 +64,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
         return authorization == null || !authorization.startsWith("bearer");
     }
 
+    //setSecurityContext 메서드 (이메일 , 권한, memberId 토큰으로 저장 )
     private void setSecurityContext(Map<String, Object> claims) {
 
         String username = claims.get("email").toString();
@@ -74,6 +77,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(memberIdAuthenticationToken);
     }
 
+    //resolveAccessToken 메서드 (헤더에 Authorization이 있는지 없는지 검사 )
     public String resolveAccessToken(HttpServletRequest request) {
         if (request.getHeader("Authorization") != null)
             return request.getHeader("Authorization").substring(6);

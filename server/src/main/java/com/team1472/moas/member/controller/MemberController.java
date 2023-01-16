@@ -30,6 +30,7 @@ public class MemberController {
     private final MemberMapper mapper;
     private final MemberService service;
 
+    //patchMember 메서드 (member 정보 수정)
     @PatchMapping("/{member-id}")
     public ResponseEntity patchMember(@PathVariable("member-id") Long memberId,
                                       @Valid @RequestBody MemberPatchDto memberPatchDto) {
@@ -42,6 +43,7 @@ public class MemberController {
 
         return new ResponseEntity<>(singleResponse, HttpStatus.OK);
     }
+    //getMember 메서드 (member 정보 조회)
     @GetMapping("/{member-id}")
     public ResponseEntity getMember(@PathVariable("member-id") Long memberId ) {
 
@@ -52,12 +54,14 @@ public class MemberController {
         return new ResponseEntity(singleResponseDto, HttpStatus.OK);
     }
 
+    //logout 메서드 (로그아웃, 토큰 삭제 )
     @PostMapping("/logout")
     public ResponseEntity logout(HttpServletRequest request) {
         service.logoutMember(request);
 
         return new ResponseEntity<>("Logout", HttpStatus.NO_CONTENT);
     }
+    //refreshToken 메서드 (토큰 재발급)
     @PostMapping("/refresh")
     public ResponseEntity refreshToken(HttpServletRequest request, HttpServletResponse response) {
         return service.refresh(request, response);

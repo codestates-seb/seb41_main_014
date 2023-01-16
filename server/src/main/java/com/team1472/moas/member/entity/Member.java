@@ -69,6 +69,7 @@ public class Member extends Auditable {
         }
     }
 
+    //getRoleKey메서드  (사용자 역할에 따른 key 조회용 )
     public String getRoleKey() {
         return this.role.getKey();
     }

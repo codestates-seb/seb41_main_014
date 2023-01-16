@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final MemberRepository memberRepository;
     private final CustomAuthorityUtil customAuthorityUtil;
 
-    //
+    //Oauth2로그인을 위한 URL지정, 특정 부분 열람을 위한 권한 설정
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http

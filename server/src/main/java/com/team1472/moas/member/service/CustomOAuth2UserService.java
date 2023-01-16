@@ -24,6 +24,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     private final MemberRepository memberRepository;
     private final HttpSession httpSession;
 
+    //loadUser 메서드 (OAuth2 인증 시 사용자 정보 로드)
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
@@ -55,9 +56,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     private Member saveAttributes(OAuthAttributes attributes) {
         Member member = memberRepository.findByEmail(attributes.getEmail()).orElse(attributes.toEntity());
-        if (member.getCreatedAt() == null) {
-            member.setCreatedAt(LocalDateTime.now());
-        }
 
         return memberRepository.save(member);
     }

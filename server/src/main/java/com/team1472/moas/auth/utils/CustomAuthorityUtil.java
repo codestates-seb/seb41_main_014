@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+//stringToGrantedAuthority 메서드 (지정된 권한 앞에 ROLE_ 붙여서 리스트 형식으로 저장 )
 @Component
 public class CustomAuthorityUtil {
 
