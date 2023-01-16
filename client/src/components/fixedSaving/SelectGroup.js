@@ -12,15 +12,29 @@ const SelectGroup = ({ title, buttons = [] }) => {
     <Box sx={{ margin: 3 }}>
       <h3>{title}</h3>
       <ToggleButtonGroup
-        sx={{ paddingTop: 2 }}
+        sx={() => ({
+          pt: 2,
+        })}
         size="medium"
-        color="primary"
         exclusive
         value={val}
         onChange={handleChange}
       >
         {buttons.map((button, index) => (
-          <ToggleButton key={index} sx={{ padding: 1.5 }} value={button.value}>
+          <ToggleButton
+            key={index}
+            sx={(theme) => ({
+              p: 1,
+              borderBottom: `4px solid ${theme.colors.mainMiddle}`,
+              color: theme.palette.text.secondary,
+              backgroundColor: theme.colors.mainLight,
+              '&.Mui-selected, &.Mui-selected:hover': {
+                color: theme.colors.white,
+                backgroundColor: theme.colors.mainMiddle,
+              },
+            })}
+            value={button.value}
+          >
             {button.title}
           </ToggleButton>
         ))}

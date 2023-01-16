@@ -1,13 +1,13 @@
-import { Box, Input, styled as MuiStyled } from '@mui/material';
+import { Box, Input, styled } from '@mui/material';
 import { rowCenter, theme } from '../../styles/theme';
 import PropTypes from 'prop-types';
 
-const StyledRow = MuiStyled(Box)`
+const StyledRow = styled(Box)`
   ${rowCenter}
   align-items: center;
 `;
 
-const StyledColorRow = MuiStyled(StyledRow)`
+const StyledColorRow = styled(StyledRow)`
   background: #eef1ff;
   border-bottom: 4px solid #aac4ff;
   border-radius: 4px;
