@@ -3,11 +3,11 @@ import {
   Button,
   ButtonGroup,
   Divider,
+  Grid,
   List,
   ListItem,
   Typography,
 } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
 import {
   FS_BANKS,
   FS_D_DCLS_CHRG_MAN,
@@ -20,13 +20,17 @@ import {
   FS_D_RSRV_TYPE_NM,
   getWRAPPER_DATA,
 } from '../helper/fixedSavingHelper';
-import { DUMMY_FiexedSavings } from '../data/dummies';
 import InputTitleNubmer from '../components/fixedSaving/InputTitleNubmer';
 import SelectGroup from '../components/fixedSaving/SelectGroup';
 import BankCheck from '../components/fixedSaving/BankCheck';
-import { columnCenter, theme } from '../styles/theme';
+import { columnCenter } from '../styles/theme';
+import { DUMMY_FiexedSavings } from '../data/dummies';
+import { getPERCENT_WITH_TEXT } from '../helper/unitHelper';
 // import PropTypes from 'prop-types';
 // import { theme } from '../styles/theme';
+// import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+// import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+// import SortIcon from '@mui/icons-material/Sort';
 
 const Notice = () => {
   const contents = [
@@ -38,11 +42,15 @@ const Notice = () => {
   ];
   return (
     <>
-      <h2>주의</h2>
+      <h2 style={{ color: 'white' }}>주의</h2>
       <List>
         {contents.map((content, index) => (
-          <ListItem key={index} sx={{ padding: theme.spacing(1) }}>
-            <Typography sx={{ fontSize: theme.fontSizes.base }}>
+          <ListItem key={index} sx={{ p: 1, color: 'white' }}>
+            <Typography
+              sx={(theme) => ({
+                fontSize: theme.fontSizes.lg,
+              })}
+            >
               {content}
             </Typography>
           </ListItem>
@@ -77,12 +85,149 @@ const FixedSavingContent = () => {
     { field: 'detail', headerName: '상세보기' },
   ];
   const rows = getWRAPPER_DATA(DUMMY_FiexedSavings);
+  console.log(rows);
   return (
-    <Box sx={{ height: '500px', width: '1200px' }}>
-      <DataGrid rows={rows} columns={columns} />
+    <Box
+      sx={(theme) => ({
+        width: '100%',
+        mt: 2,
+        mb: 2,
+        height: 'auto',
+        border: `4px solid ${theme.colors.mainMiddle}`,
+        backgroundColor: theme.colors.mainMiddle,
+        borderRadius: 2,
+      })}
+    >
+      <Grid container>
+        {/* 헤더행 */}
+        {columns.map((column) => (
+          <Grid
+            key={column.field}
+            sx={() => ({
+              display: 'flex',
+              alignItems: 'center',
+            })}
+            item
+            xs={
+              column.field === FS_D_KOR_CO_NM.field ||
+              column.field === FS_D_FIN_PRDT_NM.field ||
+              column.field === FS_D_DCLS_CHRG_MAN.field
+                ? 2
+                : 1
+            }
+          >
+            <Typography
+              sx={(theme) => ({
+                p: 2,
+                fontSize: theme.fontSizes.lg,
+                fontWeight: theme.fontWeight.bold,
+              })}
+            >
+              {column.headerName}
+            </Typography>
+          </Grid>
+        ))}
+      </Grid>
+      {rows.map((row) => (
+        <Grid
+          container
+          key={row.id}
+          sx={(theme) => ({
+            display: 'flex',
+            justifyContent: 'center',
+            border: `1px solid ${theme.colors.mainMiddle}`,
+            backgroundColor: theme.colors.mainLight,
+          })}
+        >
+          <Grid item xs={1.5}>
+            <Typography
+              sx={(theme) => ({ p: 1, fontSize: theme.fontSizes.base })}
+            >
+              {row.korCoNm}
+            </Typography>
+          </Grid>
+          <Grid item xs={1.5}>
+            <Typography
+              sx={(theme) => ({ p: 1, fontSize: theme.fontSizes.base })}
+            >
+              {row.finPrdtNm}
+            </Typography>
+          </Grid>
+          <Grid item xs={1}>
+            <Typography
+              sx={(theme) => ({ p: 1, fontSize: theme.fontSizes.base })}
+            >
+              {row.rsrvTypeNm}
+            </Typography>
+          </Grid>
+          <Grid item xs={1}>
+            <Typography
+              sx={(theme) => ({ p: 1, fontSize: theme.fontSizes.base })}
+            >
+              {getPERCENT_WITH_TEXT(row.intrRate)}
+            </Typography>
+          </Grid>
+          <Grid item xs={1}>
+            <Typography
+              sx={(theme) => ({ p: 1, fontSize: theme.fontSizes.base })}
+            >
+              {getPERCENT_WITH_TEXT(row.intrRate2)}
+            </Typography>
+          </Grid>
+          <Grid item xs={1}>
+            <Typography
+              sx={(theme) => ({ p: 1, fontSize: theme.fontSizes.base })}
+            >
+              {row.joinDeny}
+            </Typography>
+          </Grid>
+          <Grid item xs={1}>
+            <Typography
+              sx={(theme) => ({ p: 1, fontSize: theme.fontSizes.base })}
+            >
+              {row.intrRateTypeNm}
+            </Typography>
+          </Grid>
+          <Grid item xs={2}>
+            <Typography
+              sx={(theme) => ({
+                p: 1,
+                fontSize: theme.fontSizes.base,
+                whiteSpace: 'pre-wrap',
+              })}
+            >
+              {row.dcls_chrg_man}
+            </Typography>
+          </Grid>
+          <Grid item xs={1}>
+            <Typography
+              sx={(theme) => ({ p: 1, fontSize: theme.fontSizes.base })}
+            >
+              {}
+            </Typography>
+          </Grid>
+        </Grid>
+      ))}
     </Box>
   );
 };
+
+/* 
+      {/* <DataGrid
+        sx={(theme) => ({
+          boxShadow: 2,
+          border: 4,
+          borderColor: theme.colors.mainMiddle,
+          borderRadius: 2,
+        })}
+        rows={rows}
+        columns={columns}
+        autoHeight
+        checkboxSelection
+        headerHeight={30}
+        rowHeight={30}
+      /> 
+*/
 
 const UserSelected = () => {
   return (
@@ -127,11 +272,22 @@ const FixedSaving = () => {
   return (
     <>
       <Divider light />
-      <Box sx={{ ...columnCenter }}>
-        <Box sx={{ padding: theme.spacing(5) }}>
+      <Box
+        sx={() => ({
+          ...columnCenter,
+        })}
+      >
+        <Box
+          sx={(theme) => ({
+            p: 5,
+            mt: 2,
+            mb: 2,
+            backgroundColor: theme.colors.mainLight,
+          })}
+        >
           <h2>{title}</h2>
           {contents.map((content, index) => (
-            <p key={index} style={{ paddingTop: theme.spacing(2) }}>
+            <p key={index} style={{ pt: 2 }}>
               {content}
             </p>
           ))}
@@ -173,13 +329,13 @@ const FixedSaving = () => {
       />
       <Divider />
       <Box
-        sx={{
-          marginTop: theme.spacing(2),
-          marginBottom: theme.spacing(2),
-          padding: theme.spacing(4),
+        sx={(theme) => ({
+          mt: theme.spacing(2),
+          mb: theme.spacing(2),
+          p: theme.spacing(4),
           backgroundColor: theme.colors.accent,
-          borderRadius: '8px',
-        }}
+          borderRadius: 2,
+        })}
       >
         <Notice />
       </Box>

@@ -321,6 +321,7 @@ export const getWRAPPER_DATA = (data) => {
       joinDeny: getParsingJoinDeny(elObj[FS_D_JOIN_DENY.field]),
       dcls_chrg_man: getDetail(elObj[FS_D_KOR_CO_NM.field]),
       isChecked: false,
+      isOpen: false,
     };
   });
   return wrapperData;
