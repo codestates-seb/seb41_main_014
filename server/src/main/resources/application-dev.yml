@@ -7,7 +7,7 @@ spring:
             client-id: 882323060278-3sr179710p7mmem65hibngar6cigpa03.apps.googleusercontent.com
             client-secret: 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
             redirect-uri: http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/google
-            #            redirect-uri: http://localhost:8080/login/oauth2/code/google
+#            redirect-uri: http://localhost:8080/login/oauth2/code/google
             scope:
               - profile
               - email
