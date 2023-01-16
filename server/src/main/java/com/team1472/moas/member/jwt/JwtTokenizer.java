@@ -19,15 +19,15 @@ import java.util.*;
 @Component
 public class JwtTokenizer {
     @Getter
-    @Value("${jwt.key}")
+    @Value("ppp11112341111123411112341111123411111234pppppp11112341111123411112341111123411111234ppp")
     private String secretKey;
 
     @Getter
-    @Value("${jwt.access-token-expiration-minutes}")
+    @Value("550000")
     private int accessTokenExpirationMinutes;
 
     @Getter
-    @Value("${jwt.refresh-token-expiration-minutes}")
+    @Value("420")
     private int refreshTokenExpirationMinutes;
 
     private final TokenRepository tokenRepository;
