@@ -24,21 +24,25 @@ import FixedSaving from './pages/FixedSaving';
 
 import Footer from './components/Footer';
 import Header from './components/Header';
-import { ColumnCenterContainer } from './styles/common';
+import { Container } from '@mui/system';
+import { column, columnCenter } from './styles/theme';
 
 // TODO theme사용예시, theme의경우 typeScript ts, tsx설정안되면
 // 단순 theme interface(명세)라 자동완성안되니 style/theme.js 참조
-const StyledApp = styled(ColumnCenterContainer)(({ theme }) => ({
-  fontSize: theme.fontSizes.base,
-  height: '100vh',
+const StyledApp = styled(Container)`
+  ${columnCenter};
+  width: 100%;
   /* TODO */
-  backgroundColor: 'yellow',
-}));
+  background-color: yellow;
+`;
 
-const ContentContainer = styled(ColumnCenterContainer)`
-  width: ${(props) => props.theme.spacing(150)};
+const ContentContainer = styled(Container)`
+  ${column}
+  max-width: 600px;
+  width: 600px;
+  min-width: 360px;
   /* TODO */
-  background-color: aliceblue;
+  background-color: beige;
 `;
 
 function App() {

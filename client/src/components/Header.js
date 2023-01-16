@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import {
@@ -8,22 +9,20 @@ import {
   ROUTE_PATH_MEMBER,
   ROUTE_PATH_SIGNUP,
 } from '../store/routerStore';
-import { RowCenterContainer } from '../styles/common';
+import { row, rowCenter } from '../styles/theme';
 
-const StyeldHeader = styled(RowCenterContainer)(({ theme }) => ({
-  width: '100vw',
-  height: theme.spacing(15),
-  fontSize: theme.fontSizes.xxxxl,
-  justifyContent: 'space-around',
+const StyeldHeader = styled(Box)`
+  ${rowCenter}
+  width: 100vw;
+  height: ${(props) => props.theme.spacing(15)};
+  font-size: ${(props) => props.theme.fontSizes.xxxxl};
+  justify-content: 'space-around';
   /* TODO */
-  backgroundColor: 'bisque',
-  ul: {
-    //임시 ~~~~ 나중에 지우셈
-    display: 'flex',
-    flexDirection: 'row',
-    marginLeft: theme.spacing(3),
-  },
-}));
+  background-color: bisque;
+  ul {
+    ${row}
+  }
+`;
 
 // 참고 : divUl 은 추후에 지울 겁니다. 편하게 보려고 해놓음
 const Header = () => {

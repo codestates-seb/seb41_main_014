@@ -1,7 +1,6 @@
-import { styled } from '@mui/material';
-import { RowCenterContainer } from '../styles/common';
+import { Box, styled } from '@mui/material';
 
-const StyeldFooter = styled(RowCenterContainer)(({ theme }) => ({
+const StyeldFooter = styled(Box)(({ theme }) => ({
   width: '100vw',
   height: theme.spacing(50),
   backgroundColor: theme.colors.mainHeavy,
