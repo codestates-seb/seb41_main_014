@@ -5,6 +5,18 @@ spring:
       path: /h2
   datasource:
     url: jdbc:h2:mem:moas
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 882323060278-3sr179710p7mmem65hibngar6cigpa03.apps.googleusercontent.com
+            client-secret: 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
+            redirect-uri: http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/google
+#            redirect-uri: http://localhost:8080/login/oauth2/code/google
+            scope:
+              - profile
+              - email
   jpa:
     hibernate:
       ddl-auto: create
@@ -22,3 +34,12 @@ server:
   servlet:
     encoding:
       force-response: true
+
+
+mail:
+  address:
+    admin: admin@gmail.com
+jwt:
+  key: ppp11112341111123411112341111123411111234pppppp11112341111123411112341111123411111234ppp
+  access-token-expiration-minutes: 550000
+  refresh-token-expiration-minutes: 420
