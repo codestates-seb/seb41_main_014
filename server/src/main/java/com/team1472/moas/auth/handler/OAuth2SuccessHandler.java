@@ -43,6 +43,10 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final TokenRepository tokenRepository;
     private final CustomAuthorityUtil customAuthorityUtil;
 
+    //OAuth2로그인 성공 시 토큰 발급 (Authorization, RefreshToken)
+    //지정된 URL(http://localhost:3000/loginCallback)으로 토큰 직접 전달 (URL 자체가 토큰을 문자열로 가지고 있음 )
+    //토큰에는 유저ID, 이메일, 권한 전달
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         var oAuth2User = (OAuth2User)authentication.getPrincipal();

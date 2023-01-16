@@ -15,6 +15,8 @@ public class OAuthAttributes {
     private String email;
     private String picture;
 
+
+    // Oauth2를 통한 사용자 정보 설정을 위한 OAuthAttributes 생성자
     @Builder
     public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String picture) {
         this.attributes = attributes;
@@ -28,6 +30,7 @@ public class OAuthAttributes {
         return ofGoogle(userNameAttributeName, attributes);
     }
 
+    // google에서 가져온 사용자 정보 토대로 OAuthAttributes 설정
     public static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String,Object> attributes) {
         return OAuthAttributes.builder()
                 .name((String) attributes.get("name"))
@@ -38,6 +41,7 @@ public class OAuthAttributes {
                 .build();
     }
 
+    // 사용되는 Member entity의 객체 생성
     public Member toEntity(){
         return Member.builder()
                 .name(name)

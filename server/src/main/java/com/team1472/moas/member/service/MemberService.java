@@ -36,7 +36,7 @@ public class MemberService {
         refreshToken.setRefreshToken(token);
         tokenRepository.save(refreshToken);
     }
-
+    //updateMember메서드 (회원 업로드)
     public Member updateMember(Member member, Long memberId) {
 
         Member findMember = verifyExistsMember(memberId);
@@ -52,14 +52,15 @@ public class MemberService {
 
         Optional.ofNullable(member.getName())
                 .ifPresent(name -> findMember.setName(name));
-        Optional.ofNullable(member.getModifiedAt())
-                .ifPresent(modifiedAt -> findMember.setModifiedAt(modifiedAt));
+        Optional.ofNullable(member.getModifiedAt());
+
 
         Member updateMember = memberRepository.save(findMember);
 
         return updateMember;
     }
 
+    //findMember메서드(회원 찾기)
     public Member findMember(Long memberId) {
 
         Member findMember = verifyExistsMember(memberId);
@@ -69,8 +70,7 @@ public class MemberService {
 
     }
 
-
-
+    //logoutMember 메서드 (로그아웃, 토큰삭제)
     public void logoutMember(HttpServletRequest request){
 
         String refreshToken = request.getHeader("RefreshToken").substring(6);
@@ -79,6 +79,7 @@ public class MemberService {
         tokenRepository.deleteById(token.getTokenId());
     }
 
+    //refresh 메서드 (RefreshToken을 입력받아 토큰 재발급)
     public ResponseEntity refresh(HttpServletRequest request, HttpServletResponse response) {
 
         String refreshToken = request.getHeader("RefreshToken").substring(6);
@@ -101,6 +102,7 @@ public class MemberService {
         }
     }
 
+    //verifyExistsMember 메서드(회원 가입 시 이미 존재하는 회원인지 여부 판별) 추가
     private Member verifyExistsMember(Long memberId) {
 
         return memberRepository.findById(memberId).orElseThrow(
