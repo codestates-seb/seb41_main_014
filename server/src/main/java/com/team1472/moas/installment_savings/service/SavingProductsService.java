@@ -19,9 +19,9 @@ public class SavingProductsService {
     public MultiResponse findSavingsProducts(Pageable pageable, SavingsFilteringReq filter) {
          Page<SavingProductRes> pageSavingProduct = interestRateRepository.findFilteringSavingProducts(pageable, filter);
 
-        // 이자율 계산
         List<SavingProductRes> savingProducts = pageSavingProduct.getContent();
 
+        //세후 이자 계산
         for (SavingProductRes savingProduct : savingProducts) {
             long interestAmount = calculateInterestAmount(savingProduct, filter.getMonthlySavings());
             savingProduct.setInterestAmount(interestAmount);
@@ -30,15 +30,16 @@ public class SavingProductsService {
         return new MultiResponse(savingProducts, pageSavingProduct);
     }
 
-    //이자 금액 계산
+    //세후 이자 금액 계산
     private long calculateInterestAmount(SavingProductRes savingProduct, long money) {
-        long pretaxInterest = 0;
+        long pretaxInterest; //세전 이자
+        int period = Integer.parseInt(savingProduct.getSaveTrm()); //총 월 납입 기간
 
         if (savingProduct.getIntrRateType().equals("S")) { //단리 계산
-            pretaxInterest =  calculateSimpleInterest(money, savingProduct.getIntrRate(), savingProduct.getSaveTrm());
+            pretaxInterest =  calculateSimpleInterest(money, savingProduct.getIntrRate(), period);
 
         } else { //복리 계산
-            pretaxInterest =  calculateCompoundInterest(money, savingProduct.getIntrRate(), savingProduct.getSaveTrm());
+            pretaxInterest =  calculateCompoundInterest(money, savingProduct.getIntrRate(), period);
         }
 
         long tax = calculateTax(pretaxInterest); //세금 계산
@@ -47,17 +48,15 @@ public class SavingProductsService {
     }
 
     //단리 계산
-    private long calculateSimpleInterest(long money, double interest, String period) {
-        int years = Integer.parseInt(period);
+    private long calculateSimpleInterest(long money, double interest, int period) {
 
-        return Math.round((money * interest * 0.01 * (years + 1) * years / 2) / 12);
+        return Math.round((money * interest * 0.01 * (period + 1) * period / 2) / 12);
     }
 
     //복리 계산
-    private long calculateCompoundInterest(long money, double interest, String period) {
-        int years = Integer.parseInt(period);
+    private long calculateCompoundInterest(long money, double interest, int period) {
 
-        return Math.round(money * (1 + interest * 0.01 / 12) * (Math.pow((1 + interest * 0.01 / 12), years) - 1) / (interest * 0.01 / 12)) - money * years;
+        return Math.round(money * (1 + interest * 0.01 / 12) * (Math.pow((1 + interest * 0.01 / 12), period) - 1) / (interest * 0.01 / 12)) - money * period;
     }
 
     //이자 세금 계산
