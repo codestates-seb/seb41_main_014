@@ -29,6 +29,9 @@ const InputTitleNubmer = ({
           type={type}
           defaultValue={value}
           readOnly={type !== 'number'}
+          inputRef={
+            type === 'number' ? (input) => input && input.focus() : undefined
+          }
         />
         <span style={{ padding: theme.spacing(2) }}>{unit}</span>
       </StyledColorRow>

@@ -99,7 +99,6 @@ const Main = () => {
           monthlySavings: 10000,
           saveTrm: '12',
           totalSavings: 10000,
-          rsrvType: null,
           finCoNoList: ['0010002'],
         } /*//TODO 참고 https://junglast.com/blog/http-ajax-withcredential
         쿼리파라메타가 아닌 경우, option -> params: {key:value} 추가*/,
@@ -114,21 +113,6 @@ const Main = () => {
       .then((response) => {
         const { data } = response;
         console.log(data);
-        /* 
-            {
-              id: 2,
-              memberId: 0,
-              url: null,
-              goalName: "초콜릿",
-              price: 500000,
-              monthlyPayment: 100000,
-              paymentStart: null
-              period: 5
-              status: PROGRESS
-              createdAt: 날자정보
-              modifiedAt: 날짜
-            }
-        */
       })
       .catch((error) => {
         console.log(error);

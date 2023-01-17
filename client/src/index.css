@@ -43,6 +43,10 @@ time, mark, audio, video {
 
 body {
     line-height:1;
+    -webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 article,aside,details,figcaption,figure,
