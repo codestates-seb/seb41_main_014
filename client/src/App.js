@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 
 import {
@@ -26,6 +26,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import { Container } from '@mui/system';
 import { column, columnCenter } from './styles/theme';
+import { useEffect, useState } from 'react';
 
 // TODO theme사용예시, theme의경우 typeScript ts, tsx설정안되면
 // 단순 theme interface(명세)라 자동완성안되니 style/theme.js 참조
@@ -46,6 +47,11 @@ const ContentContainer = styled(Container)`
 `;
 
 function App() {
+  const [footerVisibility, setFooterVisibility] = useState(false);
+  const location = useLocation();
+  useEffect(() => {
+    setFooterVisibility(location.pathname === ROUTE_PATH_BASE);
+  }, [location]);
   return (
     <StyledApp>
       <Header />
@@ -62,7 +68,7 @@ function App() {
           <Route path={ROUTE_PATH_FIXED_SAVING} element={<FixedSaving />} />
         </Routes>
       </ContentContainer>
-      <Footer />
+      {footerVisibility ? <Footer /> : ''}
     </StyledApp>
   );
 }
