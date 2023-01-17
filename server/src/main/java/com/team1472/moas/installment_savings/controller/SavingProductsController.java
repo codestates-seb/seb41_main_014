@@ -33,10 +33,9 @@ public class SavingProductsController {
                                                @Valid @RequestBody SavingsFilteringReq savingsFilteringReq) {
 
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<SavingProductRes> pageSavingProducts = savingProductsService.findSavingsProducts(pageable, savingsFilteringReq);
+        MultiResponse response = savingProductsService.findSavingsProducts(pageable, savingsFilteringReq);
 
-        List<SavingProductRes> savingProducts = pageSavingProducts.getContent();
 
-        return new ResponseEntity(new MultiResponse<>(savingProducts, pageSavingProducts), HttpStatus.OK);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 }
