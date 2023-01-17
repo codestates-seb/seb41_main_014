@@ -14,9 +14,6 @@ public class SavingsFilteringReq {
 
     private String saveTrm; //저축 희망 기간
 
-    @Positive(message = "정확한 금액을 입력해주세요.")
-    private long totalSavings; //총 저축 금액
-
     private String rsrvType; //저축 방식 - 정액적립식: "S", 자유적립식: "F"
 
     private List<String> finCoNoList; //은행 선택
