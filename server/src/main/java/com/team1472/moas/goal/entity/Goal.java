@@ -66,3 +66,4 @@ public class Goal extends Auditable {
         }
     }
 }
+

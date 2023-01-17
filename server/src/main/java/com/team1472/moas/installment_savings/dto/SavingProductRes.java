@@ -41,3 +41,4 @@ public class SavingProductRes {
     private double intrRate2; //최고 우대 금리(소수점 2자리)
 
 }
+

@@ -28,3 +28,4 @@ public class SimpleMemberResponseDto {
 
     private String content;
 }
+

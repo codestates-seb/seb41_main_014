@@ -11,3 +11,4 @@ public class BusinessLogicException extends RuntimeException {
         this.exceptionCode = exceptionCode;
     }
 }
+

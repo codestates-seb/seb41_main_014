@@ -20,3 +20,4 @@ public class MemberAccessDeniedHandler implements AccessDeniedHandler {
         ErrorResponder.sendErrorResponse(response, HttpStatus.FORBIDDEN);
     }
 }
+

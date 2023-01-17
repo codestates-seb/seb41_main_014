@@ -18,3 +18,4 @@ public class GoalPatchReq {
     @NotNull(message = "반드시 월 납입금액이 존재해야 합니다.")
     private long monthlyPayment; //월 납입금
 }
+

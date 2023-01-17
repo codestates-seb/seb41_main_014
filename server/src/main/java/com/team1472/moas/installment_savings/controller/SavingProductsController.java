@@ -40,3 +40,4 @@ public class SavingProductsController {
         return new ResponseEntity(new MultiResponse<>(savingProducts, pageSavingProducts), HttpStatus.OK);
     }
 }
+

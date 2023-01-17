@@ -16,3 +16,4 @@ public class MemberIdAuthenticationToken extends UsernamePasswordAuthenticationT
         this.memberId = memberId;
     }
 }
+

@@ -16,3 +16,4 @@ public class GoalPostReq {
     @NotNull(message = "반드시 월 납입 금액이 존재해야 합니다.")
     private long monthlyPayment; //월 납입금
 }
+

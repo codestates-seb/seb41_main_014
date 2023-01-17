@@ -19,3 +19,4 @@ public enum ExceptionCode {
         this.message = message;
     }
 }
+

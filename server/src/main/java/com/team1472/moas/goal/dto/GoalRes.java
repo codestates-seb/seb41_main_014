@@ -21,3 +21,4 @@ public class GoalRes {
     private LocalDateTime createdAt; //목표 생성시간
     private LocalDateTime modifiedAt; //목표 수정시간
 }
+

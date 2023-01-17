@@ -8,3 +8,4 @@ import java.util.Optional;
 public interface InstallmentSavingsRepository extends JpaRepository<InstallmentSavings, Long> {
     Optional<InstallmentSavings> findByfinPrdtCd(String productCode);
 }
+

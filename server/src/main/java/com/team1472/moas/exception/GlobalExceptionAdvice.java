@@ -61,3 +61,4 @@ public class GlobalExceptionAdvice {
         return new ResponseEntity(response, HttpStatus.valueOf(e.getExceptionCode().getStatus()));
     }
 }
+

@@ -15,3 +15,4 @@ public class SessionMember {
         this.picture = member.getPicture();
     }
 }
+

@@ -15,3 +15,4 @@ public interface GoalMapper {
     GoalRes goalRes(Goal goal);
     List<GoalRes> goalsRes(List<Goal> goals);
 }
+

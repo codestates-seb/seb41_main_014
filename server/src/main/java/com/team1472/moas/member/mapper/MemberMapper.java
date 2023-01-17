@@ -39,7 +39,6 @@ public interface MemberMapper {
         simpleMemberResponseDto.createdAt(member.getCreatedAt());
         simpleMemberResponseDto.modifiedAt(member.getModifiedAt());
 
-
         return simpleMemberResponseDto.build();
     }
 

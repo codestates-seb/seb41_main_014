@@ -47,3 +47,4 @@ public class InstallmentSavings {
     private List<InterestRate> interestRates = new ArrayList<>();
 
 }
+

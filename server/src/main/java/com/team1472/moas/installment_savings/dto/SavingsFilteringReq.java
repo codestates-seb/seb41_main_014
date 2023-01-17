@@ -25,3 +25,4 @@ public class SavingsFilteringReq {
 
     private String joinDeny; //가입 대상 - 제한 없음: “1”, 서민전용: “2”, 일부제한: ”3”
 }
+
