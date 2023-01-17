@@ -11,20 +11,20 @@ spring:
             scope:
               - profile
               - email
-  h2:
-    console:
-      enabled: true
-      path: /h2
-  datasource:
-    url: jdbc:h2:mem:moas
-
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: create  # (1) 스키마 자동 생성
     show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
+  datasource:
+    url: jdbc:mysql://database-1.c0tv6ltxjil9.ap-northeast-2.rds.amazonaws.com:3306/stackoverflow_database?characterEncoding=UTF-8&serverTimezone=UTC
+    username: admin
+    password: chicken1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
 logging:
   level:
     org:
