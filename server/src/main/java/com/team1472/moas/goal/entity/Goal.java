@@ -30,14 +30,14 @@ public class Goal extends Auditable {
     @Column(nullable = false)
     private long monthlyPayment; //월 납입금
 
-    @Column()
-    private LocalDateTime paymentStart; //납입 시작일
-
-    @Column()
+    @Column
     private int period; //납입 기간 = (목표금액 - 원금)/월 납입금
 
-    @Column(length = 1000)
+    @Column
     private String url; //이미지 url
+
+    @Column
+    private int progress = 0; //진척도(%)
 
     @Enumerated(value = EnumType.STRING)
     private GoalStatus status = GoalStatus.PROGRESS; //진행중이 기본값

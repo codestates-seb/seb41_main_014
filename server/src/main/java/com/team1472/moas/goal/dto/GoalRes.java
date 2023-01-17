@@ -15,7 +15,9 @@ public class GoalRes {
     private String goalName; //목표명
     private long price; //목표 금액
     private long monthlyPayment; //월 납입금
-    private LocalDateTime paymentStart; //납입 시작일
     private int period; //기간
+    private int progress; //진척도(%)
     private Goal.GoalStatus status; //목표 진행상태
+    private LocalDateTime createdAt; //목표 생성시간
+    private LocalDateTime modifiedAt; //목표 수정시간
 }
