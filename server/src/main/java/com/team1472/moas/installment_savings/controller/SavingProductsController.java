@@ -28,8 +28,8 @@ public class SavingProductsController {
      * 적금 정보 리스트 필터링 조회
      */
     @PostMapping
-    public ResponseEntity searchSavingProducts(@Positive @RequestParam("page") int page,
-                                               @Positive @RequestParam("size") int size,
+    public ResponseEntity searchSavingProducts(@Positive @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                               @Positive @RequestParam(value = "size", required = false, defaultValue = "10") int size,
                                                @Valid @RequestBody SavingsFilteringReq savingsFilteringReq) {
 
         Pageable pageable = PageRequest.of(page - 1, size);
