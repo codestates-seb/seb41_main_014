@@ -7,14 +7,10 @@ import {
   Typography,
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const BankCheck = ({ title, buttons }) => {
   const [checkeds, setCheckeds] = useState(buttons);
-
-  useEffect(() => {
-    console.log(checkeds);
-  }, [checkeds]);
 
   const handleCheckedAll = (event) => {
     setCheckeds(() => {
@@ -27,20 +23,29 @@ const BankCheck = ({ title, buttons }) => {
     });
   };
 
-  // const handleCheckedConfirm = (checkeds, n = 0) => {
-  //   if (n - 1 === checkeds.length) return true;
-  //   for (const el of checkeds) {
-  //     if (checkeds[n].isChecked !== el.isChecked) return false;
-  //   }
-  //   return handleCheckedConfirm(ch);
-  // };
-
-  const handleChecked = (event, index) => {
+  const handleCheckedItem = (event, index) => {
     setCheckeds(() => {
       const newCheckeds = [...checkeds];
       newCheckeds[index].isChecked = event.target.checked;
       return newCheckeds;
     });
+  };
+
+  //TODO indeterminate 구현안됨 ㅜㅜ https://mui.com/material-ui/react-checkbox/
+  const handleCheckedConfirm = (checkeds, n = 0) => {
+    console.log(n);
+    if (n - 1 === checkeds.length) return true;
+    console.log(n);
+    for (let i = n; i < checkeds.length; i++) {
+      const el = checkeds[i];
+      for (let j = n + 1; j < checkeds.length; j++) {
+        const innerEl = checkeds[j];
+        if (el.isChecked && el.isChecked !== innerEl.isChecked) return false;
+        if (!el.isChecked && el.isChecked !== innerEl.isChecked) return false;
+        if (!el.isChecked && el.isChecked === innerEl.isChecked) return false;
+      }
+    }
+    return handleCheckedConfirm(checkeds, n + 1);
   };
 
   return (
@@ -49,7 +54,12 @@ const BankCheck = ({ title, buttons }) => {
       <FormGroup>
         <FormControlLabel
           key={-1}
-          control={<Checkbox onChange={handleCheckedAll} />}
+          control={
+            <Checkbox
+              checked={handleCheckedConfirm(checkeds)}
+              onChange={handleCheckedAll}
+            />
+          }
           label={
             <Typography sx={(theme) => ({ fontSize: theme.fontSizes.lg })}>
               전체
@@ -63,7 +73,7 @@ const BankCheck = ({ title, buttons }) => {
                 control={
                   <Checkbox
                     checked={checkeds[index].isChecked}
-                    onChange={(event) => handleChecked(event, index)}
+                    onChange={(event) => handleCheckedItem(event, index)}
                   />
                 }
                 label={
