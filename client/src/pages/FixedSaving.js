@@ -7,50 +7,104 @@ import FixedSavingContents from '../components/fixedSaving/FixedSavingContents';
 import UserSelected from '../components/fixedSaving/UserSelected';
 import { Divider } from '@mui/material';
 import FixedSavingButtonGroup from '../components/fixedSaving/FixedSavingButtonGroup';
+import { useState } from 'react';
 
 const FixedSaving = () => {
-  const banks = getFS_BANKS();
+  const [conditions, setConditions] = useState({
+    monthlySavings: {
+      title: '월 저축금액',
+      unit: '원',
+      value: 0,
+    },
+    saveTrm: {
+      title: '저축 희망 기간',
+      data: [
+        { title: '6개월', value: 6 },
+        { title: '12개월', value: 12 },
+        { title: '24개월', value: 24 },
+        { title: '36개월', value: 36 },
+      ],
+      value: 6,
+    },
+    finishSavings: {
+      title: '총 저축금액',
+      unit: '원',
+      value: 0,
+    },
+    rsrvType: {
+      title: '적립방식',
+      data: [
+        { title: '전체', value: null },
+        { title: '정액적립식', value: 'S' },
+        { title: '자유적립식', value: 'F' },
+      ],
+      value: null,
+    },
+    banks: getFS_BANKS(),
+    intrRateType: {
+      title: '이자계산방식',
+      data: [
+        { title: '전체', value: null },
+        { title: '단리', value: 'S' },
+        { title: '복리', value: 'M' },
+      ],
+      value: null,
+    },
+    joinDeny: {
+      title: '가입대상',
+      data: [
+        { title: '전체', value: 0 },
+        { title: '제한없음', value: 1 },
+        { title: '서민전용', value: 2 },
+        { title: '일부제한', value: 3 },
+      ],
+      value: 0,
+    },
+  });
+  console.log(setConditions);
+  const [isSearch, setIsSearch] = useState(true);
+  console.log(setIsSearch);
   return (
     <>
       <Notice />
       <Divider />
-      <InputTitleNubmer title="월 저축금액" unit="원" />
-      <Divider />
-      <SelectGroup
-        title={'저축 희망 기간'}
-        buttons={[
-          { title: '6개월', value: 6 },
-          { title: '12개월', value: 12 },
-          { title: '24개월', value: 24 },
-          { title: '36개월', value: 36 },
-        ]}
+      <InputTitleNubmer
+        title={conditions.monthlySavings.title}
+        unit={conditions.monthlySavings.unit}
       />
       <Divider />
-      <InputTitleNubmer title="총 저축금액" unit="원" type="text" />
-      <Divider />
       <SelectGroup
-        title="적립방식"
-        buttons={[
-          { title: '전체', value: 255 },
-          { title: '정액적립식', value: 256 },
-          { title: '자유적립식', value: 257 },
-        ]}
+        title={conditions.saveTrm.title}
+        buttons={conditions.saveTrm.data}
       />
       <Divider />
-      <BankCheck title="주 거래은행" buttons={banks} />
-      <Divider />
-      <SelectGroup
-        title={'이자계산방식'}
-        buttons={[
-          { title: '전체', value: 355 },
-          { title: '단리', value: 356 },
-          { title: '복리', value: 357 },
-        ]}
+      <InputTitleNubmer
+        title={conditions.finishSavings.title}
+        unit={conditions.finishSavings.unit}
+        type="text"
       />
       <Divider />
-      <Notice isWarning />
+      <SelectGroup
+        title={conditions.rsrvType.title}
+        buttons={conditions.rsrvType.data}
+      />
       <Divider />
-      <FixedSavingContents />
+      <BankCheck title="주 거래은행" buttons={conditions.banks} />
+      <Divider />
+      <SelectGroup
+        title={conditions.intrRateType.title}
+        buttons={conditions.intrRateType.data}
+      />
+      {isSearch ? (
+        <>
+          <Divider />
+          <Notice isWarning />
+          <Divider />
+          <FixedSavingContents />{' '}
+        </>
+      ) : (
+        ''
+      )}
       <UserSelected />
       <FixedSavingButtonGroup />
     </>

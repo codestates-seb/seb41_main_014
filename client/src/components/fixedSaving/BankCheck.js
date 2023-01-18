@@ -33,9 +33,7 @@ const BankCheck = ({ title, buttons }) => {
 
   //TODO indeterminate 구현안됨 ㅜㅜ https://mui.com/material-ui/react-checkbox/
   const handleCheckedConfirm = (checkeds, n = 0) => {
-    console.log(n);
     if (n - 1 === checkeds.length) return true;
-    console.log(n);
     for (let i = n; i < checkeds.length; i++) {
       const el = checkeds[i];
       for (let j = n + 1; j < checkeds.length; j++) {
