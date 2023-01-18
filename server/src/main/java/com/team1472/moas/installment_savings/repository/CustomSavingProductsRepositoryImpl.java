@@ -38,6 +38,7 @@ public class CustomSavingProductsRepositoryImpl implements CustomSavingProductsR
                                 installmentSavings.joinMember,
                                 installmentSavings.etcNote,
                                 installmentSavings.maxLimit,
+                                interestRate.intrRateType,
                                 interestRate.intrRateTypeNm,
                                 interestRate.rsrvTypeNm,
                                 interestRate.saveTrm,
@@ -50,7 +51,9 @@ public class CustomSavingProductsRepositoryImpl implements CustomSavingProductsR
                         checkCondition(savingsFilteringReq.getSaveTrm(), interestRate.saveTrm::eq), //저축 희망 기간 필터링
                         checkCondition(savingsFilteringReq.getRsrvType(), interestRate.rsrvType::eq), //적립 방식 필터링
                         checkCondition(savingsFilteringReq.getIntrRateType(), interestRate.intrRateType::eq), //이자 적립 방식 필터링
-                        checkCondition(savingsFilteringReq.getJoinDeny(), installmentSavings.joinDeny::in)) //가입 대상 필터링
+                        checkCondition(savingsFilteringReq.getJoinDeny(), installmentSavings.joinDeny::in), //가입 대상 필터링
+                        (installmentSavings.maxLimit.goe(savingsFilteringReq.getMonthlySavings())
+                                .or(installmentSavings.maxLimit.eq(0)))) //월 납입 한도 필터링
                 .orderBy(interestRate.intrRate.desc(), interestRate.intrRate2.desc())
                 .offset(pageable.getPageNumber()).limit(pageable.getPageSize())
                 .fetch();
@@ -63,7 +66,9 @@ public class CustomSavingProductsRepositoryImpl implements CustomSavingProductsR
                         checkCondition(savingsFilteringReq.getSaveTrm(), interestRate.saveTrm::eq), //저축 희망 기간 필터링
                         checkCondition(savingsFilteringReq.getRsrvType(), interestRate.rsrvType::eq), //적립 방식 필터링
                         checkCondition(savingsFilteringReq.getIntrRateType(), interestRate.intrRateType::eq), //이자 적립 방식 필터링
-                        checkCondition(savingsFilteringReq.getJoinDeny(), installmentSavings.joinDeny::in)) //가입 대상 필터링
+                        checkCondition(savingsFilteringReq.getJoinDeny(), installmentSavings.joinDeny::in), //가입 대상 필터링
+                        (installmentSavings.maxLimit.goe(savingsFilteringReq.getMonthlySavings())
+                                .or(installmentSavings.maxLimit.eq(0)))) //월 납입 한도 필터링
                 .fetch().size();
 
         return new PageImpl<>(savings, pageable, totalCount);
