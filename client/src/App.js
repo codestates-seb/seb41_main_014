@@ -9,11 +9,13 @@ import {
   ROUTE_PATH_GOAL_EDIT,
   ROUTE_PATH_GOAL_LIST,
   ROUTE_PATH_LOGIN,
+  ROUTE_PATH_LOGINCALLBACK,
   ROUTE_PATH_MEMBER,
   ROUTE_PATH_SIGNUP,
 } from './store/routerStore';
 import Main from './pages/Main';
 import Login from './pages/Login';
+import LoginCallback from './pages/LoginCallback';
 import Signup from './pages/Signup';
 import Member from './pages/Member';
 import GoalCreate from './pages/GoalCreate';
@@ -59,6 +61,7 @@ function App() {
         <Routes>
           <Route path={ROUTE_PATH_BASE} element={<Main />} />
           <Route path={ROUTE_PATH_LOGIN} element={<Login />} />
+          <Route path={ROUTE_PATH_LOGINCALLBACK} element={<LoginCallback />} />
           <Route path={ROUTE_PATH_SIGNUP} element={<Signup />} />
           <Route path={ROUTE_PATH_MEMBER} element={<Member />} />
           <Route path={ROUTE_PATH_GOAL_CREATE} element={<GoalCreate />} />
