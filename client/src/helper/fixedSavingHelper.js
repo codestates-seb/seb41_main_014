@@ -68,6 +68,7 @@ const setBank = (korCoNm, finCoNo, dcls_chrg_man, homp_url, cal_tel) => ({
   dcls_chrg_man: dcls_chrg_man,
   homp_url: homp_url,
   cal_tel: cal_tel,
+  isChecked: false,
 });
 
 const woori = setBank(
@@ -326,8 +327,6 @@ export const getWRAPPER_DATA = (data) => {
       id: elObj.interestId,
       joinDeny: getParsingJoinDeny(elObj[joinDeny.field]),
       dcls_chrg_man: getDetail(elObj[korCoNm.field]),
-      isChecked: false,
-      isOpen: false,
     };
   });
   return wrapperData;

@@ -73,25 +73,25 @@ const StyledButton = styled(Button)`
   border-radius: 0;
   color: ${(props) => props.theme.colors.white};
   background-color: ${(props) =>
-    props.type === -1
+    props.buttontype === -1
       ? props.theme.colors.accent
-      : props.type === 1001
+      : props.buttontype === 1001
       ? props.theme.colors.mainMiddleLight
       : props.theme.colors.mainMiddle};
   :hover {
     background-color: ${(props) =>
-      props.type === -1
+      props.buttontype === -1
         ? props.theme.colors.accent
-        : props.type === 1001
+        : props.buttontype === 1001
         ? props.theme.colors.mainMiddleLight
         : props.theme.colors.mainMiddle};
     opacity: 0.8;
   }
   :active {
     background-color: ${(props) =>
-      props.type === -1
+      props.buttontype === -1
         ? props.theme.colors.accent
-        : props.type === 1001
+        : props.buttontype === 1001
         ? props.theme.colors.mainMiddleLight
         : props.theme.colors.mainMiddle};
     opacity: 0.6;
@@ -102,12 +102,12 @@ const ChoiceButtonGroup = () => {
   return (
     <Grid container>
       <Grid item xs={4}>
-        <StyledButton type={-1}>
+        <StyledButton buttontype={-1}>
           <ArrowBackTwoToneIcon fontSize="large" />
         </StyledButton>
       </Grid>
       <Grid item xs={4}>
-        <StyledButton type={1001}>
+        <StyledButton buttontype={1001}>
           <RestorePageTwoToneIcon fontSize="large" />
         </StyledButton>
       </Grid>

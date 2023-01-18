@@ -34,7 +34,7 @@ const StyledApp = styled(Container)`
   ${columnCenter};
   width: 100%;
   /* TODO */
-  background-color: yellow;
+  /* background-color: yellow; */
 `;
 
 const ContentContainer = styled(Container)`
@@ -43,7 +43,7 @@ const ContentContainer = styled(Container)`
   width: 600px;
   min-width: 360px;
   /* TODO */
-  background-color: beige;
+  /* background-color: beige; */
 `;
 
 function App() {
