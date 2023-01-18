@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -42,8 +40,5 @@ public class InstallmentSavings {
     private String etcNote; //기타 유의사항
 
     private int maxLimit; //최고 한도
-
-    @OneToMany(mappedBy = "installmentSavings", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<InterestRate> interestRates = new ArrayList<>();
 
 }

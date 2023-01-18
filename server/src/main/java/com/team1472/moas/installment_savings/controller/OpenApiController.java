@@ -44,6 +44,7 @@ public class OpenApiController {
      * 매일 새벽 4시 자동 업데이트
      */
     @Scheduled(cron = "0 0 4 * * ?") // 매일 새벽 4시 자동 업데이트
+    @GetMapping("/refresh")
     public void deleteAndSaveInstallmentSavingsInfo() throws IOException {
         log.info("적금 정보 자동 업데이트 시작");
         openApiService.deleteAllData();

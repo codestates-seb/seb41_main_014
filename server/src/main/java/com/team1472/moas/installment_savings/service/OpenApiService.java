@@ -10,10 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -42,12 +40,12 @@ public class OpenApiService {
 
         JsonArray baseList = result.get("baseList").getAsJsonArray(); //적금 기본 정보 리스트
         List<InstallmentSavings> savingsList = parseInstallmentSavingsInfo(baseList, gson);
-        installmentSavingsRepository.saveAll(savingsList);
 
         JsonArray optionList = result.get("optionList").getAsJsonArray(); //적금 이자율에 대한 정보 리스트
         List<InterestRate> interestRateList = parseInterestRateInfo(optionList, gson);
-        interestRateRepository.saveAll(interestRateList);
 
+        installmentSavingsRepository.saveAll(savingsList);
+        interestRateRepository.saveAll(interestRateList);
 
         return totalPageNum;
     }
@@ -73,21 +71,9 @@ public class OpenApiService {
 
     //적금 상품의 이자율 정보 파싱
     private List<InterestRate> parseInterestRateInfo(JsonArray optionList, Gson gson) {
-        List<InterestRate> interestRateList = new ArrayList<>();
+        InterestRate[] interestRates = gson.fromJson(optionList, InterestRate[].class);
 
-        for (int i = 0; i < optionList.size(); i++) {
-            JsonObject data = (JsonObject) optionList.get(i);
-
-            InterestRate interestRate = gson.fromJson(data, InterestRate.class);
-            Optional<InstallmentSavings> optSavings = installmentSavingsRepository.findByfinPrdtCd(interestRate.getFinPrdtCd());
-
-            optSavings.ifPresent(savings -> {
-                interestRate.addInstallmentSavings(savings);
-                interestRateList.add(interestRate);
-            });
-        }
-
-        return interestRateList;
+        return Arrays.asList(interestRates);
     }
 
     // 적금, 이자 정보 데이터 전부 삭제
