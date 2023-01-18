@@ -6,18 +6,18 @@ import reportWebVitals from './reportWebVitals';
 import { theme } from './styles/theme.js';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
-import { store } from './app/store';
 import { Provider } from 'react-redux';
+import store from './store/isLoginSlice';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Provider store={store}>
+      <Provider store={store}>
+        <BrowserRouter>
           <App />
-        </Provider>
-      </BrowserRouter>
+        </BrowserRouter>
+      </Provider>
     </ThemeProvider>
   </React.StrictMode>
 );
