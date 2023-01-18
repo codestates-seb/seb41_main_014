@@ -2,6 +2,7 @@ export const ROUTE_PATH_BASE = '/';
 
 //TODO 홍
 export const ROUTE_PATH_LOGIN = '/login';
+export const ROUTE_PATH_LOGINCALLBACK = '/loginCallback';
 export const ROUTE_PATH_SIGNUP = '/signup';
 export const ROUTE_PATH_MEMBER = '/member';
 
