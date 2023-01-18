@@ -27,13 +27,13 @@ const BankCheck = ({ title, buttons }) => {
     });
   };
 
-  const handleCheckedConfirm = (checkeds, n = 0) => {
-    if (n - 1 === checkeds.length) return true;
-    for (const el of checkeds) {
-      if (checkeds[n].isChecked !== el.isChecked) return false;
-    }
-    return handleCheckedConfirm(ch);
-  };
+  // const handleCheckedConfirm = (checkeds, n = 0) => {
+  //   if (n - 1 === checkeds.length) return true;
+  //   for (const el of checkeds) {
+  //     if (checkeds[n].isChecked !== el.isChecked) return false;
+  //   }
+  //   return handleCheckedConfirm(ch);
+  // };
 
   const handleChecked = (event, index) => {
     setCheckeds(() => {
