@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setACCESS_TOKEN, setREFRESH_TOKEN } from '../helper/cookieHelper';
+import { login } from '../reducer/isLoginSlice';
 import { ROUTE_PATH_BASE } from '../store/routerStore';
-import { isLoginActions } from '../store/isLoginSlice';
 
 const LoginCallback = () => {
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ const LoginCallback = () => {
             Authorization: accessToken,
           },
         }
-      ).then((response) => dispatch(isLoginActions.login(response.data.data)));
+      ).then((response) => dispatch(login(response.data.data)));
       // {
       //     id: 2,
       //     email: 'iltae94@gmail.com',

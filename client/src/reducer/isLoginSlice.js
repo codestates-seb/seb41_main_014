@@ -1,4 +1,4 @@
-import { createSlice, configureStore } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 // 받아오는 유저정보 내용 초기 상태로 등록
 // 일단 로그인시 받아오는 정보만 등록했습니당 유저 정보 추가해주세요 (초기값)
@@ -22,11 +22,6 @@ const isLoginSlice = createSlice({
   },
 });
 
-// 전역 저장소 설정
-const store = configureStore({
-  reducer: isLoginSlice.reducer,
-});
+export const { login, logout } = isLoginSlice.actions;
 
-export const isLoginActions = isLoginSlice.actions;
-
-export default store;
+export default isLoginSlice.reducer;

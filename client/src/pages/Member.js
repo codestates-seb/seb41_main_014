@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
 const Member = () => {
-  const userInfo = useSelector((state) => state.userInfo);
+  const userInfo = useSelector((state) => state.isLogin.userInfo);
   return (
     <>
       <div>{userInfo.email}</div>
