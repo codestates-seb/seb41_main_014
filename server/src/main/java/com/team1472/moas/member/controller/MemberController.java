@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+import java.util.List;
 
 @Validated
 @RequiredArgsConstructor
@@ -76,5 +78,4 @@ public class MemberController {
     public ResponseEntity refreshToken(HttpServletRequest request, HttpServletResponse response) {
         return service.refresh(request, response);
     }
-
 }
