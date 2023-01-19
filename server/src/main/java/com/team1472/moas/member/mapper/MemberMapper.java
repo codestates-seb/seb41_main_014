@@ -1,15 +1,16 @@
 package com.team1472.moas.member.mapper;
-
-import com.team1472.moas.member.dto.*;
+import com.team1472.moas.member.dto.MemberDeleteDto;
+import com.team1472.moas.member.dto.MemberPatchDto;
+import com.team1472.moas.member.dto.MemberResponseDto;
+import com.team1472.moas.member.dto.SimpleMemberResponseDto;
 import com.team1472.moas.member.entity.Member;
 import org.mapstruct.Mapper;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface MemberMapper {
     Member memberPatchDtoToMember(MemberPatchDto memberPatchDto);
+
+    Member memberDeleteDtoToMember(MemberDeleteDto memberDeleteDto);
     default MemberResponseDto memberToMemberResponseDto(Member member) {
         if (member == null) {
             return null;
