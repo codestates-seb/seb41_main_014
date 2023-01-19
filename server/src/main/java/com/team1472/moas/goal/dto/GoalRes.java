@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class GoalRes {
     private long id; //목표ID
-    private long memberId; //회원ID
-    private String url; //이미지 url
     private String goalName; //목표명
     private long price; //목표 금액
     private long monthlyPayment; //월 납입금
