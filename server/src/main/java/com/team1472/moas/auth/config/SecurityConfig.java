@@ -10,7 +10,6 @@ import com.team1472.moas.member.repository.MemberRepository;
 import com.team1472.moas.member.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -47,7 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.PATCH,"/**").hasRole("USER")
+//                        .antMatchers(HttpMethod.PATCH,"/**").hasRole("USER")
+//                        .antMatchers(HttpMethod.GET,"/api/members/**").hasRole("USER") // 바디로 맴버 아이디 넘겨주기
 //                        .antMatchers(HttpMethod.GET,"/api/members/**").hasRole("USER")
                         .antMatchers("/**").permitAll()
                         .anyRequest().permitAll())
