@@ -47,7 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.PATCH,"/**").hasRole("USER")
+//                        .antMatchers(HttpMethod.PATCH,"/**").hasRole("USER")
+//                        .antMatchers(HttpMethod.GET,"/api/members/**").hasRole("USER") // 바디로 맴버 아이디 넘겨주기
 //                        .antMatchers(HttpMethod.GET,"/api/members/**").hasRole("USER")
                         .antMatchers("/**").permitAll()
                         .anyRequest().permitAll())
