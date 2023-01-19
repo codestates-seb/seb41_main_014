@@ -9,16 +9,13 @@ import com.team1472.moas.member.jwt.RefreshToken;
 import com.team1472.moas.member.repository.MemberRepository;
 import com.team1472.moas.member.repository.TokenRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
-import com.team1472.moas.util.audi.Auditable;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,12 +49,37 @@ public class MemberService {
 
         Optional.ofNullable(member.getName())
                 .ifPresent(name -> findMember.setName(name));
-        Optional.ofNullable(member.getModifiedAt());
-
+        Optional.ofNullable(member.getPicture())
+                .ifPresent(picture -> findMember.setPicture(picture));
+        Optional.ofNullable(member.getModifiedAt())
+                .ifPresent(modifiedAt -> findMember.setModifiedAt(modifiedAt));
 
         Member updateMember = memberRepository.save(findMember);
 
         return updateMember;
+    }
+
+    //회원 삭제 메서드
+    public void deleteMember(Member member, Long memberId){
+        Member findMember = verifyExistsMember(memberId);
+
+        // 기존닉네임과 Patch요청의 닉네임이 다른경우
+        if (!member.getName().equals(findMember.getName())){
+            // 요청 닉네임이 존재하는지 조회
+            if(memberRepository.existsByName(member.getName())){
+                // 닉네임이 있으면 계속 진행
+            }else{
+                //존재하지 않는다면 에러 발생
+                throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_EXISTS);
+            }
+        }
+        Optional.ofNullable(member.getName())
+                .ifPresent(name -> findMember.setName(name));
+
+
+        memberRepository.deleteById(memberId);
+
+
     }
 
     //findMember메서드(회원 찾기)
