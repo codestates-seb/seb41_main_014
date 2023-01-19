@@ -5,7 +5,7 @@ import { useState } from 'react';
 const SelectGroup = ({ title, buttons = [] }) => {
   const [val, setVal] = useState(buttons[0].value);
   const handleChange = (event, val) => {
-    setVal(val);
+    if (val !== null) setVal(val);
   };
 
   return (
@@ -25,9 +25,11 @@ const SelectGroup = ({ title, buttons = [] }) => {
             key={index}
             sx={(theme) => ({
               p: 1,
-              borderBottom: `4px solid ${theme.colors.mainMiddle}`,
-              color: theme.palette.text.secondary,
-              backgroundColor: theme.colors.mainLight,
+              '&.MuiToggleButton-root': {
+                borderBottom: `4px solid ${theme.colors.mainMiddle}`,
+                color: theme.palette.text.secondary,
+                backgroundColor: theme.colors.mainLight,
+              },
               '&.Mui-selected, &.Mui-selected:hover': {
                 color: theme.colors.white,
                 backgroundColor: theme.colors.mainMiddle,

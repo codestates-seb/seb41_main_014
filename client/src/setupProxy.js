@@ -15,4 +15,11 @@ module.exports = function (app) {
       changeOrigin: true,
     })
   );
+  app.use(
+    '/open-api/search',
+    createProxyMiddleware({
+      target: process.env.REACT_APP_BASEURL,
+      changeOrigin: true,
+    })
+  );
 };

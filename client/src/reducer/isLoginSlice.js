@@ -2,7 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 // 받아오는 유저정보 내용 초기 상태로 등록
 // 일단 로그인시 받아오는 정보만 등록했습니당 유저 정보 추가해주세요 (초기값)
-const initialUserInfo = { email: '', id: 0, name: '', picture: '' };
+
+//230119 김태윤
+//id 0은 유의미하다고 약속된값. 없다의 의미인 -1이나 Math.min or Math.max로 대체
+const initialUserInfo = { email: '', id: Math.min, name: '', picture: '' };
 
 const initialState = { isLogin: false, userInfo: initialUserInfo };
 

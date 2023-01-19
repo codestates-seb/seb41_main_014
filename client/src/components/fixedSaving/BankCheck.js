@@ -6,29 +6,25 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
-import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setBankCheckeds } from '../../reducer/savingConditions';
 
-const BankCheck = ({ title, buttons }) => {
-  const [checkeds, setCheckeds] = useState(buttons);
+const BankCheck = () => {
+  const banks = useSelector((state) => state.savingConditions.banks);
+  const dispatch = useDispatch();
 
   const handleCheckedAll = (event) => {
-    setCheckeds(() => {
-      const newCheckeds = [...checkeds];
-      for (let index = 0; index < newCheckeds.length; index++) {
-        const el = newCheckeds[index];
-        el.isChecked = event.target.checked;
-      }
-      return newCheckeds;
-    });
+    const newChecks = [...banks.isCheckeds];
+    for (let index = 0; index < banks.isCheckeds.length; index++) {
+      newChecks[index] = event.target.checked;
+    }
+    dispatch(setBankCheckeds(newChecks));
   };
 
   const handleCheckedItem = (event, index) => {
-    setCheckeds(() => {
-      const newCheckeds = [...checkeds];
-      newCheckeds[index].isChecked = event.target.checked;
-      return newCheckeds;
-    });
+    const newChecks = [...banks.isCheckeds];
+    newChecks[index] = event.target.checked;
+    dispatch(setBankCheckeds(newChecks));
   };
 
   //TODO indeterminate 구현안됨 ㅜㅜ https://mui.com/material-ui/react-checkbox/
@@ -38,9 +34,9 @@ const BankCheck = ({ title, buttons }) => {
       const el = checkeds[i];
       for (let j = n + 1; j < checkeds.length; j++) {
         const innerEl = checkeds[j];
-        if (el.isChecked && el.isChecked !== innerEl.isChecked) return false;
-        if (!el.isChecked && el.isChecked !== innerEl.isChecked) return false;
-        if (!el.isChecked && el.isChecked === innerEl.isChecked) return false;
+        if (el && el !== innerEl) return false;
+        if (!el && el !== innerEl) return false;
+        if (!el && el === innerEl) return false;
       }
     }
     return handleCheckedConfirm(checkeds, n + 1);
@@ -48,13 +44,13 @@ const BankCheck = ({ title, buttons }) => {
 
   return (
     <FormControl sx={{ margin: 3 }}>
-      <h3>{title}</h3>
+      <h3>{banks.fixed.title}</h3>
       <FormGroup>
         <FormControlLabel
           key={-1}
           control={
             <Checkbox
-              checked={handleCheckedConfirm(checkeds)}
+              checked={handleCheckedConfirm(banks.isCheckeds)}
               onChange={handleCheckedAll}
             />
           }
@@ -65,12 +61,12 @@ const BankCheck = ({ title, buttons }) => {
           }
         />
         <Grid container sx={{ marginLeft: 3 }}>
-          {buttons.map((button, index) => (
+          {banks.fixed.data.map((button, index) => (
             <Grid item xs={3} key={index}>
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={checkeds[index].isChecked}
+                    checked={banks.isCheckeds[index]}
                     onChange={(event) => handleCheckedItem(event, index)}
                   />
                 }
@@ -91,11 +87,6 @@ const BankCheck = ({ title, buttons }) => {
       </FormGroup>
     </FormControl>
   );
-};
-
-BankCheck.propTypes = {
-  title: PropTypes.string.isRequired,
-  buttons: PropTypes.array.isRequired,
 };
 
 export default BankCheck;
