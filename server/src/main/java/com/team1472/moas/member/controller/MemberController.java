@@ -1,25 +1,22 @@
 package com.team1472.moas.member.controller;
 
+import com.team1472.moas.member.dto.MemberDeleteDto;
+import com.team1472.moas.member.dto.MemberPatchDto;
+import com.team1472.moas.member.dto.MemberResponseDto;
+import com.team1472.moas.member.dto.SimpleMemberResponseDto;
 import com.team1472.moas.member.entity.Member;
 import com.team1472.moas.member.mapper.MemberMapper;
 import com.team1472.moas.member.service.MemberService;
+import com.team1472.moas.response.SingleResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import com.team1472.moas.member.dto.SimpleMemberResponseDto;
-import com.team1472.moas.member.dto.MemberResponseDto;
-import com.team1472.moas.member.dto.MemberPatchDto;
-import com.team1472.moas.response.SingleResponse;
-import com.team1472.moas.response.MultiResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.validation.constraints.Positive;
-import java.util.List;
 
 @Validated
 @RequiredArgsConstructor
@@ -43,6 +40,19 @@ public class MemberController {
 
         return new ResponseEntity<>(singleResponse, HttpStatus.OK);
     }
+
+    //deleteMember 메서드 (member 삭제)
+
+    @DeleteMapping("/{member-id}")
+    public ResponseEntity deleteMember(@PathVariable("member-id") Long memberId,
+                                       @Valid @RequestBody MemberDeleteDto memberDeleteDto) {
+        Member member = mapper.memberDeleteDtoToMember(memberDeleteDto);
+        service.deleteMember(member, memberId);
+
+
+        return new ResponseEntity<>("MEMBER DELETED", HttpStatus.OK);
+    }
+
     //getMember 메서드 (member 정보 조회)
     @GetMapping("/{member-id}")
     public ResponseEntity getMember(@PathVariable("member-id") Long memberId ) {
@@ -66,4 +76,5 @@ public class MemberController {
     public ResponseEntity refreshToken(HttpServletRequest request, HttpServletResponse response) {
         return service.refresh(request, response);
     }
+
 }
