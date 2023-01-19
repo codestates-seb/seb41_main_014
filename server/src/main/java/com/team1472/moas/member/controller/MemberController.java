@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import com.team1472.moas.member.dto.SimpleMemberResponseDto;
 import com.team1472.moas.member.dto.MemberResponseDto;
 import com.team1472.moas.member.dto.MemberPatchDto;
+import com.team1472.moas.member.dto.MemberDeleteDto;
 import com.team1472.moas.response.SingleResponse;
 import com.team1472.moas.response.MultiResponse;
 
@@ -43,6 +44,19 @@ public class MemberController {
 
         return new ResponseEntity<>(singleResponse, HttpStatus.OK);
     }
+
+    //deleteMember 메서드 (member 삭제)
+
+    @DeleteMapping("/{member-id}")
+    public ResponseEntity deleteMember(@PathVariable("member-id") Long memberId,
+                                       @Valid @RequestBody MemberDeleteDto memberDeleteDto) {
+        Member member = mapper.memberDeleteDtoToMember(memberDeleteDto);
+        service.deleteMember(member, memberId);
+
+
+        return new ResponseEntity<>("MEMBER DELETED", HttpStatus.OK);
+    }
+
     //getMember 메서드 (member 정보 조회)
     @GetMapping("/{member-id}")
     public ResponseEntity getMember(@PathVariable("member-id") Long memberId ) {
@@ -66,4 +80,5 @@ public class MemberController {
     public ResponseEntity refreshToken(HttpServletRequest request, HttpServletResponse response) {
         return service.refresh(request, response);
     }
+
 }
