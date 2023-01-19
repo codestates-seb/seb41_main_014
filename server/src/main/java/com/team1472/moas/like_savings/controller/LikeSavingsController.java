@@ -7,11 +7,15 @@ import com.team1472.moas.like_savings.service.LikeSavingsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/{memberId}/savings/interest")
 @RequiredArgsConstructor
+@Validated
 public class LikeSavingsController {
     private final LikeSavingsService likeSavingsService;
     private final LikeSavingsMapper mapper;
@@ -21,7 +25,7 @@ public class LikeSavingsController {
      */
     @PostMapping
     public ResponseEntity likeSavingProduct(@PathVariable("memberId") long memberId,
-                                            @RequestBody RegisterLikeSavingProductReq registerLikeSavingProductReq) {
+                                            @Valid @RequestBody RegisterLikeSavingProductReq registerLikeSavingProductReq) {
 
 
         LikeSavings likeSavings = likeSavingsService.RegisterInterestInSavings(memberId, mapper.likeSavingProductReqToLikeSavings(registerLikeSavingProductReq));
