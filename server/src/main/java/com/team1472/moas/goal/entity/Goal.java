@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
@@ -32,9 +31,6 @@ public class Goal extends Auditable {
 
     @Column
     private int period; //납입 기간 = (목표금액 - 원금)/월 납입금
-
-    @Column
-    private String url; //이미지 url
 
     @Column
     private int progress = 0; //진척도(%)
