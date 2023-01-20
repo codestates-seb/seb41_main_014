@@ -21,4 +21,9 @@ public abstract class Auditable {
     @LastModifiedDate
     @Column(name = "LAST_MODIFIED_AT", nullable = false)
     private LocalDateTime modifiedAt;
+
+    public void setModifiedAt(LocalDateTime modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
 }

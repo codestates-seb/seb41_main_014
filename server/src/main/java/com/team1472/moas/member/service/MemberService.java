@@ -36,35 +36,77 @@ public class MemberService {
         refreshToken.setRefreshToken(token);
         tokenRepository.save(refreshToken);
     }
+    
     //updateMember메서드 (회원 업로드)
-    public Member updateMember(Member member, Long memberId) {
+    public Member updateMember(Member member, String email) {
 
-        Member findMember = verifyExistsMember(memberId);
+        Member findMember = verifyExistsMemberbyemail(email);
 
-        // 기존닉네임과 Patch요청의 닉네임이 다른경우
-        if (!member.getName().equals(findMember.getName())){
-            // 요청 닉네임이 존재하는지 조회
-            if(memberRepository.existsByName(member.getName())){
-                //존재한다면 에러 발생
-                throw new BusinessLogicException(ExceptionCode.NAME_ALREADY_EXISTS);
+            // 기존닉네임과 Patch요청의 닉네임이 다른경우
+            if (!member.getName().equals(findMember.getName())) {
+                // 요청 닉네임이 존재하는지 조회
+                if (memberRepository.existsByName(member.getName())) {
+                    //존재한다면 에러 발생
+                    throw new BusinessLogicException(ExceptionCode.NAME_ALREADY_EXISTS);
+                }
             }
-        }
+        Optional.ofNullable(member.getEmail())
+                .ifPresent(email_2 -> findMember.setEmail(email_2));
 
         Optional.ofNullable(member.getName())
                 .ifPresent(name -> findMember.setName(name));
-        Optional.ofNullable(member.getModifiedAt());
-
+        Optional.ofNullable(member.getPicture())
+                .ifPresent(picture -> findMember.setPicture(picture));
+        Optional.ofNullable(member.getModifiedAt())
+                .ifPresent(modifiedAt -> findMember.setModifiedAt(modifiedAt));
 
         Member updateMember = memberRepository.save(findMember);
 
         return updateMember;
     }
 
+    //회원 삭제 메서드
+    public void deleteMember(Member member, String email){
+
+        Member findMember = verifyExistsMemberbyemail(email);
+
+        long memberId = findMember.getId();
+
+
+        // 기존닉네임과 Patch요청의 닉네임이 다른경우
+        if (!member.getName().equals(findMember.getName())){
+            // 요청 닉네임이 존재하는지 조회
+            if(memberRepository.existsByName(member.getName())){
+
+                // 닉네임이 있으면 계속 진행
+            }else{
+                //존재하지 않는다면 에러 발생
+                throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_EXISTS);
+            }
+        }
+        Optional.ofNullable(member.getName())
+                .ifPresent(name -> findMember.setName(name));
+
+
+        memberRepository.deleteById(memberId);
+
+
+    }
+
     //findMember메서드(회원 찾기)
-    public Member findMember(Long memberId) {
+    public Member findMember(long memberId) {
 
         Member findMember = verifyExistsMember(memberId);
-        memberRepository.save(findMember);
+
+
+        return findMember;
+
+    }
+
+    //findMember메서드(회원 찾기)
+    public Member findMemberbyemail(String email) {
+
+        Member findMember = verifyExistsMemberbyemail(email);
 
         return findMember;
 
@@ -106,6 +148,13 @@ public class MemberService {
     private Member verifyExistsMember(Long memberId) {
 
         return memberRepository.findById(memberId).orElseThrow(
+                () -> {throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_EXISTS);
+                });
+    }
+
+    private Member verifyExistsMemberbyemail(String email) {
+
+        return memberRepository.findByEmail(email).orElseThrow(
                 () -> {throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_EXISTS);
                 });
     }

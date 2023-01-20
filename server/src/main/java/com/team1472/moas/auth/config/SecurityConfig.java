@@ -47,8 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.PATCH,"/**").hasRole("USER")
-//                        .antMatchers(HttpMethod.GET,"/api/members/**").hasRole("USER")
+                        .antMatchers(HttpMethod.DELETE,"/api/members/**").hasRole("USER")
                         .antMatchers("/**").permitAll()
                         .anyRequest().permitAll())
                 .logout().logoutSuccessUrl("/")

@@ -26,6 +26,9 @@ public class CustomSavingProductsRepositoryImpl implements CustomSavingProductsR
     //적금 상품 필터링해서 조회
     @Override
     public Page<SavingProductRes> findFilteringSavingProducts(Pageable pageable, SavingsFilteringReq savingsFilteringReq) {
+        int page = pageable.getPageNumber();
+        int size = pageable.getPageSize();
+
         List<SavingProductRes> savings = jpaQueryFactory.select(
                         Projections.constructor(SavingProductRes.class,
                                 installmentSavings.id,
@@ -55,7 +58,7 @@ public class CustomSavingProductsRepositoryImpl implements CustomSavingProductsR
                         (installmentSavings.maxLimit.goe(savingsFilteringReq.getMonthlySavings())
                                 .or(installmentSavings.maxLimit.eq(0)))) //월 납입 한도 필터링
                 .orderBy(interestRate.intrRate.desc(), interestRate.intrRate2.desc())
-                .offset(pageable.getPageNumber()).limit(pageable.getPageSize())
+                .offset((long) page * size).limit(size)
                 .fetch();
 
         //필터링 한 후 전체 데이터 개수

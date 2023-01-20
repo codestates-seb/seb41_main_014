@@ -10,8 +10,8 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface GoalMapper {
-    Goal goalPostReq(GoalPostReq goalPostReq);
-    Goal goalPatchReq(GoalPatchReq goalPatchReq);
-    GoalRes goalRes(Goal goal);
-    List<GoalRes> goalsRes(List<Goal> goals);
+    Goal goalPostReqToGoal(GoalPostReq goalPostReq);
+    Goal goalPatchReqToGoal(GoalPatchReq goalPatchReq);
+    GoalRes goalToGoalRes(Goal goal);
+    List<GoalRes> goalsToGoalRes(List<Goal> goals);
 }
