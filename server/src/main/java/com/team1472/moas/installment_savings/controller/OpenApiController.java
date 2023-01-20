@@ -30,9 +30,7 @@ public class OpenApiController {
 
     /**
      * Open API를 통한 적금 정보 조회 후 DB 저장
-     * 서버 실행 시 자동 수행
      */
-    @EventListener(ApplicationReadyEvent.class)
     @GetMapping("/savings")
     public ResponseEntity saveInstallmentSavingsInfo() throws IOException {
         callOpenApi();
