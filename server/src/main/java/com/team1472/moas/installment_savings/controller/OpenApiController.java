@@ -9,6 +9,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,6 +50,14 @@ public class OpenApiController {
         log.info("적금 정보 자동 업데이트 시작");
         openApiService.deleteAllData();
         callOpenApi();
+    }
+
+    /**
+     * DB에 저장되어 있는 적금 정보 모두 삭제
+     */
+    @DeleteMapping("/savings")
+    public void deleteInstallmentSavingsInfo() {
+        openApiService.deleteAllData();
     }
 
     // 금융감독원 적금 조회 Open API 호출
