@@ -1,5 +1,6 @@
 package com.team1472.moas.member.controller;
 
+import com.team1472.moas.member.dto.MemberDeleteDto;
 import com.team1472.moas.member.entity.Member;
 import com.team1472.moas.member.mapper.MemberMapper;
 import com.team1472.moas.member.service.MemberService;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.security.Principal;
 import java.util.List;
 
 @Validated
@@ -35,24 +37,42 @@ public class MemberController {
 
     //patchMember 메서드 (member 정보 수정)
     @Operation(summary = "회원 정보 수정")
-    @PatchMapping("/{member-id}")
-    public ResponseEntity patchMember(@PathVariable("member-id") Long memberId,
-                                      @Valid @RequestBody MemberPatchDto memberPatchDto) {
+    @PatchMapping()
+    public ResponseEntity patchMember(
+                                      @Valid @RequestBody MemberPatchDto memberPatchDto, Principal principal) {
+
+        String email = principal.getName();
 
         Member member = mapper.memberPatchDtoToMember(memberPatchDto);
-        Member updateMember = service.updateMember(member, memberId);
+        Member updateMember = service.updateMember(member,email);
 
         SimpleMemberResponseDto response = mapper.memberToSimpleMemberResponseDto(updateMember);
         SingleResponse<SimpleMemberResponseDto> singleResponse = new SingleResponse<>(response);
 
         return new ResponseEntity<>(singleResponse, HttpStatus.OK);
     }
+    //deleteMember 메서드 (member 삭제)
+    @Operation(summary = "회원 정보 삭제")
+    @DeleteMapping()
+    public ResponseEntity deleteMember(
+                                       @Valid @RequestBody MemberDeleteDto memberDeleteDto,Principal principal) {
+        String email = principal.getName();
+
+
+        Member member = mapper.memberDeleteDtoToMember(memberDeleteDto);
+        service.deleteMember(member, email);
+
+
+        return new ResponseEntity<>("MEMBER DELETED", HttpStatus.OK);
+    }
     //getMember 메서드 (member 정보 조회)
     @Operation(summary = "회원 정보 조회")
-    @GetMapping("/{member-id}")
-    public ResponseEntity getMember(@PathVariable("member-id") Long memberId ) {
+    @GetMapping()
+    public ResponseEntity getMember(Principal principal ) {
 
-        Member findMember = service.findMember(memberId);
+        String email = principal.getName();
+
+        Member findMember = service.findMemberbyemail(email);
         MemberResponseDto response = mapper.memberToMemberResponseDto(findMember);
         SingleResponse<MemberResponseDto> singleResponseDto = new SingleResponse<>(response);
 
