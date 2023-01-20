@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class LikeSavings {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     private String finPrdtCd; //금융 상품 코드 => FK로 사용
 
