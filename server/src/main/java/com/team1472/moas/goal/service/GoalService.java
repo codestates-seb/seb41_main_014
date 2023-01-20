@@ -41,7 +41,6 @@ public class GoalService{
         Optional.ofNullable(goal.getGoalName()).ifPresent(goalName -> findGoal.setGoalName(goalName));
         Optional.ofNullable(goal.getPrice()).ifPresent(price -> findGoal.setPrice(price));
         Optional.ofNullable(goal.getMonthlyPayment()).ifPresent(monthlyPayment -> findGoal.setMonthlyPayment(monthlyPayment));
-        Optional.ofNullable(goal.getUrl()).ifPresent(url -> findGoal.setUrl(url));
 
         savePeriod(goal);
         saveProgress(goalId);
