@@ -5,7 +5,7 @@ import com.team1472.moas.exception.ExceptionCode;
 import com.team1472.moas.goal.entity.Goal;
 import com.team1472.moas.goal.repository.GoalRepository;
 import com.team1472.moas.member.entity.Member;
-import com.team1472.moas.member.repository.MemberRepository;
+import com.team1472.moas.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,13 +21,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class GoalService{
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
     private final GoalRepository goalRepository;
 
     //목표 생성
     public Goal createGoal(Goal goal, long memberId) {
-        Member member = memberRepository.findById(memberId);
-        goal.setMember(member);
+        Member member = memberService.findMember(memberId);
+        goal.addMember(member);
 
         savePeriod(goal); //납입 기간 계산
 

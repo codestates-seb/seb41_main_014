@@ -32,10 +32,10 @@ public class GoalController {
     @PostMapping("/{member-id}")
     public ResponseEntity postGoal(@PathVariable("member-id") @Positive long memberId,
                                    @Valid @RequestBody GoalPostReq goalPostReq) {
-        Goal createdGoal = goalService.createGoal(mapper.goalPostReq(goalPostReq), memberId);
+        Goal createdGoal = goalService.createGoal(mapper.goalPostReqToGoal(goalPostReq), memberId);
 
         return new ResponseEntity<>(
-                new SingleResponse<>(mapper.goalRes(createdGoal)),
+                new SingleResponse<>(mapper.goalToGoalRes(createdGoal)),
                 HttpStatus.CREATED);
     }
 
@@ -44,10 +44,10 @@ public class GoalController {
     public ResponseEntity patchGoal(@PathVariable("member-id") @Positive long memberId,
                                     @PathVariable("goal-id") @Positive long goalId,
                                     @Valid @RequestBody GoalPatchReq goalPatchReq) {
-        Goal goal = goalService.updateGoal(mapper.goalPatchReq(goalPatchReq),goalId);
+        Goal goal = goalService.updateGoal(mapper.goalPatchReqToGoal(goalPatchReq),goalId);
 
         return new ResponseEntity<>(
-                new SingleResponse<>(mapper.goalRes(goal)),
+                new SingleResponse<>(mapper.goalToGoalRes(goal)),
                 HttpStatus.OK);
     }
 
@@ -56,7 +56,7 @@ public class GoalController {
     public ResponseEntity getGoal(@PathVariable("goal-id") @Positive long goalId) {
         Goal goal = goalService.findGoal(goalId);
         return new ResponseEntity<>(
-                new SingleResponse<>(mapper.goalRes(goal)),
+                new SingleResponse<>(mapper.goalToGoalRes(goal)),
                 HttpStatus.OK);
     }
 
@@ -65,7 +65,7 @@ public class GoalController {
     public ResponseEntity getQuestions() {
         List<Goal> goals = goalService.findGoals();
         return new ResponseEntity<>(
-                new MultiResponse<>(mapper.goalsRes(goals)),
+                new MultiResponse<>(mapper.goalsToGoalRes(goals)),
                 HttpStatus.OK);
     }
 
