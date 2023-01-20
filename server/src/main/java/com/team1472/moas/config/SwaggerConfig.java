@@ -20,6 +20,6 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(new Info().title("MOAS API")
                         .description("MOAS 프로젝트 API 명세서입니다.")
-                        .version("v0.0.1"));
+                        .version("v1.0"));
     }
 }

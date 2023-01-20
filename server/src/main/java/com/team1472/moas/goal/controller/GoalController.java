@@ -8,6 +8,8 @@ import com.team1472.moas.goal.mapper.GoalMapper;
 import com.team1472.moas.goal.service.GoalService;
 import com.team1472.moas.response.MultiResponse;
 import com.team1472.moas.response.SingleResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,11 +26,13 @@ import java.util.List;
 @Validated
 @Slf4j
 @RequiredArgsConstructor
+@Tag(name = "Goals", description = "목표 API")
 public class GoalController {
     private final GoalService goalService;
     private final GoalMapper mapper;
 
     //목표 등록
+    @Operation(summary = "목표 등록")
     @PostMapping("/{member-id}")
     public ResponseEntity postGoal(@PathVariable("member-id") @Positive long memberId,
                                    @Valid @RequestBody GoalPostReq goalPostReq) {
@@ -40,6 +44,7 @@ public class GoalController {
     }
 
     //목표 수정
+    @Operation(summary = "목표 수정")
     @PatchMapping("/{member-id}/{goal-id}")
     public ResponseEntity patchGoal(@PathVariable("member-id") @Positive long memberId,
                                     @PathVariable("goal-id") @Positive long goalId,
@@ -52,8 +57,10 @@ public class GoalController {
     }
 
     //목표 상세 조회
+    @Operation(summary = "목표 상세 조회")
     @GetMapping("/{member-id}/{goal-id}")
-    public ResponseEntity getGoal(@PathVariable("goal-id") @Positive long goalId) {
+    public ResponseEntity getGoal(@PathVariable("member-id") @Positive long memberId,
+                                  @PathVariable("goal-id") @Positive long goalId) {
         Goal goal = goalService.findGoal(goalId);
         return new ResponseEntity<>(
                 new SingleResponse<>(mapper.goalToGoalRes(goal)),
@@ -61,8 +68,9 @@ public class GoalController {
     }
 
     //목표 전체 조회(페이지네이션 적용 X)
+    @Operation(summary = "목표 전체 조회")
     @GetMapping("/{member-id}")
-    public ResponseEntity getQuestions() {
+    public ResponseEntity getQuestions(@PathVariable("member-id") @Positive long memberId) {
         List<Goal> goals = goalService.findGoals();
         return new ResponseEntity<>(
                 new MultiResponse<>(mapper.goalsToGoalRes(goals)),
@@ -70,8 +78,10 @@ public class GoalController {
     }
 
     //목표 삭제
+    @Operation(summary = "목표 삭제")
     @DeleteMapping("/{member-id}/{goal-id}")
-    public ResponseEntity deleteGoal(@PathVariable("goal-id") @Positive long goalId) {
+    public ResponseEntity deleteGoal(@PathVariable("member-id") @Positive long memberId,
+                                     @PathVariable("goal-id") @Positive long goalId) {
         goalService.deleteGoal(goalId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
