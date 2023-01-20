@@ -9,6 +9,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,9 +30,7 @@ public class OpenApiController {
 
     /**
      * Open API를 통한 적금 정보 조회 후 DB 저장
-     * 서버 실행 시 자동 수행
      */
-    @EventListener(ApplicationReadyEvent.class)
     @GetMapping("/savings")
     public ResponseEntity saveInstallmentSavingsInfo() throws IOException {
         callOpenApi();
@@ -45,10 +44,22 @@ public class OpenApiController {
      */
     @Scheduled(cron = "0 0 4 * * ?") // 매일 새벽 4시 자동 업데이트
     @GetMapping("/refresh")
-    public void deleteAndSaveInstallmentSavingsInfo() throws IOException {
+    public ResponseEntity deleteAndSaveInstallmentSavingsInfo() throws IOException {
         log.info("적금 정보 자동 업데이트 시작");
         openApiService.deleteAllData();
         callOpenApi();
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    /**
+     * DB에 저장되어 있는 적금 정보 모두 삭제
+     */
+    @DeleteMapping("/savings")
+    public ResponseEntity deleteInstallmentSavingsInfo() {
+        openApiService.deleteAllData();
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     // 금융감독원 적금 조회 Open API 호출
