@@ -6,7 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MemberPatchDto {
-
     private String email;
     private String name;
     private String picture;

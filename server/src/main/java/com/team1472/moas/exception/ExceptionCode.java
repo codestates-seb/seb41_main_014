@@ -11,7 +11,6 @@ public enum ExceptionCode {
     GOAL_NOT_FOUND(404,"해당 목표를 찾을 수 없습니다."),
     LIKE_SAVINGS_NOT_FOUND(404, "해당 관심 적금을 찾을 수 없습니다.");
 
-
     private int status;
     private String message;
 

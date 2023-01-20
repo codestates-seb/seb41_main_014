@@ -99,6 +99,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         Map<String, Object> claims = new HashMap<>();
         claims.put("email", email);
         claims.put("roles", authorities);
+
         String memberId = memberRepository.findByEmail(email).get().getId().toString();
         claims.put("member_id", memberId); // Oauth2 인증 시 프론트에 주는 토큰에 멤버 아이디 추가
 
@@ -129,7 +130,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private URI createURI(String accessToken, String refreshToken, String email) {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         String memberId = memberRepository.findByEmail(email).get().getId().toString();
-//        String name = memberRepository.findByName(email).get().().toString();
         queryParams.add("access_token", "bearer"+accessToken);
         queryParams.add("refresh_token", "bearer"+refreshToken);
         queryParams.add("member_id", memberId);

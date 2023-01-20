@@ -25,4 +25,5 @@ public abstract class Auditable {
     public void setModifiedAt(LocalDateTime modifiedAt) {
         this.modifiedAt = modifiedAt;
     }
+
 }

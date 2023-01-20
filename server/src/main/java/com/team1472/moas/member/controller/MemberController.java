@@ -51,6 +51,7 @@ public class MemberController {
 
         return new ResponseEntity<>(singleResponse, HttpStatus.OK);
     }
+
     //deleteMember 메서드 (member 삭제)
     @Operation(summary = "회원 정보 삭제")
     @DeleteMapping()
@@ -88,6 +89,7 @@ public class MemberController {
         return new ResponseEntity<>("Logout", HttpStatus.NO_CONTENT);
     }
     //refreshToken 메서드 (토큰 재발급)
+
     @Operation(summary = "토큰 재발급")
     @PostMapping("/refresh")
     public ResponseEntity refreshToken(HttpServletRequest request, HttpServletResponse response) {

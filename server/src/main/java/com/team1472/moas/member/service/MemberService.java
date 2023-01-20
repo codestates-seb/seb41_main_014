@@ -36,16 +36,11 @@ public class MemberService {
         refreshToken.setRefreshToken(token);
         tokenRepository.save(refreshToken);
     }
+    
     //updateMember메서드 (회원 업로드)
-//updateMember메서드 (회원 업로드)
     public Member updateMember(Member member, String email) {
 
-//        Member findMemberbyemail = memberRepository.findByEmail(email);
-
         Member findMember = verifyExistsMemberbyemail(email);
-
-//        if(findMember.getEmail().equals(email)) { // 입력한 이메일이 같은지 비교
-
 
             // 기존닉네임과 Patch요청의 닉네임이 다른경우
             if (!member.getName().equals(findMember.getName())) {
@@ -82,6 +77,7 @@ public class MemberService {
         if (!member.getName().equals(findMember.getName())){
             // 요청 닉네임이 존재하는지 조회
             if(memberRepository.existsByName(member.getName())){
+
                 // 닉네임이 있으면 계속 진행
             }else{
                 //존재하지 않는다면 에러 발생
@@ -111,7 +107,6 @@ public class MemberService {
     public Member findMemberbyemail(String email) {
 
         Member findMember = verifyExistsMemberbyemail(email);
-
 
         return findMember;
 

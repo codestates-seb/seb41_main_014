@@ -49,6 +49,7 @@ public class GoalController {
     public ResponseEntity patchGoal(@PathVariable("member-id") @Positive long memberId,
                                     @PathVariable("goal-id") @Positive long goalId,
                                     @Valid @RequestBody GoalPatchReq goalPatchReq) {
+                                    
         Goal goal = goalService.updateGoal(mapper.goalPatchReqToGoal(goalPatchReq),goalId);
 
         return new ResponseEntity<>(
@@ -82,6 +83,7 @@ public class GoalController {
     @DeleteMapping("/{member-id}/{goal-id}")
     public ResponseEntity deleteGoal(@PathVariable("member-id") @Positive long memberId,
                                      @PathVariable("goal-id") @Positive long goalId) {
+                                     
         goalService.deleteGoal(goalId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
