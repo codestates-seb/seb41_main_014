@@ -44,18 +44,22 @@ public class OpenApiController {
      */
     @Scheduled(cron = "0 0 4 * * ?") // 매일 새벽 4시 자동 업데이트
     @GetMapping("/refresh")
-    public void deleteAndSaveInstallmentSavingsInfo() throws IOException {
+    public ResponseEntity deleteAndSaveInstallmentSavingsInfo() throws IOException {
         log.info("적금 정보 자동 업데이트 시작");
         openApiService.deleteAllData();
         callOpenApi();
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     /**
      * DB에 저장되어 있는 적금 정보 모두 삭제
      */
     @DeleteMapping("/savings")
-    public void deleteInstallmentSavingsInfo() {
+    public ResponseEntity deleteInstallmentSavingsInfo() {
         openApiService.deleteAllData();
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     // 금융감독원 적금 조회 Open API 호출
