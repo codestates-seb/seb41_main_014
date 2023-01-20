@@ -4,6 +4,8 @@ import com.team1472.moas.member.dto.MemberDeleteDto;
 import com.team1472.moas.member.entity.Member;
 import com.team1472.moas.member.mapper.MemberMapper;
 import com.team1472.moas.member.service.MemberService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -27,12 +29,14 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/members")
+@Tag(name = "Members", description = "회원 API")
 public class MemberController {
 
     private final MemberMapper mapper;
     private final MemberService service;
 
     //patchMember 메서드 (member 정보 수정)
+    @Operation(summary = "회원 정보 수정")
     @PatchMapping()
     public ResponseEntity patchMember(
                                       @Valid @RequestBody MemberPatchDto memberPatchDto, Principal principal) {
@@ -48,7 +52,7 @@ public class MemberController {
         return new ResponseEntity<>(singleResponse, HttpStatus.OK);
     }
     //deleteMember 메서드 (member 삭제)
-
+    @Operation(summary = "회원 정보 삭제")
     @DeleteMapping()
     public ResponseEntity deleteMember(
                                        @Valid @RequestBody MemberDeleteDto memberDeleteDto,Principal principal) {
@@ -62,11 +66,11 @@ public class MemberController {
         return new ResponseEntity<>("MEMBER DELETED", HttpStatus.OK);
     }
     //getMember 메서드 (member 정보 조회)
+    @Operation(summary = "회원 정보 조회")
     @GetMapping()
     public ResponseEntity getMember(Principal principal ) {
 
         String email = principal.getName();
-
 
         Member findMember = service.findMemberbyemail(email);
         MemberResponseDto response = mapper.memberToMemberResponseDto(findMember);
@@ -76,6 +80,7 @@ public class MemberController {
     }
 
     //logout 메서드 (로그아웃, 토큰 삭제 )
+    @Operation(summary = "로그아웃, 토큰 삭제")
     @PostMapping("/logout")
     public ResponseEntity logout(HttpServletRequest request) {
         service.logoutMember(request);
@@ -83,6 +88,7 @@ public class MemberController {
         return new ResponseEntity<>("Logout", HttpStatus.NO_CONTENT);
     }
     //refreshToken 메서드 (토큰 재발급)
+    @Operation(summary = "토큰 재발급")
     @PostMapping("/refresh")
     public ResponseEntity refreshToken(HttpServletRequest request, HttpServletResponse response) {
         return service.refresh(request, response);

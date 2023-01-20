@@ -6,6 +6,8 @@ import com.team1472.moas.like_savings.entity.LikeSavings;
 import com.team1472.moas.like_savings.mapper.LikeSavingsMapper;
 import com.team1472.moas.like_savings.service.LikeSavingsService;
 import com.team1472.moas.response.MultiResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +25,7 @@ import java.util.List;
 @RequestMapping("/api/{member-id}/savings/interest")
 @RequiredArgsConstructor
 @Validated
+@Tag(name = "LikeSavings", description = "관심 적금 API")
 public class LikeSavingsController {
     private final LikeSavingsService likeSavingsService;
     private final LikeSavingsMapper mapper;
@@ -34,6 +37,7 @@ public class LikeSavingsController {
      * @param registerLikeSavingProductReq
      * @return ResponseEntity
      */
+    @Operation(summary = "관심 적금 등록")
     @PostMapping
     public ResponseEntity likeSavingProduct(@Positive @PathVariable("member-id") long memberId,
                                             @Valid @RequestBody RegisterLikeSavingProductReq registerLikeSavingProductReq) {
@@ -51,6 +55,7 @@ public class LikeSavingsController {
      * @param interestId
      * @return ResponseEntity
      */
+    @Operation(summary = "관심 적금 삭제")
     @DeleteMapping("/{like-saving-id}")
     public ResponseEntity deleteLikeSavingProduct(@Positive @PathVariable("member-id") long memberId,
                                                   @Positive @PathVariable("like-saving-id") long interestId) {
@@ -67,6 +72,7 @@ public class LikeSavingsController {
      * @param size
      * @return
      */
+    @Operation(summary = "회원 별 관심 적금 목록 조회")
     @GetMapping
     public ResponseEntity findLikeSavingProducts(@Positive @PathVariable("member-id") long memberId,
                                                  @Positive @RequestParam(value = "page", required = false, defaultValue = "1") int page,
