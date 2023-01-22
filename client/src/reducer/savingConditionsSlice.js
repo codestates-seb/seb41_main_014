@@ -7,7 +7,7 @@ const monthlySavings = {
     title: '월 저축금액',
     unit: '원',
   },
-  value: 0,
+  value: 10000,
 };
 
 // title, data, value
@@ -30,7 +30,7 @@ const finishSavings = {
     title: '총 저축금액',
     unit: '원',
   },
-  value: 0,
+  value: '60,000',
 };
 
 // title, data, value
@@ -55,6 +55,7 @@ const banks = {
     data: fixedBanks,
   },
   isCheckeds: getCheckeds(),
+  isSelectedValue: 0,
 };
 
 // title, data, value
@@ -84,7 +85,7 @@ const joinDeny = {
   value: -1,
 };
 
-const initialState = {
+const initSavingConditions = {
   monthlySavings,
   saveTrm,
   finishSavings,
@@ -92,45 +93,75 @@ const initialState = {
   banks,
   intrRateType,
   joinDeny,
+};
+
+const initialState = {
+  origin: initSavingConditions,
   isSearch: false,
 };
 
-const savingConditions = createSlice({
+const savingConditionsSlice = createSlice({
   name: 'savingConditions',
   initialState,
   reducers: {
+    setConditionsInit: (state) => {
+      state.origin.monthlySavings.value = 0;
+      state.origin.saveTrm.value = 6;
+      state.origin.finishSavings.value = 0;
+      state.origin.rsrvType.value = -1;
+      state.origin.banks.isCheckeds = getCheckeds();
+      state.origin.intrRateType.value = -1;
+      state.origin.value = -1;
+      state.isSearch = false;
+    },
     setMonthlySavings: (state, action) => {
-      state.monthlySavings.value = action.payload;
+      state.origin.monthlySavings.value = action.payload;
     },
     setSaveTrm: (state, action) => {
-      state.saveTrm.value = action.payload;
+      state.origin.saveTrm.value = action.payload;
     },
     setFinishSavings: (state, action) => {
-      state.finishSavings.value = action.payload;
+      state.origin.finishSavings.value = action.payload;
     },
     setRsrvType: (state, action) => {
-      state.rsrvType.value = action.payload;
+      state.origin.rsrvType.value = action.payload;
+    },
+    setBanksInit: (state) => {
+      state.origin.banks = banks;
     },
     setBankCheckeds: (state, action) => {
-      state.banks.isCheckeds = action.payload;
+      state.origin.banks.isCheckeds = action.payload;
+    },
+    setBankSelectedValue: (state, action) => {
+      state.origin.banks.isSelectedValue = action.payload;
+    },
+    setBankSelectedValueInit: (state) => {
+      state.origin.banks.isSelectedValue = banks.isSelectedValue;
     },
     setIntrRateType: (state, action) => {
-      state.intrRateType.value = action.payload;
+      state.origin.intrRateType.value = action.payload;
     },
     setJoinDeny: (state, action) => {
-      state.joinDeny.value = action.payload;
+      state.origin.joinDeny.value = action.payload;
+    },
+    setIsSearch: (state, action) => {
+      state.isSearch = action.payload;
     },
   },
 });
 
 export const {
+  setConditionsInit,
   setMonthlySavings,
   setSaveTrm,
   setFinishSavings,
   setRsrvType,
   setBankCheckeds,
+  setBankSelectedValue,
+  setBankSelectedValueInit,
   setIntrRateType,
   setJoinDeny,
-} = savingConditions.actions;
+  setIsSearch,
+} = savingConditionsSlice.actions;
 
-export default savingConditions.reducer;
+export default savingConditionsSlice.reducer;

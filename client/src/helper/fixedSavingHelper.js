@@ -228,27 +228,61 @@ export const getFS_BANKS = () => [
   toss,
 ];
 
-const none = '1';
-const seomin = '2';
-const restriction = '3';
-
-const getParsingJoinDeny = (check) => {
-  let deny;
-  switch (check) {
-    case none:
-      deny = '제한없음';
+export const getRSRV_TYPE = (value) => {
+  let result;
+  switch (value) {
+    case -1:
+      result = '전체';
       break;
-    case seomin:
-      deny = '서민전용';
+    case 'S':
+      result = '정액적립식';
       break;
-    case restriction:
-      deny = '일부제한';
+    case 'F':
+      result = '자유적립식';
       break;
     default:
-      deny = '-';
-      break;
+      result = '전체';
   }
-  return deny;
+  return result;
+};
+
+export const geINTR_RATE_TYPE = (value) => {
+  let result;
+  switch (value) {
+    case -1:
+      result = '전체';
+      break;
+    case 'S':
+      result = '단리';
+      break;
+    case 'M':
+      result = '복리';
+      break;
+    default:
+      result = '전체';
+  }
+  return result;
+};
+
+export const getJOIN_DENY = (value) => {
+  let result;
+  switch (value) {
+    case -1:
+      result = '전체';
+      break;
+    case 1:
+      result = '제한없음';
+      break;
+    case 2:
+      result = '서민전용';
+      break;
+    case 3:
+      result = '일부제한';
+      break;
+    default:
+      result = '전체';
+  }
+  return result;
 };
 
 const getDetail = (korCoNm) => {
@@ -325,7 +359,6 @@ export const getWRAPPER_DATA = (data) => {
     return {
       ...elObj,
       id: elObj.interestId,
-      joinDeny: getParsingJoinDeny(elObj[joinDeny.field]),
       dcls_chrg_man: getDetail(elObj[korCoNm.field]),
     };
   });

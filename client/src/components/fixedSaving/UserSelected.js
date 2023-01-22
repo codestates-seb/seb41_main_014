@@ -1,4 +1,7 @@
 import { Box, Grid, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { geINTR_RATE_TYPE, getRSRV_TYPE } from '../../helper/fixedSavingHelper';
+import { getLOCALE_MONEY } from '../../helper/unitHelper';
 
 const TypographyStyle = (bold) => (theme) => ({
   pt: 2,
@@ -8,6 +11,7 @@ const TypographyStyle = (bold) => (theme) => ({
 });
 
 const UserSelected = () => {
+  const conditions = useSelector((state) => state.savingConditions.origin);
   return (
     <Box
       sx={(theme) => ({
@@ -18,19 +22,29 @@ const UserSelected = () => {
     >
       <Grid container>
         <Grid item xs={3}>
-          <Typography sx={TypographyStyle(true)}>월 저축금액</Typography>
+          <Typography sx={TypographyStyle(true)}>
+            {conditions.monthlySavings.fixed.title}
+          </Typography>
         </Grid>
         <Grid item xs={2}>
-          <Typography sx={TypographyStyle(true)}>기간</Typography>
+          <Typography sx={TypographyStyle(true)}>
+            {conditions.saveTrm.fixed.title}
+          </Typography>
         </Grid>
         <Grid item xs={2}>
-          <Typography sx={TypographyStyle(true)}>적립방식</Typography>
+          <Typography sx={TypographyStyle(true)}>
+            {conditions.rsrvType.fixed.title}
+          </Typography>
         </Grid>
         <Grid item xs={3}>
-          <Typography sx={TypographyStyle(true)}>주 거래은행</Typography>
+          <Typography sx={TypographyStyle(true)}>
+            {conditions.banks.fixed.title}
+          </Typography>
         </Grid>
         <Grid item xs={2}>
-          <Typography sx={TypographyStyle(true)}>이자계산방식</Typography>
+          <Typography sx={TypographyStyle(true)}>
+            {conditions.intrRateType.fixed.title}
+          </Typography>
         </Grid>
       </Grid>
       <Grid
@@ -40,19 +54,29 @@ const UserSelected = () => {
         })}
       >
         <Grid item xs={3}>
-          <Typography sx={TypographyStyle()}>1,000,000 원</Typography>
+          <Typography sx={TypographyStyle()}>
+            {getLOCALE_MONEY(conditions.monthlySavings.value)} 원
+          </Typography>
         </Grid>
         <Grid item xs={2}>
-          <Typography sx={TypographyStyle()}>12 개월</Typography>
+          <Typography sx={TypographyStyle()}>
+            {conditions.saveTrm.value} 개월
+          </Typography>
         </Grid>
         <Grid item xs={2}>
-          <Typography sx={TypographyStyle()}>자유적립식</Typography>
+          <Typography sx={TypographyStyle()}>
+            {getRSRV_TYPE(conditions.rsrvType.value)}
+          </Typography>
         </Grid>
         <Grid item xs={3}>
-          <Typography sx={TypographyStyle()}>신한은행 외 1</Typography>
+          <Typography sx={TypographyStyle()}>
+            {conditions.banks.isSelectedValue}
+          </Typography>
         </Grid>
         <Grid item xs={2}>
-          <Typography sx={TypographyStyle()}>단리</Typography>
+          <Typography sx={TypographyStyle()}>
+            {geINTR_RATE_TYPE(conditions.intrRateType.value)}
+          </Typography>
         </Grid>
       </Grid>
     </Box>

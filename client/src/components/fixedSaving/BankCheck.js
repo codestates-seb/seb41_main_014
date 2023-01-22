@@ -7,10 +7,14 @@ import {
   Typography,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { setBankCheckeds } from '../../reducer/savingConditions';
+import {
+  setBankCheckeds,
+  setBankSelectedValue,
+  setBankSelectedValueInit,
+} from '../../reducer/savingConditionsSlice';
 
 const BankCheck = () => {
-  const banks = useSelector((state) => state.savingConditions.banks);
+  const banks = useSelector((state) => state.savingConditions.origin.banks);
   const dispatch = useDispatch();
 
   const handleCheckedAll = (event) => {
@@ -19,12 +23,18 @@ const BankCheck = () => {
       newChecks[index] = event.target.checked;
     }
     dispatch(setBankCheckeds(newChecks));
+    if (event.target.checked)
+      dispatch(setBankSelectedValue(banks.isCheckeds.length));
+    else dispatch(setBankSelectedValueInit());
   };
 
   const handleCheckedItem = (event, index) => {
     const newChecks = [...banks.isCheckeds];
     newChecks[index] = event.target.checked;
     dispatch(setBankCheckeds(newChecks));
+    let selectedCount = 0;
+    for (const el of banks.isCheckeds) if (el) selectedCount++;
+    dispatch(setBankSelectedValue(selectedCount));
   };
 
   //TODO indeterminate 구현안됨 ㅜㅜ https://mui.com/material-ui/react-checkbox/

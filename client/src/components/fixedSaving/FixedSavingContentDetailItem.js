@@ -5,18 +5,18 @@ const FiexedSavingContentDetailItem = ({ title, content }) => {
   return (
     <>
       <Box
-        sx={(theme) => ({
-          backgroundColor: theme.colors.mainMiddle,
+        sx={() => ({
+          backgroundColor: 'transparent',
           borderRadius: 1,
           opacity: 0.8,
           p: 2,
-          color: theme.colors.white,
         })}
       >
         <Typography
           sx={(theme) => ({
             fontSize: theme.fontSizes.lg,
             fontWeight: theme.fontWeight.bold,
+            color: theme.colors.mainMiddle,
           })}
         >
           {title}
@@ -25,6 +25,7 @@ const FiexedSavingContentDetailItem = ({ title, content }) => {
           sx={(theme) => ({
             fontSize: theme.fontSizes.lg,
             whiteSpace: 'pre-wrap',
+            color: theme.colors.black,
           })}
         >
           {content}

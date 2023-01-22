@@ -14,14 +14,18 @@ const StyledColorRow = styled(StyledRow)`
 `;
 
 const FinishSavings = () => {
-  const data = useSelector((state) => state.savingConditions.finishSavings);
+  const finishSavings = useSelector(
+    (state) => state.savingConditions.origin.finishSavings
+  );
 
   return (
     <Box sx={{ margin: 3, width: '40%' }}>
-      <h3>{data.fixed.title}</h3>
+      <h3>{finishSavings.fixed.title}</h3>
       <StyledColorRow sx={{ marginTop: 1, justifyContent: 'end' }}>
-        <Typography textAlign="right">{data.value}</Typography>
-        <span style={{ padding: theme.spacing(2) }}>{data.fixed.unit}</span>
+        <Typography textAlign="right">{finishSavings.value}</Typography>
+        <span style={{ padding: theme.spacing(2) }}>
+          {finishSavings.fixed.unit}
+        </span>
       </StyledColorRow>
     </Box>
   );

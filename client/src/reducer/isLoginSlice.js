@@ -5,7 +5,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 //230119 김태윤
 //id 0은 유의미하다고 약속된값. 없다의 의미인 -1이나 Math.min or Math.max로 대체
-const initialUserInfo = { email: '', id: Math.min, name: '', picture: '' };
+const initialUserInfo = { email: '', id: -1, name: '', picture: '' };
 
 const initialState = { isLogin: false, userInfo: initialUserInfo };
 

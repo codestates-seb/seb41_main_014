@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   setFinishSavings,
   setMonthlySavings,
-} from '../../reducer/savingConditions';
+} from '../../reducer/savingConditionsSlice';
 import { getLOCALE_MONEY } from '../../helper/unitHelper';
 
 const StyledRow = styled(Box)`
@@ -19,8 +19,10 @@ const StyledColorRow = styled(StyledRow)`
 `;
 
 const MonthlySavingsInput = () => {
-  const data = useSelector((state) => state.savingConditions.monthlySavings);
-  const saveTrm = useSelector((state) => state.savingConditions.saveTrm);
+  const monthlySavings = useSelector(
+    (state) => state.savingConditions.origin.monthlySavings
+  );
+  const saveTrm = useSelector((state) => state.savingConditions.origin.saveTrm);
   const dispatch = useDispatch();
 
   const handleOnChange = (event) => {
@@ -32,22 +34,22 @@ const MonthlySavingsInput = () => {
 
   return (
     <Box sx={{ margin: 3, width: '40%' }}>
-      <h3>{data.fixed.title}</h3>
+      <h3>{monthlySavings.fixed.title}</h3>
       <StyledColorRow sx={{ marginTop: 1 }}>
         <Input
           disableUnderline
           sx={{ input: { textAlign: 'end' } }}
-          value={data.value}
+          value={monthlySavings.value}
           type="number"
           onChange={handleOnChange}
           inputRef={(input) => input && input.focus()}
         />
-        <span style={{ padding: '4px' }}>{data.fixed.unit}</span>
+        <span style={{ padding: '4px' }}>{monthlySavings.fixed.unit}</span>
       </StyledColorRow>
       <StyledRow sx={{ justifyContent: 'right', pt: 2 }}>
-        <Typography>{getLOCALE_MONEY(data.value)}</Typography>
+        <Typography>{getLOCALE_MONEY(monthlySavings.value)}</Typography>
         <span style={{ padding: '4px', marginRight: '13px' }}>
-          {data.fixed.unit}
+          {monthlySavings.fixed.unit}
         </span>
       </StyledRow>
     </Box>
