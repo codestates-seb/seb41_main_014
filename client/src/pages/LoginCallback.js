@@ -31,9 +31,7 @@ const LoginCallback = () => {
 
       // 로그인을 통해 받은 토큰을 바로 헤더에 실어 유저 정보를 받아오는 요청을 보냄
       axios(
-        `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/members/${Number(
-          memberId
-        )}`,
+        `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/members`,
         {
           headers: {
             'Content-Type': 'application/json',
