@@ -1,5 +1,4 @@
-import { Box } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import {
   ROUTE_PATH_BASE,
@@ -9,58 +8,122 @@ import {
   ROUTE_PATH_MEMBER,
   ROUTE_PATH_SIGNUP,
 } from '../store/routerStore';
-import { row, rowCenter } from '../styles/theme';
+import MenuIcon from '@mui/icons-material/Menu';
+import logo from '../asset/images/logo_main_light.png';
+import moas from '../asset/images/logo_name.png';
+import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
-const StyeldHeader = styled(Box)`
-  ${rowCenter}
-  width: 100vw;
-  height: ${(props) => props.theme.spacing(15)};
-  font-size: ${(props) => props.theme.fontSizes.xxxxl};
-  justify-content: 'space-around';
-  /* TODO */
-  background-color: bisque;
-  ul {
-    ${row}
-  }
-`;
+const Header = ({ handleOpenModal }) => {
+  const isLogin = useSelector((state) => state.isLogin);
 
-// 참고 : divUl 은 추후에 지울 겁니다. 편하게 보려고 해놓음
-const Header = () => {
   return (
-    <StyeldHeader as="header">
-      <div>
-        <p>비로그인</p>
-        <ul>
-          <li>
-            <Link to={ROUTE_PATH_BASE}>로고(메인)</Link>
-          </li>
-          <li>
-            <Link to={ROUTE_PATH_LOGIN}>로그인</Link>
-          </li>
-          <li>
-            <Link to={ROUTE_PATH_SIGNUP}>회원가입</Link>
-          </li>
-        </ul>
-      </div>
-      <div>
-        <p>로그인</p>
-        <ul>
-          <li>
-            <Link to={ROUTE_PATH_GOAL_LIST}>로고(희망목록)</Link>
-          </li>
-          <li>
-            <Link to={ROUTE_PATH_GOAL_LIST}>희망목록</Link>
-          </li>
-          <li>
-            <Link to={ROUTE_PATH_FIXED_SAVING}>적금</Link>
-          </li>
-          <li>
-            <Link to={ROUTE_PATH_MEMBER}>멤버</Link>
-          </li>
-        </ul>
-      </div>
-    </StyeldHeader>
+    <AppBar
+      position="fixed"
+      sx={(theme) => ({
+        height: '60px',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: theme.colors.white,
+        borderBottom: `4px solid ${theme.colors.mainHeavy}`,
+      })}
+    >
+      <Toolbar sx={{ maxWidth: 600, minWidth: 360 }}>
+        <IconButton size="large" edge="start" onClick={handleOpenModal}>
+          <MenuIcon />
+        </IconButton>
+
+        <Link to={ROUTE_PATH_BASE}>
+          <IconButton size="large">
+            <img src={logo} alt="logo" style={{ height: '48px' }} />
+            <img src={moas} alt="logo" style={{ height: '48px' }} />
+          </IconButton>
+        </Link>
+        {isLogin.userInfo.id === -1 ? (
+          <>
+            {/* 비로그인시 */}
+            <Typography variant="h2" sx={{ mr: 4 }}>
+              <Link to={ROUTE_PATH_LOGIN} style={{ textDecoration: 'none' }}>
+                로그인
+              </Link>
+            </Typography>
+            <Typography variant="h2" sx={{ mr: 4 }}>
+              <Link to={ROUTE_PATH_SIGNUP} style={{ textDecoration: 'none' }}>
+                회원가입
+              </Link>
+            </Typography>
+            {/* 로그인 시 */}
+            <Typography
+              variant="h2"
+              sx={{ mr: 4 }}
+              style={{ textDecoration: 'none' }}
+            >
+              <Link
+                to={ROUTE_PATH_GOAL_LIST}
+                style={{ textDecoration: 'none' }}
+              >
+                희망목록
+              </Link>
+            </Typography>
+            <Typography variant="h2" sx={{ mr: 4 }}>
+              <Link
+                to={ROUTE_PATH_FIXED_SAVING}
+                style={{ textDecoration: 'none' }}
+              >
+                적금
+              </Link>
+            </Typography>
+            <Typography variant="h2" sx={{ mr: 4 }}>
+              <Link to={ROUTE_PATH_MEMBER} style={{ textDecoration: 'none' }}>
+                멤버
+              </Link>
+            </Typography>
+          </>
+        ) : (
+          <>
+            {/* 비로그인시 */}
+            <Typography variant="h2" sx={{ mr: 4 }}>
+              <Link to={ROUTE_PATH_LOGIN} style={{ textDecoration: 'none' }}>
+                로그인
+              </Link>
+            </Typography>
+            <Typography variant="h2" sx={{ mr: 4 }}>
+              <Link to={ROUTE_PATH_SIGNUP} style={{ textDecoration: 'none' }}>
+                회원가입
+              </Link>
+            </Typography>
+            {/* 로그인 시 */}
+            <Typography variant="h2" sx={{ mr: 4 }}>
+              <Link
+                to={ROUTE_PATH_GOAL_LIST}
+                style={{ textDecoration: 'none' }}
+              >
+                희망목록
+              </Link>
+            </Typography>
+            <Typography variant="h2" sx={{ mr: 4 }}>
+              <Link
+                to={ROUTE_PATH_FIXED_SAVING}
+                style={{ textDecoration: 'none' }}
+              >
+                적금
+              </Link>
+            </Typography>
+            <Typography variant="h2" sx={{ mr: 4 }}>
+              <Link to={ROUTE_PATH_MEMBER} style={{ textDecoration: 'none' }}>
+                멤버
+              </Link>
+            </Typography>
+            ㅣ것
+          </>
+        )}
+      </Toolbar>
+    </AppBar>
   );
+};
+
+Header.propTypes = {
+  handleOpenModal: PropTypes.func,
 };
 
 export default Header;
