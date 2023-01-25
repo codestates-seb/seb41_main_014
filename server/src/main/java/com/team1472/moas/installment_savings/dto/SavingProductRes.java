@@ -9,10 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SavingProductRes {
-    private long savingsId; //적금 상품 id
-
-    private long interestId; //금리 id
-
     private String korCoNm; //금융회사 명
 
     private String finPrdtNm; //금융상품명
@@ -46,12 +42,10 @@ public class SavingProductRes {
     @Setter
     private long interestAmount; //세후 이자 금액 (세전 이자 금액 - 세금(15.4%))
 
-    public SavingProductRes(long savingsId, long interestId, String korCoNm, String finPrdtNm, String joinWay,
-                            String spclCnd, String joinDeny, String joinMember, String etcNote, int maxLimit,
-                            String intrRateType, String intrRateTypeNm, String rsrvTypeNm, String saveTrm,
-                            String mtrtInt, double intrRate, double intrRate2) {
-        this.savingsId = savingsId;
-        this.interestId = interestId;
+    public SavingProductRes(String korCoNm, String finPrdtNm, String joinWay, String spclCnd, String joinDeny,
+                            String joinMember, String etcNote, int maxLimit, String intrRateType, String intrRateTypeNm,
+                            String rsrvTypeNm, String saveTrm, String mtrtInt, double intrRate, double intrRate2) {
+
         this.korCoNm = korCoNm;
         this.finPrdtNm = finPrdtNm;
         this.joinWay = joinWay;
