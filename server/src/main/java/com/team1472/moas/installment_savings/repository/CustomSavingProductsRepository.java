@@ -6,5 +6,5 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface CustomSavingProductsRepository {
-    Page<SavingProductRes> findFilteringSavingProducts(Pageable pageable, SavingsFilteringReq savingsFilteringReq);
+    Page<SavingProductRes> findFilteringSavingProducts(Pageable pageable, SavingsFilteringReq savingsFilteringReq, Long memberId);
 }

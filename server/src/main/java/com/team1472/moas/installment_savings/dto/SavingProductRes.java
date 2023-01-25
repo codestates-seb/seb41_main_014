@@ -9,10 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SavingProductRes {
-    private long savingsId; //적금 상품 id
-
-    private long interestId; //금리 id
-
     private String korCoNm; //금융회사 명
 
     private String finPrdtNm; //금융상품명
@@ -43,15 +39,15 @@ public class SavingProductRes {
 
     private double intrRate2; //최고 우대 금리(소수점 2자리)
 
+    private Long likeSavingId; //관심 적금 id
+
     @Setter
     private long interestAmount; //세후 이자 금액 (세전 이자 금액 - 세금(15.4%))
 
-    public SavingProductRes(long savingsId, long interestId, String korCoNm, String finPrdtNm, String joinWay,
-                            String spclCnd, String joinDeny, String joinMember, String etcNote, int maxLimit,
-                            String intrRateType, String intrRateTypeNm, String rsrvTypeNm, String saveTrm,
-                            String mtrtInt, double intrRate, double intrRate2) {
-        this.savingsId = savingsId;
-        this.interestId = interestId;
+    public SavingProductRes(String korCoNm, String finPrdtNm, String joinWay, String spclCnd, String joinDeny,
+                            String joinMember, String etcNote, int maxLimit, String intrRateType, String intrRateTypeNm,
+                            String rsrvTypeNm, String saveTrm, String mtrtInt, double intrRate, double intrRate2, Long likeSavingId) {
+
         this.korCoNm = korCoNm;
         this.finPrdtNm = finPrdtNm;
         this.joinWay = joinWay;
@@ -67,5 +63,6 @@ public class SavingProductRes {
         this.mtrtInt = mtrtInt;
         this.intrRate = intrRate;
         this.intrRate2 = intrRate2;
+        this.likeSavingId = likeSavingId;
     }
 }
