@@ -24,9 +24,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import logo from '../asset/images/logo_main_light.png';
 import moas from '../asset/images/logo_name.png';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { logout } from '../reducer/isLoginSlice';
+import {
+  MODAL_TYPE_MAIN_MENU,
+  setModalOpen,
+  setModalType,
+} from '../reducer/modaSlice';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -57,7 +61,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-const Header = ({ handleOpenModal }) => {
+const Header = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const isLogin = useSelector((state) => state.isLogin);
   const dispatch = useDispatch();
@@ -98,7 +102,14 @@ const Header = ({ handleOpenModal }) => {
       })}
     >
       <Toolbar sx={{ maxWidth: 600, minWidth: 360 }}>
-        <IconButton size="large" edge="start" onClick={handleOpenModal}>
+        <IconButton
+          size="large"
+          edge="start"
+          onClick={() => {
+            dispatch(setModalType(MODAL_TYPE_MAIN_MENU));
+            dispatch(setModalOpen());
+          }}
+        >
           <MenuIcon />
         </IconButton>
 
@@ -191,10 +202,6 @@ const Header = ({ handleOpenModal }) => {
       </Toolbar>
     </AppBar>
   );
-};
-
-Header.propTypes = {
-  handleOpenModal: PropTypes.func,
 };
 
 export default Header;

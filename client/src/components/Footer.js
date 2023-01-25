@@ -103,7 +103,7 @@ const Footer = () => {
           </Typography>
         </Link>
         <Grid container sx={{ p: 4 }}>
-          <Grid xs={4}>
+          <Grid item xs={4}>
             <StyledGithub
               herf={'https://github.com/iltae'}
               imgSrc={'https://avatars.githubusercontent.com/u/106229016?v=4'}
@@ -112,6 +112,7 @@ const Footer = () => {
             />
           </Grid>
           <Grid
+            item
             xs={4}
             sx={{
               display: 'flex',
@@ -127,6 +128,7 @@ const Footer = () => {
             />
           </Grid>
           <Grid
+            item
             xs={4}
             sx={{
               display: 'flex',
@@ -142,6 +144,7 @@ const Footer = () => {
             />
           </Grid>
           <Grid
+            item
             xs={4}
             sx={{
               display: 'flex',
@@ -157,6 +160,7 @@ const Footer = () => {
             />
           </Grid>
           <Grid
+            item
             xs={4}
             sx={{
               display: 'flex',
@@ -172,6 +176,7 @@ const Footer = () => {
             />
           </Grid>
           <Grid
+            item
             xs={4}
             sx={{
               display: 'flex',
