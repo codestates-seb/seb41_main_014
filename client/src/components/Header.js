@@ -11,19 +11,22 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   ROUTE_PATH_BASE,
   ROUTE_PATH_FIXED_SAVING,
   ROUTE_PATH_GOAL_LIST,
   ROUTE_PATH_LOGIN,
+  ROUTE_PATH_MEMBER,
+  ROUTE_PATH_MEMBER_EDIT,
 } from '../store/routerStore';
 import MenuIcon from '@mui/icons-material/Menu';
 import logo from '../asset/images/logo_main_light.png';
 import moas from '../asset/images/logo_name.png';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { logout } from '../reducer/isLoginSlice';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -57,13 +60,31 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 const Header = ({ handleOpenModal }) => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const isLogin = useSelector((state) => state.isLogin);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = () => {
+  const member = 111;
+  const memberEdit = 112;
+  const memberLogout = 113;
+
+  const handleCloseUserMenu = (type) => {
     setAnchorElUser(null);
+    switch (type) {
+      case member:
+        navigate(ROUTE_PATH_MEMBER);
+        break;
+      case memberEdit:
+        navigate(ROUTE_PATH_MEMBER_EDIT);
+        break;
+      case memberLogout:
+        dispatch(logout());
+        navigate(ROUTE_PATH_BASE);
+        break;
+    }
   };
   return (
     <AppBar
@@ -154,9 +175,15 @@ const Header = ({ handleOpenModal }) => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem onClick={handleCloseUserMenu}>회원정보</MenuItem>
-                <MenuItem onClick={handleCloseUserMenu}>정보수정</MenuItem>
-                <MenuItem onClick={handleCloseUserMenu}>로그아웃</MenuItem>
+                <MenuItem onClick={() => handleCloseUserMenu(member)}>
+                  회원정보
+                </MenuItem>
+                <MenuItem onClick={() => handleCloseUserMenu(memberEdit)}>
+                  정보수정
+                </MenuItem>
+                <MenuItem onClick={() => handleCloseUserMenu(memberLogout)}>
+                  로그아웃
+                </MenuItem>
               </Menu>
             </Box>
           </>

@@ -11,7 +11,7 @@ import {
   ROUTE_PATH_LOGIN,
   ROUTE_PATH_LOGINCALLBACK,
   ROUTE_PATH_MEMBER,
-  ROUTE_PATH_SIGNUP,
+  ROUTE_PATH_NOT_FOUND,
 } from './store/routerStore';
 import Main from './pages/Main';
 import Login from './pages/Login';
@@ -28,6 +28,7 @@ import Header from './components/Header';
 import { column, columnCenter } from './styles/theme';
 import { useEffect, useState } from 'react';
 import { Box, Container, Modal, Typography } from '@mui/material';
+import NotFound from './pages/NotFound';
 
 // TODO theme사용예시, theme의경우 typeScript ts, tsx설정안되면
 // 단순 theme interface(명세)라 자동완성안되니 style/theme.js 참조
@@ -77,6 +78,7 @@ function App() {
           <Route path={ROUTE_PATH_GOAL_DETAIL} element={<GoalDetail />} />
           <Route path={ROUTE_PATH_GOAL_EDIT} element={<GoalEdit />} />
           <Route path={ROUTE_PATH_FIXED_SAVING} element={<FixedSaving />} />
+          <Route path={ROUTE_PATH_NOT_FOUND} element={<NotFound />} />
         </Routes>
       </ContentContainer>
       {footerVisibility ? <Footer /> : ''}
@@ -114,17 +116,6 @@ function App() {
               sx={{ fontSize: '3rem', fontWeight: '900', color: 'white' }}
             >
               로그인
-            </Typography>
-          </Link>
-          <Link
-            to={ROUTE_PATH_SIGNUP}
-            style={{ textDecoration: 'none', padding: '24px' }}
-            onClick={handleCloseModal}
-          >
-            <Typography
-              sx={{ fontSize: '3rem', fontWeight: '900', color: 'white' }}
-            >
-              회원가입
             </Typography>
           </Link>
           <Link
