@@ -17,6 +17,7 @@ import java.util.function.Function;
 
 import static com.team1472.moas.installment_savings.entity.QInstallmentSavings.installmentSavings;
 import static com.team1472.moas.installment_savings.entity.QInterestRate.interestRate;
+import static com.team1472.moas.like_savings.entity.QLikeSavings.likeSavings;
 
 @Repository
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class CustomSavingProductsRepositoryImpl implements CustomSavingProductsR
 
     //적금 상품 필터링해서 조회
     @Override
-    public Page<SavingProductRes> findFilteringSavingProducts(Pageable pageable, SavingsFilteringReq savingsFilteringReq) {
+    public Page<SavingProductRes> findFilteringSavingProducts(Pageable pageable, SavingsFilteringReq savingsFilteringReq, Long memberId) {
         int page = pageable.getPageNumber();
         int size = pageable.getPageSize();
 
@@ -45,9 +46,15 @@ public class CustomSavingProductsRepositoryImpl implements CustomSavingProductsR
                                 interestRate.saveTrm,
                                 installmentSavings.mtrtInt,
                                 interestRate.intrRate,
-                                interestRate.intrRate2))
+                                interestRate.intrRate2,
+                                likeSavings.id))
                 .from(interestRate)
                 .join(installmentSavings).on(interestRate.finPrdtCd.eq(installmentSavings.finPrdtCd)).fetchJoin()
+                .leftJoin(likeSavings).on(likeSavings.id.isNotNull().and(likeSavings.id.eq(memberId))
+                        .and(likeSavings.finPrdtCd.eq(installmentSavings.finPrdtCd))
+                        .and(likeSavings.intrRateType.eq(interestRate.intrRateType))
+                        .and(likeSavings.rsrvType.eq(interestRate.rsrvType))
+                        .and(likeSavings.saveTrm.eq(interestRate.saveTrm))).fetchJoin()
                 .where(checkCondition(savingsFilteringReq.getFinCoNoList(), installmentSavings.finCoNo::in), //주 거래 은행 필터링
                         checkCondition(savingsFilteringReq.getSaveTrm(), interestRate.saveTrm::eq), //저축 희망 기간 필터링
                         checkCondition(savingsFilteringReq.getRsrvType(), interestRate.rsrvType::eq), //적립 방식 필터링

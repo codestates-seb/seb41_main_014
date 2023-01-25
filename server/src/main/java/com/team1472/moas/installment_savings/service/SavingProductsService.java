@@ -16,8 +16,8 @@ import java.util.List;
 public class SavingProductsService {
     private final InterestRateRepository interestRateRepository;
 
-    public MultiResponse findSavingsProducts(Pageable pageable, SavingsFilteringReq filter) {
-         Page<SavingProductRes> pageSavingProduct = interestRateRepository.findFilteringSavingProducts(pageable, filter);
+    public MultiResponse findSavingsProducts(Pageable pageable, SavingsFilteringReq filter, Long memberId) {
+        Page<SavingProductRes> pageSavingProduct = interestRateRepository.findFilteringSavingProducts(pageable, filter, memberId);
 
         List<SavingProductRes> savingProducts = pageSavingProduct.getContent();
 
