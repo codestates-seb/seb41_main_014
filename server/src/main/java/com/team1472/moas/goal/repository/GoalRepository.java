@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-public interface GoalRepository extends JpaRepository<Goal, Long> {
+public interface GoalRepository extends JpaRepository<Goal, Long>, CustomGoalRepository {
 }
