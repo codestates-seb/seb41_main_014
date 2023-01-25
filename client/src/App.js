@@ -16,7 +16,6 @@ import {
 import Main from './pages/Main';
 import Login from './pages/Login';
 import LoginCallback from './pages/LoginCallback';
-import Signup from './pages/Signup';
 import Member from './pages/Member';
 import GoalCreate from './pages/GoalCreate';
 import GoalList from './pages/GoalList';
@@ -72,7 +71,6 @@ function App() {
           <Route path={ROUTE_PATH_BASE} element={<Main />} />
           <Route path={ROUTE_PATH_LOGIN} element={<Login />} />
           <Route path={ROUTE_PATH_LOGINCALLBACK} element={<LoginCallback />} />
-          <Route path={ROUTE_PATH_SIGNUP} element={<Signup />} />
           <Route path={ROUTE_PATH_MEMBER} element={<Member />} />
           <Route path={ROUTE_PATH_GOAL_CREATE} element={<GoalCreate />} />
           <Route path={ROUTE_PATH_GOAL_LIST} element={<GoalList />} />
