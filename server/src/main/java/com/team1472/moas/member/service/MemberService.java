@@ -37,7 +37,6 @@ public class MemberService {
         tokenRepository.save(refreshToken);
     }
     //updateMember메서드 (회원 업로드)
-//updateMember메서드 (회원 업로드)
     public Member updateMember(Member member, String email) {
 
 //        Member findMemberbyemail = memberRepository.findByEmail(email);
@@ -107,13 +106,23 @@ public class MemberService {
 
     }
 
-    //findMember메서드(회원 찾기)
+    //findMember메서드(회원 찾기) // 멤버 아이디 리턴으로 변경 혹은 사용 가능한방법으로
     public Member findMemberbyemail(String email) {
 
         Member findMember = verifyExistsMemberbyemail(email);
 
-
         return findMember;
+
+    }
+
+    //findMemberId메서드(회원 아이디 찾기)
+    public Long findMemberId(String email) {
+
+        Member findMember = verifyExistsMemberbyemail(email);
+
+        Long memberId = findMember.getId();
+
+        return memberId;
 
     }
 
