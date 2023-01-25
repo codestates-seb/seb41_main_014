@@ -129,7 +129,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private URI createURI(String accessToken, String refreshToken, String email) {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         String memberId = memberRepository.findByEmail(email).get().getId().toString();
-//        String name = memberRepository.findByName(email).get().().toString();
         queryParams.add("access_token", "bearer"+accessToken);
         queryParams.add("refresh_token", "bearer"+refreshToken);
         queryParams.add("member_id", memberId);

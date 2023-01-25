@@ -4,6 +4,8 @@ import com.team1472.moas.installment_savings.dto.SavingProductRes;
 import com.team1472.moas.installment_savings.dto.SavingsFilteringReq;
 import com.team1472.moas.installment_savings.service.SavingProductsService;
 import com.team1472.moas.response.MultiResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,12 +23,14 @@ import java.util.List;
 @RequestMapping("/api/savings")
 @RequiredArgsConstructor
 @Validated
+@Tag(name = "SavingProducts", description = "적금 API")
 public class SavingProductsController {
     private final SavingProductsService savingProductsService;
 
     /**
      * 적금 정보 리스트 필터링 조회
      */
+    @Operation(summary = "적금 정보 리스트 필터링 조회")
     @PostMapping
     public ResponseEntity searchSavingProducts(@Positive @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                                                @Positive @RequestParam(value = "size", required = false, defaultValue = "10") int size,
