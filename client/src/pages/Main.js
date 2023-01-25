@@ -1,6 +1,13 @@
-import { styled } from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import cart from '../../src/asset/images/main_cart_woman.svg';
+import goal from '../../src/asset/images/main_goal_woman.svg';
+import plan from '../../src/asset/images/main_plan_man.svg';
+import logo_main from '../../src/asset/images/logo_main.png';
+import coin from '../../src/asset/images/main_coin.svg';
+import { Animate, AnimateGroup } from 'react-simple-animate';
+import 'animate.css';
 
 const StyledButton = styled(Button)`
   padding: ${(props) => props.theme.spacing(2)};
@@ -541,29 +548,170 @@ const Main = () => {
       });
   };
   return (
-    <>
-      <StyledButton variant="contained" onClick={create}>
-        목표등록
-      </StyledButton>
-      <StyledButton variant="contained" onClick={openapi}>
-        물품검색
-      </StyledButton>
-      <StyledButton variant="contained" onClick={get}>
-        물품조회
-      </StyledButton>
-      <StyledButton variant="contained" onClick={readDetail}>
-        물품상세조회
-      </StyledButton>
-      <StyledButton variant="contained" onClick={edit}>
-        물품수정
-      </StyledButton>
-      <StyledButton variant="contained" onClick={deleteGoal}>
-        물품삭제
-      </StyledButton>
-      <StyledButton variant="contained" onClick={fixedSaving}>
-        적금
-      </StyledButton>
-    </>
+    <AnimateGroup play>
+      <Box>
+        <StyledButton variant="contained" onClick={create}>
+          목표등록
+        </StyledButton>
+        <StyledButton variant="contained" onClick={openapi}>
+          물품검색
+        </StyledButton>
+        <StyledButton variant="contained" onClick={get}>
+          물품조회
+        </StyledButton>
+        <StyledButton variant="contained" onClick={readDetail}>
+          물품상세조회
+        </StyledButton>
+        <StyledButton variant="contained" onClick={edit}>
+          물품수정
+        </StyledButton>
+        <StyledButton variant="contained" onClick={deleteGoal}>
+          물품삭제
+        </StyledButton>
+        <StyledButton variant="contained" onClick={fixedSaving}>
+          적금
+        </StyledButton>
+      </Box>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Animate
+          sequenceIndex={0}
+          duration={1}
+          delay={0.3}
+          start={{ transform: 'translate(-300px, 0)', opacity: 0 }}
+          end={{ transform: 'translate(0px, 0px)', opacity: 1 }}
+        >
+          <Typography
+            variant="h3"
+            sx={(theme) => ({
+              fontWeight: theme.fontWeight.bold,
+            })}
+          >
+            당신이 원하는 목표가 있을 때
+          </Typography>
+        </Animate>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <img
+            className="animate__animated animate__fadeOutDown animate__slower animate__infinite"
+            style={{ width: '20%' }}
+            src={coin}
+            alt="coin"
+          />
+          <Animate
+            sequenceIndex={0}
+            duration={1}
+            delay={0.3}
+            start={{ opacity: 0 }}
+            end={{ opacity: 1 }}
+          >
+            <img
+              className="animate__animated animate__headShake animate__fast	animate__infinite"
+              style={{ height: '300px', padding: '24px' }}
+              src={logo_main}
+              alt="main logo"
+            />
+          </Animate>
+        </Box>
+      </Box>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Animate
+          sequenceIndex={1}
+          duration={1}
+          delay={0.3}
+          start={{ opacity: 0 }}
+          end={{ opacity: 1 }}
+        >
+          <img
+            style={{ width: '60%', padding: '24px' }}
+            src={cart}
+            alt="cart with woman"
+          />
+        </Animate>
+        <Animate
+          sequenceIndex={1}
+          duration={1}
+          delay={0.3}
+          start={{ transform: 'translate(300px, 0)', opacity: 0 }}
+          end={{ transform: 'translate(0px, 0px)', opacity: 1 }}
+        >
+          <Typography
+            variant="h3"
+            sx={(theme) => ({
+              fontWeight: theme.fontWeight.bold,
+            })}
+          >
+            당신이 원하는 목표가 있을 때
+          </Typography>
+        </Animate>
+      </Box>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Animate
+          sequenceIndex={2}
+          duration={1}
+          delay={0.3}
+          start={{ transform: 'translate(-300px, 0)', opacity: 0 }}
+          end={{ transform: 'translate(0px, 0px)', opacity: 1 }}
+        >
+          <Typography
+            variant="h3"
+            sx={(theme) => ({
+              fontWeight: theme.fontWeight.bold,
+            })}
+          >
+            계획적으로 저축하자
+          </Typography>
+        </Animate>
+        <Animate
+          sequenceIndex={2}
+          duration={1}
+          delay={0.3}
+          start={{ opacity: 0 }}
+          end={{ opacity: 1 }}
+        >
+          <img
+            style={{ height: '300px', padding: '24px' }}
+            src={goal}
+            alt="goal with woman"
+          />
+        </Animate>
+      </Box>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Animate
+          sequenceIndex={3}
+          duration={1}
+          delay={0.3}
+          start={{ opacity: 0 }}
+          end={{ opacity: 1 }}
+        >
+          <img
+            style={{ height: '300px', padding: '24px' }}
+            src={plan}
+            alt="plan with man"
+          />
+        </Animate>
+        <Animate
+          sequenceIndex={3}
+          duration={1}
+          delay={0.3}
+          start={{ transform: 'translate(300px, 0)', opacity: 0 }}
+          end={{ transform: 'translate(0px, 0px)', opacity: 1 }}
+        >
+          <Typography
+            variant="h3"
+            sx={(theme) => ({
+              fontWeight: theme.fontWeight.bold,
+            })}
+          >
+            차곡차곡 쌓이는 저축
+          </Typography>
+        </Animate>
+      </Box>
+    </AnimateGroup>
   );
 };
 

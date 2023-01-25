@@ -1,5 +1,36 @@
-import { Button } from '@mui/material';
+// import { Button } from '@mui/material';
 import styled from '@emotion/styled';
+import { useState } from 'react';
+import { getACCESS_TOKEN } from '../helper/cookieHelper.js';
+import axios from 'axios';
+import GoalSetting from '../components/goal/GoalSetting';
+
+const GuideBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 10px;
+  width: 650px;
+  height: auto;
+  text-align: left;
+  border-top: 5px solid #aac4ff;
+  border-bottom: 5px solid #aac4ff;
+  margin-bottom: 50px;
+  color: grey;
+  .TextHeader {
+    text-align: center;
+    color: #aac4ff;
+    width: 550px;
+    font-size: 16pt;
+  }
+  .Text {
+    font-size: 12px;
+  }
+  .Hilight {
+    color: #aac4ff;
+  }
+`;
 
 const CreatePage = styled.div`
   display: flex;
@@ -8,128 +39,88 @@ const CreatePage = styled.div`
   align-items: center;
 `;
 
-const ComponentContain = styled.div`
-  display: flex;
-  flex-direction: column;
-  display: inline-flex;
-  margin: 30px;
-  box-sizing: border-box;
-  width: 566px;
-  height: 278px;
-  background-color: #eef1ff;
-  border-radius: 6px;
-  .SettingLine {
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-    margin-left: 20px;
-  }
-  .SettingInput {
-    box-sizing: border-box;
-    text-align: center;
-    background-color: transparent;
-    width: 400px;
-    height: 30px;
-    /* margin: px; */
-    font-size: 16px;
-    border: none;
-    border-radius: 6px;
-    border-bottom: solid 2px #b1b2ff;
+const GoalCreatePage = () => {
+  const [goal, setGoal] = useState(''); // 수기 목표 이름
+  const [goalPrice, setGoalPrice] = useState(''); // 수기 가격
+  const [monthPrice, setMonthPrice] = useState(''); // 수기 한 달 입금
 
-    margin-top: 20px;
-    color: grey;
-    &:focus {
-      outline: none;
-      border-color: #8ec3b0;
-      box-shadow: 0px 0px 0px 4px hsla(206, 100%, 40%, 0.15);
+  console.log(setGoalPrice);
+  console.log(setMonthPrice);
+
+  const handlerGoal = (e) => {
+    setGoal(e.target.value);
+  };
+
+  const handlerGoalPrice = (e) => {
+    setGoalPrice(e.target.value);
+  };
+
+  const handlerMonthPrice = (e) => {
+    setMonthPrice(e.target.value);
+  };
+
+  const goalPost = async (memberId) => {
+    const postdata = {
+      goalName: goal,
+      price: goalPrice,
+      monthlyPayment: monthPrice,
+    };
+    try {
+      const res = await axios.post(
+        `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/goals/${memberId}`,
+        postdata,
+        {
+          headers: { getACCESS_TOKEN },
+        }
+      );
+      setGoal('');
+      setGoalPrice('');
+      setMonthPrice('');
+      console.log('post', res);
+    } catch (err) {
+      console.log('error', err);
     }
-  }
-  .buttonSet {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-  }
-  .SubmitBox {
-    box-sizing: border-box;
-    width: 214px;
-    height: 33px;
-    border-radius: 4px;
-    padding: 10px;
-    margin: 20px 0px 20px 0px;
-    text-align: center;
-    background-color: #b1b2ff;
-    :hover {
-      box-shadow: 0 5px 15px rgba(145, 92, 182, 0.4);
-      .li {
-        color: black;
-        font-weight: 700;
-      }
-    }
-  }
-`;
+  };
 
-// const SubmitBox = styled.div``;
-
-const Header = styled.h2`
-  margin: 30px 20px 0px 10px;
-`;
-
-const SavingCal = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-  font-size: 16px;
-`;
-
-const GoalCreate = () => {
   return (
     <CreatePage>
-      <ComponentContain>
+      <GuideBox>
+        <h2 className="TextHeader">나만의 목표를 등록하는 방법</h2>
         <br />
-        <div className="SettingLine">
-          <Header>나의 목표</Header>
-
-          <input
-            className="SettingInput"
-            placeholder="제네시스 GV80"
-            type="text"
-          />
-        </div>
-        <div className="SettingLine">
-          <Header>목표 금액</Header>
-          <input
-            className="SettingInput"
-            placeholder="61,360,000원"
-            type="number"
-          />
-          <Header style={{ color: '#b1b2ff' }}>원</Header>
-        </div>
-        <div className="SettingLine">
-          <Header>목표 기간</Header>
-          <input className="SettingInput" placeholder="72개월" type="number" />
-          <Header style={{ color: '#b1b2ff' }}>개월</Header>
-        </div>
-
-        <SavingCal>
-          <div style={{ display: 'flex' }}>
-            매달 &nbsp; <span style={{ color: 'red' }}>XX원</span> &nbsp;씩
-            모아야 해요!
-          </div>
-        </SavingCal>
-
-        <div className="buttonSet">
-          <Button
-            className="SubmitBox
-        "
-          >
-            <p>등록하기</p>
-          </Button>
-        </div>
-      </ComponentContain>
+        <p className="Text">
+          - <span className="Hilight">&apos;나의 목표&apos;</span>에 물건을
+          검색하여 시세를 찾을 수 있어요!
+        </p>
+        <br />
+        <p className="Text">
+          - <span className="Hilight">검색</span> 으로 나오지 않는다면, 직접
+          작성하여 등록할 수 있어요!
+        </p>
+        <br />
+        <p className="Text">
+          - 등록된 물품은 언제든 <span className="Hilight">수정, 삭제</span>가
+          가능합니다!
+        </p>
+        <br />
+        <p className="Text">
+          - 한 달에 이 물건을 위해 모을 수 있는 돈을 기입해 보아요!
+        </p>
+        <br />
+        <p className="Text">
+          - 위시리스트는 최대 <span className="Hilight">5개</span>까지 등록
+          가능합니다.
+        </p>
+        <br />
+      </GuideBox>
+      <GoalSetting
+        goal={goal}
+        goalprice={goalPrice}
+        goalPost={goalPost}
+        handlerGoal={handlerGoal}
+        handlerExtended={handlerGoalPrice}
+        handlerPeriod={handlerMonthPrice}
+      />
     </CreatePage>
   );
 };
-
-export default GoalCreate;
+export default GoalCreatePage;

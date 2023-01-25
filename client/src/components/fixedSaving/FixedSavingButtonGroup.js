@@ -139,7 +139,11 @@ const FixedSavingButtonGroup = () => {
   return (
     <Grid container>
       <Grid item xs={4}>
-        <StyledButton buttontype={-1} onClick={handleBack}>
+        <StyledButton
+          sx={{ borderBottomLeftRadius: 8 }}
+          buttontype={-1}
+          onClick={handleBack}
+        >
           <ArrowBackTwoToneIcon fontSize="large" />
         </StyledButton>
       </Grid>
@@ -149,7 +153,10 @@ const FixedSavingButtonGroup = () => {
         </StyledButton>
       </Grid>
       <Grid item xs={4}>
-        <StyledButton onClick={handleSearch}>
+        <StyledButton
+          sx={{ borderBottomRightRadius: 8 }}
+          onClick={handleSearch}
+        >
           <SearchTwoToneIcon fontSize="large" />
         </StyledButton>
       </Grid>
