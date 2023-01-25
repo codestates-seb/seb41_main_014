@@ -1,5 +1,7 @@
 package com.team1472.moas.member.controller;
 
+import com.team1472.moas.exception.BusinessLogicException;
+import com.team1472.moas.exception.ExceptionCode;
 import com.team1472.moas.member.dto.MemberDeleteDto;
 import com.team1472.moas.member.entity.Member;
 import com.team1472.moas.member.mapper.MemberMapper;
@@ -33,10 +35,16 @@ public class MemberController {
     private final MemberService service;
 
     //patchMember 메서드 (member 정보 수정)
+    //Principal null 값일때 NullPointerException 수정
     @PatchMapping()
     public ResponseEntity patchMember(
                                       @Valid @RequestBody MemberPatchDto memberPatchDto, Principal principal) {
 
+        try{
+            String email = principal.getName();
+        }catch (NullPointerException e){
+            return new ResponseEntity<>("회원정보 없음", HttpStatus.OK);
+        }
         String email = principal.getName();
 
         Member member = mapper.memberPatchDtoToMember(memberPatchDto);
