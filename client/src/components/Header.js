@@ -1,22 +1,95 @@
-import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import {
+  AppBar,
+  Avatar,
+  Badge,
+  Box,
+  IconButton,
+  Menu,
+  MenuItem,
+  styled,
+  Toolbar,
+  Tooltip,
+  Typography,
+} from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   ROUTE_PATH_BASE,
   ROUTE_PATH_FIXED_SAVING,
   ROUTE_PATH_GOAL_LIST,
   ROUTE_PATH_LOGIN,
   ROUTE_PATH_MEMBER,
-  ROUTE_PATH_SIGNUP,
+  ROUTE_PATH_MEMBER_EDIT,
 } from '../store/routerStore';
 import MenuIcon from '@mui/icons-material/Menu';
 import logo from '../asset/images/logo_main_light.png';
 import moas from '../asset/images/logo_name.png';
-import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { logout } from '../reducer/isLoginSlice';
+import {
+  MODAL_TYPE_MAIN_MENU,
+  setModalOpen,
+  setModalType,
+} from '../reducer/modaSlice';
 
-const Header = ({ handleOpenModal }) => {
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  '& .MuiBadge-badge': {
+    backgroundColor: '#44b700',
+    color: '#44b700',
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+    '&::after': {
+      position: 'absolute',
+      top: -1,
+      left: -1,
+      width: '100%',
+      height: '100%',
+      borderRadius: '50%',
+      animation: 'ripple 1.2s infinite ease-in-out',
+      border: '1px solid currentColor',
+      content: '""',
+    },
+  },
+  '@keyframes ripple': {
+    '0%': {
+      transform: 'scale(.8)',
+      opacity: 1,
+    },
+    '100%': {
+      transform: 'scale(2.4)',
+      opacity: 0,
+    },
+  },
+}));
+
+const Header = () => {
+  const [anchorElUser, setAnchorElUser] = useState(null);
   const isLogin = useSelector((state) => state.isLogin);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const member = 111;
+  const memberEdit = 112;
+  const memberLogout = 113;
+
+  const handleCloseUserMenu = (type) => {
+    setAnchorElUser(null);
+    switch (type) {
+      case member:
+        navigate(ROUTE_PATH_MEMBER);
+        break;
+      case memberEdit:
+        navigate(ROUTE_PATH_MEMBER_EDIT);
+        break;
+      case memberLogout:
+        dispatch(logout());
+        navigate(ROUTE_PATH_BASE);
+        break;
+    }
+  };
   return (
     <AppBar
       position="fixed"
@@ -29,7 +102,14 @@ const Header = ({ handleOpenModal }) => {
       })}
     >
       <Toolbar sx={{ maxWidth: 600, minWidth: 360 }}>
-        <IconButton size="large" edge="start" onClick={handleOpenModal}>
+        <IconButton
+          size="large"
+          edge="start"
+          onClick={() => {
+            dispatch(setModalType(MODAL_TYPE_MAIN_MENU));
+            dispatch(setModalOpen());
+          }}
+        >
           <MenuIcon />
         </IconButton>
 
@@ -48,50 +128,16 @@ const Header = ({ handleOpenModal }) => {
               </Link>
             </Typography>
             <Typography variant="h2" sx={{ mr: 4 }}>
-              <Link to={ROUTE_PATH_SIGNUP} style={{ textDecoration: 'none' }}>
-                회원가입
-              </Link>
-            </Typography>
-            {/* 로그인 시 */}
-            <Typography
-              variant="h2"
-              sx={{ mr: 4 }}
-              style={{ textDecoration: 'none' }}
-            >
-              <Link
-                to={ROUTE_PATH_GOAL_LIST}
-                style={{ textDecoration: 'none' }}
-              >
-                희망목록
-              </Link>
-            </Typography>
-            <Typography variant="h2" sx={{ mr: 4 }}>
               <Link
                 to={ROUTE_PATH_FIXED_SAVING}
                 style={{ textDecoration: 'none' }}
               >
                 적금
-              </Link>
-            </Typography>
-            <Typography variant="h2" sx={{ mr: 4 }}>
-              <Link to={ROUTE_PATH_MEMBER} style={{ textDecoration: 'none' }}>
-                멤버
               </Link>
             </Typography>
           </>
         ) : (
           <>
-            {/* 비로그인시 */}
-            <Typography variant="h2" sx={{ mr: 4 }}>
-              <Link to={ROUTE_PATH_LOGIN} style={{ textDecoration: 'none' }}>
-                로그인
-              </Link>
-            </Typography>
-            <Typography variant="h2" sx={{ mr: 4 }}>
-              <Link to={ROUTE_PATH_SIGNUP} style={{ textDecoration: 'none' }}>
-                회원가입
-              </Link>
-            </Typography>
             {/* 로그인 시 */}
             <Typography variant="h2" sx={{ mr: 4 }}>
               <Link
@@ -106,24 +152,56 @@ const Header = ({ handleOpenModal }) => {
                 to={ROUTE_PATH_FIXED_SAVING}
                 style={{ textDecoration: 'none' }}
               >
-                적금
+                적금추천
               </Link>
             </Typography>
-            <Typography variant="h2" sx={{ mr: 4 }}>
-              <Link to={ROUTE_PATH_MEMBER} style={{ textDecoration: 'none' }}>
-                멤버
-              </Link>
-            </Typography>
-            ㅣ것
+            <Box>
+              <Tooltip title={isLogin.userInfo.name}>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <StyledBadge
+                    overlap="circular"
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    variant="dot"
+                  >
+                    <Avatar
+                      src={isLogin.userInfo.picture}
+                      alt={isLogin.userInfo.name}
+                    />
+                  </StyledBadge>
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <MenuItem onClick={() => handleCloseUserMenu(member)}>
+                  회원정보
+                </MenuItem>
+                <MenuItem onClick={() => handleCloseUserMenu(memberEdit)}>
+                  정보수정
+                </MenuItem>
+                <MenuItem onClick={() => handleCloseUserMenu(memberLogout)}>
+                  로그아웃
+                </MenuItem>
+              </Menu>
+            </Box>
           </>
         )}
       </Toolbar>
     </AppBar>
   );
-};
-
-Header.propTypes = {
-  handleOpenModal: PropTypes.func,
 };
 
 export default Header;
