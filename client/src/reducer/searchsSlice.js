@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 // display: size / start: page / sort: sim: 정확도, date: 날짜순
-const pageInfo = { query: '', display: 1, start: 1, sort: 'sim' };
+const pageInfo = { query: '', display: 8, start: 1, sort: 'sim' };
 
-const initPageInfo = { hasNext: false, origin: pageInfo };
+const initPageInfo = { origin: pageInfo };
 
 const searchs = [];
 
@@ -28,7 +28,7 @@ const initSearchs = { origin: searchs };
 
 const initialState = {
   pageInfo: initPageInfo,
-  searchs: initSearchs,
+  data: initSearchs,
 };
 
 // 로그인, 로그아웃 리듀서 설정 => 로그인 상태 변경 및 유저 정보 추가 or 초기화
@@ -40,7 +40,7 @@ const searchsSlice = createSlice({
       state.searchs.origin = action.payload;
     },
     setSearchsPageInfo: (state, action) => {
-      state.pageInfo = action.payload;
+      state.pageInfo.origin = action.payload;
     },
     setInitSearchs: (state) => {
       state.pageInfo = initPageInfo;

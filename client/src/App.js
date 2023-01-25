@@ -27,11 +27,12 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import { column, columnCenter } from './styles/theme';
 import { useEffect, useState } from 'react';
-import { Box, Container, Modal, Typography } from '@mui/material';
+import { Container, Modal } from '@mui/material';
 import NotFound from './pages/NotFound';
 import ModalMainMenu from './components/modal/ModalMainMenu';
 import { useDispatch, useSelector } from 'react-redux';
 import { MODAL_TYPE_MAIN_MENU, setModalClose } from './reducer/modaSlice';
+import ModalSearchs from './components/modal/ModalSearchs';
 
 // TODO theme사용예시, theme의경우 typeScript ts, tsx설정안되면
 // 단순 theme interface(명세)라 자동완성안되니 style/theme.js 참조
@@ -80,12 +81,10 @@ function App() {
       </ContentContainer>
       {footerVisibility ? <Footer /> : ''}
       <Modal open={modal.open} onClose={() => dispatch(setModalClose())}>
-        {modal.type === MODAL_TYPE_MAIN_MENU ? (
+        {modal.type !== MODAL_TYPE_MAIN_MENU ? (
           <ModalMainMenu />
         ) : (
-          <Box>
-            <Typography variant="h1">네이버 검색</Typography>
-          </Box>
+          <ModalSearchs />
         )}
       </Modal>
     </StyledApp>

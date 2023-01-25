@@ -15,9 +15,6 @@ const StyledButton = styled(Button)`
 `;
 
 const Main = () => {
-  /**
-   * goalCreate 홍
-   */
   const create = () => {
     axios
       .post(
@@ -248,7 +245,6 @@ const Main = () => {
         return alert(errorText); */
       });
   };
-  //patch 400error 230119 김태윤
   const edit = () => {
     axios
       .patch(
@@ -586,7 +582,8 @@ const Main = () => {
               fontWeight: theme.fontWeight.bold,
             })}
           >
-            당신이 원하는 목표가 있을 때
+            동그랑 한푼 동그랑 두푼 여러푼 모아 푼돈 ㅜㅡㅜ 레버리지로 코인떡상
+            가즈아~!~!
           </Typography>
         </Animate>
         <Box
