@@ -2,6 +2,8 @@
 import styled from '@emotion/styled';
 import { Button } from '@mui/material';
 import PropTypes from 'prop-types';
+// import { ROUTE_PATH_GOAL_LIST } from '../../store/routerStore';
+// import { Link } from 'react-router-dom';
 
 const ComponentContain = styled.div`
   display: flex;
@@ -10,9 +12,11 @@ const ComponentContain = styled.div`
   align-items: center;
   margin: 30px;
   box-sizing: border-box;
-  width: 100%;
+  width: 600px;
   height: auto;
   border: 5px solid #aac4ff;
+  background-color: #aac4ff;
+  border-radius: 10px;
   .trashicon {
     margin-left: 500px;
   }
@@ -20,9 +24,22 @@ const ComponentContain = styled.div`
     font-size: 17px;
     font-weight: 500;
   }
+  .postButton {
+    background-color: white;
+    margin: 10px 0px 10px 0px;
+    font-size: 20px;
+    color: #aac4ff;
+    width: 30%;
+    &:hover {
+      outline: none;
+      border-color: #aac4ff;
+      box-shadow: 0px 0px 0px 4px hsla(206, 100%, 40%, 0.15);
+    }
+  }
 `;
 
-const Header = styled.h3`
+const Header = styled.h1`
+  color: #424242;
   margin-top: 30px;
 `;
 
@@ -42,6 +59,11 @@ const SettingInput = styled.input`
   }
 `;
 
+const LineBox = styled.div`
+  display: flex;
+  width: 600px;
+  justify-content: space-around;
+`;
 // const TextBox = styled.div`
 //   display: flex;
 //   flex-direction: row;
@@ -59,7 +81,7 @@ const SettingInput = styled.input`
 
 const AssetSetting = ({
   goal,
-  goalprice,
+  goalPrice,
   monthPrice,
   goalPost,
   handlerGoal,
@@ -71,30 +93,38 @@ const AssetSetting = ({
       <div style={{ display: 'flex' }}>
         <ComponentContain>
           <br />
-          <Header>나의 목표</Header>
-          <SettingInput
-            placeholder="제네시스 GV80"
-            type="text"
-            onChange={handlerGoal}
-            value={goal}
-          />
-          <p className="p">목표 금액(원)</p>
-          <SettingInput
-            placeholder="61,360,000원"
-            type="number"
-            onChange={handlerGoalPrice}
-            value={goalprice}
-          />
-          <p className="p">한달 납입금(원)</p>
-          <SettingInput
-            placeholder="300,000원"
-            type="number"
-            onChange={handlerMonthPrice}
-            value={monthPrice}
-          />
-          <p className="p">목표달성을 위한 매달 저축액은?</p>
+          <LineBox>
+            <Header>나의 목표</Header>
+            <SettingInput
+              placeholder="제네시스 GV80"
+              type="text"
+              onChange={handlerGoal}
+              value={goal}
+            />
+          </LineBox>
+          <LineBox>
+            <Header>목표 금액</Header>
+            <SettingInput
+              placeholder="61,360,000원"
+              type="number"
+              onChange={handlerGoalPrice}
+              value={goalPrice}
+            />
+          </LineBox>
+          <LineBox>
+            <Header>월 입금액</Header>
+            <SettingInput
+              placeholder="300,000원"
+              type="number"
+              onChange={handlerMonthPrice}
+              value={monthPrice}
+            />
+          </LineBox>
+          <p className="p">목표달성을 위한 기간은?</p>
           <>
-            <Button goalPost={goalPost}>등록하기</Button>
+            <Button className="postButton" onClick={goalPost}>
+              SUBMIT
+            </Button>
           </>
         </ComponentContain>
       </div>
@@ -104,7 +134,7 @@ const AssetSetting = ({
 
 AssetSetting.propTypes = {
   goal: PropTypes.string,
-  goalprice: PropTypes.number,
+  goalPrice: PropTypes.number,
   monthPrice: PropTypes.number,
   goalPost: PropTypes.func,
   handlerGoal: PropTypes.func,

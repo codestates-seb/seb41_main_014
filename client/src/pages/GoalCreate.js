@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { getACCESS_TOKEN } from '../helper/cookieHelper.js';
 import axios from 'axios';
 import GoalSetting from '../components/goal/GoalSetting';
+import { useNavigate } from 'react-router-dom';
 
 const GuideBox = styled.div`
   display: flex;
@@ -11,18 +12,19 @@ const GuideBox = styled.div`
   justify-content: center;
   box-sizing: border-box;
   padding: 10px;
-  width: 650px;
+  width: 600px;
   height: auto;
   text-align: left;
   border-top: 5px solid #aac4ff;
   border-bottom: 5px solid #aac4ff;
-  margin-bottom: 50px;
+  margin: 50px 0 50px;
   color: grey;
   .TextHeader {
     text-align: center;
     color: #aac4ff;
-    width: 550px;
+    width: 600px;
     font-size: 16pt;
+    margin-top: 20px;
   }
   .Text {
     font-size: 12px;
@@ -40,6 +42,8 @@ const CreatePage = styled.div`
 `;
 
 const GoalCreatePage = () => {
+  const navigate = useNavigate();
+
   const [goal, setGoal] = useState(''); // 수기 목표 이름
   const [goalPrice, setGoalPrice] = useState(''); // 수기 가격
   const [monthPrice, setMonthPrice] = useState(''); // 수기 한 달 입금
@@ -47,6 +51,7 @@ const GoalCreatePage = () => {
   console.log(setGoalPrice);
   console.log(setMonthPrice);
 
+  // 코드 리팩토링
   const handlerGoal = (e) => {
     setGoal(e.target.value);
   };
@@ -59,7 +64,7 @@ const GoalCreatePage = () => {
     setMonthPrice(e.target.value);
   };
 
-  const goalPost = async (memberId) => {
+  const goalPost = async () => {
     const postdata = {
       goalName: goal,
       price: goalPrice,
@@ -67,15 +72,16 @@ const GoalCreatePage = () => {
     };
     try {
       const res = await axios.post(
-        `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/goals/${memberId}`,
+        `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/goals`,
         postdata,
         {
-          headers: { getACCESS_TOKEN },
+          headers: getACCESS_TOKEN(),
         }
       );
       setGoal('');
       setGoalPrice('');
       setMonthPrice('');
+      navigate(`/goalList`);
       console.log('post', res);
     } catch (err) {
       console.log('error', err);
@@ -86,6 +92,7 @@ const GoalCreatePage = () => {
     <CreatePage>
       <GuideBox>
         <h2 className="TextHeader">나만의 목표를 등록하는 방법</h2>
+        <br />
         <br />
         <p className="Text">
           - <span className="Hilight">&apos;나의 목표&apos;</span>에 물건을
@@ -113,8 +120,9 @@ const GoalCreatePage = () => {
         <br />
       </GuideBox>
       <GoalSetting
-        goal={goal}
-        goalprice={goalPrice}
+        // goal={goal}
+        // goalPrice={goalPrice}
+        // monthPrice={monthPrice}
         goalPost={goalPost}
         handlerGoal={handlerGoal}
         handlerExtended={handlerGoalPrice}
@@ -123,4 +131,5 @@ const GoalCreatePage = () => {
     </CreatePage>
   );
 };
+
 export default GoalCreatePage;
