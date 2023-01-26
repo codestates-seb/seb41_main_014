@@ -65,6 +65,7 @@ function App() {
       <Helmet>
         <meta charSet="utf-8" />
         <title>당신의 저축도우미 MOAS</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta
           httpEquiv="Content-Security-Policy"
           content="upgrade-insecure-requests"
