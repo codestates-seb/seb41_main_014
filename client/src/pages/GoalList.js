@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { getACCESS_TOKEN } from '../helper/cookieHelper.js';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+// import styled from '@emotion/styled';
 
 const GoalList = ({
   setGoal,
@@ -14,13 +15,21 @@ const GoalList = ({
 }) => {
   const [render, setRender] = useState(0);
 
+  const [goals, setGoals] = useState([
+    { goalId: 0, goalName: '닌텐도', price: 10000, monthlyPayment: 100 },
+    { goalId: 1, goalName: '맥북 pro', price: 20000, monthlyPayment: 200 },
+    { goalId: 2, goalName: '갤럭시 z플립5', price: 30000, monthlyPayment: 300 },
+    { goalId: 3, goalName: '다이슨 청소기', price: 40000, monthlyPayment: 400 },
+  ]);
+  console.log(goals[0].goalName);
+
   useEffect(() => {
-    const goalGet = async (memberId) => {
+    const goalGet = async () => {
       try {
         const res = await axios.get(
-          `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/goals/${memberId}`,
+          `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/goals`,
           {
-            headers: { getACCESS_TOKEN },
+            headers: getACCESS_TOKEN(),
           }
         );
         console.log('get', res);
@@ -31,25 +40,29 @@ const GoalList = ({
     goalGet();
   }, [render]);
 
-  const goalDelete = async (memberId, goalId) => {
+  const goalDelete = async (goalId) => {
     try {
       // eslint-disable-next-line no-unused-vars
       const res = await axios.delete(
-        `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/goals/${memberId}/${goalId}`,
+        `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/goals/${goalId}`,
         {
-          headers: { getACCESS_TOKEN },
+          headers: getACCESS_TOKEN(),
         }
       );
       setRender((el) => el + 1);
       // console.log('DELETE', res);
     } catch (err) {
-      // console.log('deleteerror', err);
+      // console.log('deleteError', err);
     }
   };
+
+  const handleDelete = (id) =>
+    setGoals(goals.filter((goal) => goal.goalId !== id));
 
   return (
     <>
       <GoalListGroup
+        goals={goals}
         goal={goal}
         goalPrice={goalPrice}
         monthPrice={monthPrice}
@@ -57,6 +70,7 @@ const GoalList = ({
         setGoalPrice={setGoalPrice}
         setMonthPrice={setMonthPrice}
         goalDelete={goalDelete}
+        handleDelete={handleDelete}
         // goalNameonChange={goalNameonChange}
         // goalPriceonChange={goalPriceonChange}
         // goalMonthlypaymentonChange={goalMonthlypaymentonChange}
@@ -74,6 +88,7 @@ GoalList.propTypes = {
   goal: PropTypes.string,
   goalPrice: PropTypes.number,
   monthPrice: PropTypes.number,
+  id: PropTypes.number,
 };
 
 // import { useState } from 'react';
@@ -97,8 +112,8 @@ GoalList.propTypes = {
 //           <div className="SettingLine">
 //             <Header>나의 목표: </Header>
 
-//             <input className="SettingInput" value={goal.goal_name} />
-//           </div>
+//             <input className="SettingInput" value={goal.goalName} />
+//           </di, monthlyPayment: 100v>
 //           <div className="SettingLine">
 //             <Header>목표 금액: </Header>
 
@@ -116,7 +131,7 @@ GoalList.propTypes = {
 //             />
 //             <Header style={{ color: '#b1b2ff' }}>원</Header>
 //           </div>
-//           <Button onClick={() => handleDelete(goal.goal_id)}>삭제</Button>
+//           <Button onClick={() => handleDelete(goal.goalId)}>삭제</Button>
 //           {/* <Link to={ROUTE_PATH_GOAL_EDIT}>수정</Link> */}
 //           <Link to={ROUTE_PATH_GOAL_DETAIL}>상세</Link>
 //         </li>
@@ -132,20 +147,20 @@ GoalList.propTypes = {
 
 // const GoalList = () => {
 //   const [goals, setGoals] = useState([
-//     { goal_id: 0, goal_name: '목표이름', price: 10000 },
-//     { goal_id: 1, goal_name: '목표이름', price: 20000 },
-//     { goal_id: 2, goal_name: '목표이름', price: 30000 },
-//     { goal_id: 3, goal_name: '목표이름', price: 40000 },
-//     { goal_id: 4, goal_name: '목표이름', price: 50000 },
-//     { goal_id: 5, goal_name: '목표이름', price: 60000 },
-//     { goal_id: 6, goal_name: '목표이름', price: 70000 },
-//     { goal_id: 7, goal_name: '목표이름', price: 80000 },
-//     { goal_id: 8, goal_name: '목표이름', price: 90000 },
-//     { goal_id: 9, goal_name: '목표이름', price: 10000 },
+//     { goalId: 0, goalName: '목표이름', price: 10000, monthlyPayment: 100 },
+//     { goalId: 1, goalName: '목표이름', price: 20000, monthlyPayment: 100 },
+//     { goalId: 2, goalName: '목표이름', price: 30000, monthlyPayment: 100 },
+//     { goalId: 3, goalName: '목표이름', price: 40000, monthlyPayment: 100 },
+//     { goalId: 4, goalName: '목표이름', price: 50000, monthlyPayment: 100 },
+//     { goalId: 5, goalName: '목표이름', price: 60000, monthlyPayment: 100 },
+//     { goalId: 6, goalName: '목표이름', price: 70000, monthlyPayment: 100 },
+//     { goalId: 7, goalName: '목표이름', price: 80000, monthlyPayment: 100 },
+//     { goalId: 8, goalName: '목표이름', price: 90000, monthlyPayment: 100 },
+//     { goalId: 9, goalName: '목표이름', price: 10000, monthlyPayment: 100 },
 //   ]);
 
 //   const handleDelete = (id) =>
-//     setGoals(goals.filter((goal) => goal.goal_id !== id));
+//     setGoals(goals.filter((goal) => goal.goalId !== id));
 
 //   return (
 //     <>
@@ -163,7 +178,7 @@ GoalList.propTypes = {
 //       ) : (
 //         <ul>
 //           {goals.map((goal) => (
-//             <Goal key={goal.goal_id} goal={goal} handleDelete={handleDelete} />
+//             <Goal key={goal.goalId} goal={goal} handleDelete={handleDelete} />
 //           ))}
 //         </ul>
 //       )}
@@ -196,7 +211,7 @@ GoalList.propTypes = {
 //   justify-content: space-around;
 // `;
 
-// const Tempbox = styled.div`
+// const TempUl = styled.div`
 //   display: flex;
 //   flex-direction: column;
 //   align-items: center;
@@ -234,9 +249,10 @@ GoalList.propTypes = {
 //       box-shadow: 0px 0px 0px 4px hsla(206, 100%, 40%, 0.15);
 //     }
 //   }
-// `;
+//
+`;
 
-// const Header = styled.h2`
+// const Header = styled.h2`;
 //   margin: 30px 20px 0px 10px;
 // `;
 
