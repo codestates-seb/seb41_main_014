@@ -8,6 +8,8 @@ import logo_main from '../../src/asset/images/logo_main.png';
 import coin from '../../src/asset/images/main_coin.svg';
 import { Animate, AnimateGroup } from 'react-simple-animate';
 import 'animate.css';
+import { MODAL_TYPE_SEARCH, setModalOpen, setModalType } from '../reducer/modaSlice';
+import { useDispatch } from 'react-redux';
 
 const StyledButton = styled(Button)`
   padding: ${(props) => props.theme.spacing(2)};
@@ -543,6 +545,8 @@ const Main = () => {
         return alert(errorText); */
       });
   };
+
+  const dispatch = useDispatch();
   return (
     <AnimateGroup play>
       <Box>
@@ -567,6 +571,13 @@ const Main = () => {
         <StyledButton variant="contained" onClick={fixedSaving}>
           적금
         </StyledButton>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            dispatch(setModalType(MODAL_TYPE_SEARCH));
+            dispatch(setModalOpen());
+          }}
+        ></Button>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Animate

@@ -81,7 +81,7 @@ function App() {
       </ContentContainer>
       {footerVisibility ? <Footer /> : ''}
       <Modal open={modal.open} onClose={() => dispatch(setModalClose())}>
-        {modal.type !== MODAL_TYPE_MAIN_MENU ? (
+        {modal.type === MODAL_TYPE_MAIN_MENU ? (
           <ModalMainMenu />
         ) : (
           <ModalSearchs />
