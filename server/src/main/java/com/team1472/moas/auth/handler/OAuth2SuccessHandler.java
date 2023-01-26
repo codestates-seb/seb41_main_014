@@ -102,6 +102,9 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String memberId = memberRepository.findByEmail(email).get().getId().toString();
         claims.put("member_id", memberId); // Oauth2 인증 시 프론트에 주는 토큰에 멤버 아이디 추가
 
+        String memberId = memberRepository.findByEmail(email).get().getId().toString();
+        claims.put("member_id", memberId); // Oauth2 인증 시 프론트에 주는 토큰에 멤버 아이디 추가
+
         String subject = email;
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
 
