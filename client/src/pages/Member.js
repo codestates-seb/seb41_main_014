@@ -1,55 +1,78 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { logout } from '../reducer/isLoginSlice';
-import { ROUTE_PATH_BASE } from '../store/routerStore';
-import { Container, styled, Divider, Button } from '@mui/material';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import {
+  Container,
+  styled,
+  Divider,
+  Button,
+  Modal,
+  Box,
+  TextField,
+} from '@mui/material';
+import axios from 'axios';
+import { getACCESS_TOKEN } from '../helper/cookieHelper';
+import empty from '../asset/images/no_data.png';
 
 const MemberContainer = styled(Container)`
   display: flex;
   flex-direction: column;
-  height: 80vh;
+  height: 60vh;
   margin-top: 8px;
-  background-color: ${(props) => props.theme.colors.mainLight};
-  div {
-    margin-top: 4px;
-  }
-  h2 {
-    margin-top: 4px;
-  }
-  h3 {
-    margin-top: 4px;
-  }
-  img {
-    margin-top: 4px;
-  }
+  background-color: ${(props) => props.theme.colors.white};
 `;
 
 const InfoContainer = styled(Container)`
-  text-align: center;
-  font-size: 18px;
+  display: flex;
   flex: 1;
+  .userImage {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    img {
+      width: 50%;
+      height: fit-content;
+      border-radius: 8px;
+      margin-top: 20%;
+      border: 2px solid ${(props) => props.theme.colors.mainLight};
+    }
+  }
+  .userInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .userButton {
+    text-align: end;
+  }
+  .userName {
+    margin-top: 15%;
+    font-size: ${(props) => props.theme.fontSizes.xxxl};
+    font-weight: ${(props) => props.theme.fontWeight.medium};
+  }
+  .userEmail {
+    margin-top: 8px;
+    font-size: ${(props) => props.theme.fontSizes.xl};
+    font-weight: 200;
+  }
 `;
 
 const SummaryContainer = styled(Container)`
-  text-align: left;
   font-size: 14px;
   div {
-    background-color: ${(props) => props.theme.colors.mainMiddleLight};
-    margin-top: 4px;
+    border: 2px solid ${(props) => props.theme.colors.mainHeavy};
+    border-radius: 4px;
+    margin-top: 8px;
     width: 100%;
-    height: 10vh;
+    height: 18vh;
+    text-align: center;
+    img {
+      width: 25%;
+    }
   }
   h3 {
-    margin-top: 4px;
+    margin-top: 8px;
   }
-  flex: 2;
-`;
-
-const LogoutContainer = styled(Container)`
-  display: flex;
-  justify-content: end;
-  flex: 0.05;
-  margin-bottom: 4px;
+  flex: 1;
 `;
 
 const MemberDivider = styled(Divider)`
@@ -58,40 +81,113 @@ const MemberDivider = styled(Divider)`
   margin-top: 4px;
 `;
 
-const LogoutButton = styled(Button)`
-  background-color: ${(props) => props.theme.colors.white};
-  width: 15%;
+const EditButton = styled(Button)`
+  background-color: ${(props) => props.theme.colors.mainMiddleLight};
+  width: 10%;
+  margin-right: 4px;
 `;
 
+const DeleteButton = styled(Button)`
+  background-color: ${(props) => props.theme.colors.mainLight};
+  width: 10%;
+`;
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  height: 500,
+  bgcolor: 'background.paper',
+  border: '2px solid #d2daff',
+  boxShadow: 24,
+  p: 4,
+};
+
 const Member = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   const userInfo = useSelector((state) => state.isLogin.userInfo);
+  const isLogin = useSelector((state) => state.isLogin.isLogin);
+  const [open, setOpen] = useState(false);
 
-  const logoutHandler = () => {
-    dispatch(logout());
-    navigate(ROUTE_PATH_BASE);
+  const changeEditHandler = () => {
+    setOpen(!open);
+  };
+
+  const deleteHandler = () => {
+    axios
+      .delete(
+        `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/members`,
+        {
+          headers: {
+            withCredentials: true,
+            Authorization: getACCESS_TOKEN(),
+          },
+        }
+      )
+      .then((response) => console.log(response))
+      .catch((err) => console.log(err));
   };
 
   return (
     <>
-      <MemberContainer>
-        <InfoContainer>
-          <h3>MY PROFILE</h3>
-          <img src={userInfo.picture} alt="유저프로필" />
-          <h2>{userInfo.name}</h2>
-          <div>{userInfo.email}</div>
-        </InfoContainer>
-        <MemberDivider />
-        <SummaryContainer>
-          <h3>MY WISHLIST</h3>
-          <div></div>
-        </SummaryContainer>
-        <LogoutContainer>
-          <LogoutButton onClick={logoutHandler}>LOGOUT</LogoutButton>
-        </LogoutContainer>
-      </MemberContainer>
+      {isLogin && (
+        <MemberContainer>
+          <InfoContainer>
+            <div className="userImage">
+              <img src={userInfo.picture} alt="유저프로필" />
+            </div>
+            <div className="userInfo">
+              <div className="userButton">
+                <EditButton onClick={changeEditHandler}>EDIT</EditButton>
+                <Modal
+                  open={open}
+                  onClose={changeEditHandler}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={style}>
+                    <h3>회원정보 수정</h3>
+                    <form>
+                      <TextField
+                        id="outlined-helperText"
+                        label="이름"
+                        variant="outlined"
+                        defaultValue={userInfo.name}
+                      />
+                      <br />
+                      <TextField
+                        id="outlined-helperText"
+                        label="이메일"
+                        variant="outlined"
+                        defaultValue={userInfo.email}
+                      />
+                      <br />
+                      <Button>CONFIRM</Button>
+                    </form>
+                  </Box>
+                </Modal>
+                <DeleteButton onClick={deleteHandler}>DELETE</DeleteButton>
+              </div>
+              <div className="userName">{userInfo.name}</div>
+              <div className="userEmail">{userInfo.email}</div>
+            </div>
+          </InfoContainer>
+          <MemberDivider />
+          <SummaryContainer>
+            <h3>MY WISHLIST</h3>
+            <div>
+              <img src={empty} alt="빈데이터" />
+              <h4>희망 물품이 없어요</h4>
+            </div>
+          </SummaryContainer>
+        </MemberContainer>
+      )}
+      {!isLogin && (
+        <MemberContainer>
+          <div>로그인을 해주세요.</div>
+        </MemberContainer>
+      )}
     </>
   );
 };
