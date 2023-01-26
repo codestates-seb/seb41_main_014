@@ -8,16 +8,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class SavingProductsService {
     private final InterestRateRepository interestRateRepository;
 
-    public MultiResponse findSavingsProducts(Pageable pageable, SavingsFilteringReq filter) {
-         Page<SavingProductRes> pageSavingProduct = interestRateRepository.findFilteringSavingProducts(pageable, filter);
+    public MultiResponse findSavingsProducts(Pageable pageable, SavingsFilteringReq filter, Long memberId) {
+        Page<SavingProductRes> pageSavingProduct = interestRateRepository.findFilteringSavingProducts(pageable, filter, memberId);
 
         List<SavingProductRes> savingProducts = pageSavingProduct.getContent();
 

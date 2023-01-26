@@ -2,6 +2,7 @@ package com.team1472.moas.goal.service;
 
 import com.team1472.moas.exception.BusinessLogicException;
 import com.team1472.moas.exception.ExceptionCode;
+import com.team1472.moas.goal.dto.GoalRes;
 import com.team1472.moas.goal.entity.Goal;
 import com.team1472.moas.goal.repository.GoalRepository;
 import com.team1472.moas.member.entity.Member;
@@ -26,21 +27,27 @@ public class GoalService{
 
     //목표 생성
     public Goal createGoal(Goal goal, long memberId) {
+        //회원 정보 추가
         Member member = memberService.findMember(memberId);
         goal.addMember(member);
 
-        savePeriod(goal); //납입 기간 계산
+        //이미지 url 정보 존재 시 저장
+        Optional.ofNullable(goal.getUrl()).ifPresent(url -> goal.setUrl(url));
+
+        //납입 기간 자동 계산하여 저장
+        savePeriod(goal);
 
         return goalRepository.save(goal);
     }
 
     //목표 수정
-    public Goal updateGoal(Goal goal, long goalId) {
-        Goal findGoal = findVerifiedGoal(goalId);
+    public Goal updateGoal(Goal goal, long goalId, long memberId) {
+        Goal findGoal = findVerifiedGoalByMemberId(goalId, memberId);
 
         Optional.ofNullable(goal.getGoalName()).ifPresent(goalName -> findGoal.setGoalName(goalName));
         Optional.ofNullable(goal.getPrice()).ifPresent(price -> findGoal.setPrice(price));
         Optional.ofNullable(goal.getMonthlyPayment()).ifPresent(monthlyPayment -> findGoal.setMonthlyPayment(monthlyPayment));
+        Optional.ofNullable(goal.getUrl()).ifPresent(url -> findGoal.setUrl(url));
 
         savePeriod(goal);
         saveProgress(goalId);
@@ -50,16 +57,16 @@ public class GoalService{
     }
 
     //목표 상세 조회
-    public Goal findGoal(long goalId) {
+    public Goal findGoal(long goalId, long memberId) {
         saveProgress(goalId);
         saveStatus(goalId);
-        return findVerifiedGoal(goalId);
+        return findVerifiedGoalByMemberId(goalId, memberId);
     }
 
     //목표 전체 조회 (List)
-    public List<Goal> findGoals() {
-        List<Goal> goals = goalRepository.findAll();
-        for (Goal goal : goals) {
+    public List<GoalRes> findGoals(long memberId) {
+        List<GoalRes> goals = goalRepository.findGoalsByMemberId(memberId);
+        for (GoalRes goal : goals) {
             saveProgress(goal.getId());
             saveStatus(goal.getId());
         }
@@ -67,17 +74,21 @@ public class GoalService{
     }
 
     //목표 삭제
-    public void deleteGoal(long goalId) {
-        Goal findGoal = findVerifiedGoal(goalId);
+    public void deleteGoal(long goalId, long memberId) {
+        Goal findGoal = findVerifiedGoalByMemberId(goalId, memberId);
         goalRepository.delete(findGoal);
     }
 
-    //id로 특정 목표가 존재하는지 찾아서 리턴
-    //존재하지 않을 시 에러 메세지 띄움
+    //goalId와 memberId로 특정 목표 찾기
+    private Goal findVerifiedGoalByMemberId(long goalId, long memberId) {
+        return goalRepository.findByIdAndMemberId(goalId, memberId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.GOAL_NOT_FOUND));
+    }
+
+    //goalId로 특정 목표 찾기
     private Goal findVerifiedGoal(long goalId) {
-        Optional<Goal> optionalGoal = goalRepository.findById(goalId);
-        Goal findGoal = optionalGoal.orElseThrow(() -> new BusinessLogicException(ExceptionCode.GOAL_NOT_FOUND));
-        return findGoal;
+        return goalRepository.findById(goalId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.GOAL_NOT_FOUND));
     }
 
     //납입기간 설정

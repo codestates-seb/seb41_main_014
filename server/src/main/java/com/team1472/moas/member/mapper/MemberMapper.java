@@ -12,7 +12,6 @@ public interface MemberMapper {
     Member memberPatchDtoToMember(MemberPatchDto memberPatchDto);
 
     Member memberDeleteDtoToMember(MemberDeleteDto memberDeleteDto);
-
     default MemberResponseDto memberToMemberResponseDto(Member member) {
         if (member == null) {
             return null;

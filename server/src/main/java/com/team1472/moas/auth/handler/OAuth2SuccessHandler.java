@@ -99,7 +99,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         Map<String, Object> claims = new HashMap<>();
         claims.put("email", email);
         claims.put("roles", authorities);
-
         String memberId = memberRepository.findByEmail(email).get().getId().toString();
         claims.put("member_id", memberId); // Oauth2 인증 시 프론트에 주는 토큰에 멤버 아이디 추가
 
