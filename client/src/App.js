@@ -33,7 +33,6 @@ import ModalMainMenu from './components/modal/ModalMainMenu';
 import { useDispatch, useSelector } from 'react-redux';
 import { MODAL_TYPE_MAIN_MENU, setModalClose } from './reducer/modaSlice';
 import ModalSearchs from './components/modal/ModalSearchs';
-import { Helmet } from 'react-helmet';
 
 // TODO theme사용예시, theme의경우 typeScript ts, tsx설정안되면
 // 단순 theme interface(명세)라 자동완성안되니 style/theme.js 참조
@@ -62,15 +61,6 @@ function App() {
 
   return (
     <StyledApp>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>당신의 저축도우미 MOAS</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta
-          httpEquiv="Content-Security-Policy"
-          content="upgrade-insecure-requests"
-        />
-      </Helmet>
       <Header />
       <ContentContainer>
         <Routes>
