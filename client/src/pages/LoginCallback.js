@@ -24,8 +24,8 @@ const LoginCallback = () => {
     // 토큰이 받아졌다면
     if (accessToken && refreshToken) {
       // 토큰을 쿠키에 저장한다.
-      setACCESS_TOKEN(accessToken.slice(6));
-      setREFRESH_TOKEN(refreshToken.slice(6));
+      setACCESS_TOKEN(accessToken);
+      setREFRESH_TOKEN(refreshToken);
       // 멤버 아이디는 일단 사용이 불확실하므로 로컬에 저장만 해둘게요.
       localStorage.setItem('memberId', memberId);
 

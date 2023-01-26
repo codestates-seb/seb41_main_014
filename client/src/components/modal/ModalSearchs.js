@@ -17,7 +17,7 @@ import InsertLinkIcon from '@mui/icons-material/InsertLink';
 import { getLOCALE_MONEY } from '../../helper/unitHelper';
 import axios from 'axios';
 import { setSearchsPageInfo } from '../../reducer/searchsSlice';
-import { getREFRESH_TOKEN } from '../../helper/cookieHelper';
+import { getACCESS_TOKEN, getREFRESH_TOKEN } from '../../helper/cookieHelper';
 
 const ModalSearchs = () => {
   const [query, setQuery] = useState('');
@@ -61,6 +61,7 @@ const ModalSearchs = () => {
   };
   const handleSearchStart = () => {
     console.log(getREFRESH_TOKEN());
+    console.log(getACCESS_TOKEN());
     if (query === '') {
       alert('빈값');
       return;
