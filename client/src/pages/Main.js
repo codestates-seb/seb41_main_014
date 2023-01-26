@@ -8,7 +8,11 @@ import logo_main from '../../src/asset/images/logo_main.png';
 import coin from '../../src/asset/images/main_coin.svg';
 import { Animate, AnimateGroup } from 'react-simple-animate';
 import 'animate.css';
-import { MODAL_TYPE_SEARCH, setModalOpen, setModalType } from '../reducer/modaSlice';
+import {
+  MODAL_TYPE_SEARCH,
+  setModalOpen,
+  setModalType,
+} from '../reducer/modaSlice';
 import { useDispatch } from 'react-redux';
 
 const StyledButton = styled(Button)`
