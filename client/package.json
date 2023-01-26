@@ -19,6 +19,7 @@
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
     "react-google-button": "^0.7.2",
+    "react-helmet": "^6.1.0",
     "react-infinite-scroll-component": "^6.1.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.1",
