@@ -57,7 +57,7 @@ const Main = () => {
           monthlyPayment: -1,
         },
         {
-          headers: {},
+          headers: { Authorization: getACCESS_TOKEN() },
           withCredentials: true,
         }
       )
