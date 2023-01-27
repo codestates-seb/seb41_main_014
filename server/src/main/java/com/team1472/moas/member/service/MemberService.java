@@ -112,12 +112,13 @@ public class MemberService {
     }
 
     //logoutMember 메서드 (로그아웃, 토큰삭제)
-    public void logoutMember(HttpServletRequest request){
+    public void logoutMember(String email){
 
-        String refreshToken = request.getHeader("RefreshToken").substring(6);
-        RefreshToken token = tokenRepository.findByRefreshToken(refreshToken).get();
+        Member findMember = verifyExistsMemberbyemail(email);
 
-        tokenRepository.deleteById(token.getTokenId());
+        long memberId = findMember.getId();
+
+        tokenRepository.deleteById(memberId);
     }
 
     //refresh 메서드 (RefreshToken을 입력받아 토큰 재발급)
