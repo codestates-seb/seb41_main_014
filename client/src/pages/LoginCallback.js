@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { setACCESS_TOKEN, setREFRESH_TOKEN } from '../helper/cookieHelper';
 import { login } from '../reducer/isLoginSlice';
 import { ROUTE_PATH_BASE } from '../store/routerStore';
+import { URL_MEMBER, getWITH_TOKEN } from '../store/urlStore';
 
 const LoginCallback = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const LoginCallback = () => {
   const refreshToken = new URL(window.location.href).searchParams.get(
     'refresh_token'
   );
-  const memberId = new URL(window.location.href).searchParams.get('member_id');
+  // const memberId = new URL(window.location.href).searchParams.get('member_id');
 
   useEffect(() => {
     // 토큰이 받아졌다면
@@ -26,19 +27,17 @@ const LoginCallback = () => {
       // 토큰을 쿠키에 저장한다.
       setACCESS_TOKEN(accessToken);
       setREFRESH_TOKEN(refreshToken);
-      // 멤버 아이디는 일단 사용이 불확실하므로 로컬에 저장만 해둘게요.
-      localStorage.setItem('memberId', memberId);
 
       // 로그인을 통해 받은 토큰을 바로 헤더에 실어 유저 정보를 받아오는 요청을 보냄
-      axios(
-        `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/members`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: accessToken,
-          },
-        }
-      ).then((response) => dispatch(login(response.data.data)));
+      axios
+        .get(URL_MEMBER, getWITH_TOKEN())
+        .then((response) => {
+          const { data } = response;
+          dispatch(login(data.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       // {
       //     id: 2,
       //     email: 'iltae94@gmail.com',
