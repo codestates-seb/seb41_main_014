@@ -1,4 +1,5 @@
-import { Box, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
+import { forwardRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setModalClose } from '../../reducer/modaSlice';
@@ -13,25 +14,13 @@ import {
   ROUTE_PATH_MEMBER,
 } from '../../store/routerStore';
 
-const ModalMainMenu = () => {
+const ModalMainMenu = forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const handleCloseModal = () => {
     dispatch(setModalClose());
   };
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        p: 4,
-      }}
-    >
+    <Stack {...props} ref={ref}>
       <Link
         to={ROUTE_PATH_BASE}
         style={{ textDecoration: 'none', padding: '24px' }}
@@ -120,8 +109,10 @@ const ModalMainMenu = () => {
           적금
         </Typography>
       </Link>
-    </Box>
+    </Stack>
   );
-};
+});
+
+ModalMainMenu.displayName = 'ModalMainMenu';
 
 export default ModalMainMenu;

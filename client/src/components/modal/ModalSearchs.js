@@ -8,7 +8,7 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setModalClose } from '../../reducer/modaSlice';
 import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
@@ -18,7 +18,7 @@ import axios from 'axios';
 import { getWITH_PARAMS, URL_NAVER_SEARCH } from '../../store/urlStore';
 import Pagination from '../libs/Pagenation';
 
-const ModalSearchs = () => {
+const ModalSearchs = forwardRef((props, ref) => {
   const [query, setQuery] = useState('');
   const [start, setStart] = useState(1);
   const [searchs, setSearchs] = useState([]);
@@ -30,25 +30,26 @@ const ModalSearchs = () => {
   };
 
   useEffect(() => {
-    axios
-      .get(
-        URL_NAVER_SEARCH,
-        getWITH_PARAMS({
-          query: query,
-          start: start,
-          ...pageInfo,
+    if (start !== 1) {
+      axios
+        .get(
+          URL_NAVER_SEARCH,
+          getWITH_PARAMS({
+            query: query,
+            start: start,
+            ...pageInfo,
+          })
+        )
+        .then((response) => {
+          const { data } = response;
+          console.log(data);
+          setSearchs(data.items);
+          setTotal(data.total);
         })
-      )
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-        setSearchs(data.items);
-        setTotal(data.total);
-        console.log(total);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }, [start]);
 
   //7~12는 필터링해야될듯.
@@ -92,8 +93,6 @@ const ModalSearchs = () => {
         console.log(data);
         setSearchs(data.items);
         setTotal(data.total);
-        setTotal(data.total);
-        console.log(total);
       })
       .catch((error) => {
         console.log(error);
@@ -109,6 +108,8 @@ const ModalSearchs = () => {
 
   return (
     <Stack
+      {...props}
+      ref={ref}
       spacing={2}
       sx={{
         minWidth: '360px',
@@ -132,7 +133,6 @@ const ModalSearchs = () => {
         <Input
           value={query}
           onChange={handleSearchInput}
-          inputRef={(input) => input && input.focus()}
           placeholder={'검색어를 입력하세요.'}
           sx={{ input: { textAlign: 'end' } }}
         />
@@ -208,6 +208,8 @@ const ModalSearchs = () => {
       </Stack>
     </Stack>
   );
-};
+});
+
+ModalSearchs.displayName = 'ModalSearchs';
 
 export default ModalSearchs;
