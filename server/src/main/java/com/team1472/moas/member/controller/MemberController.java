@@ -61,18 +61,10 @@ public class MemberController {
     //deleteMember 메서드 (member 삭제)
     @Operation(summary = "회원 정보 삭제")
     @DeleteMapping()
-    public ResponseEntity deleteMember(
-            @Valid @RequestBody MemberDeleteDto memberDeleteDto,Principal principal) {
-
-        Member member = mapper.memberDeleteDtoToMember(memberDeleteDto);
-
-        String email_inbody = member.getEmail();
+    public ResponseEntity deleteMember(Principal principal) {
 
         String email = principal.getName();
-
-
-        service.deleteMember(member, email,email_inbody);
-
+        service.deleteMember(email);
 
         return new ResponseEntity<>("MEMBER DELETED", HttpStatus.OK);
     }
