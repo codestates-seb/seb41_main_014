@@ -60,7 +60,7 @@ public class MemberController {
 
     //deleteMember 메서드 (member 삭제)
     @Operation(summary = "회원 정보 삭제")
-    @DeleteMapping()
+    @PostMapping()
     public ResponseEntity deleteMember(
             @Valid @RequestBody MemberDeleteDto memberDeleteDto,Principal principal) {
 
