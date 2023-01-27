@@ -14,12 +14,15 @@ import {
   setModalType,
 } from '../reducer/modaSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { getACCESS_TOKEN } from '../helper/cookieHelper';
 import {
   getURL_GOALS,
+  getURL_SAVINGS_INTEREST,
   getWITH_PARAMS,
   getWITH_TOKEN,
+  URL_MEMBER,
+  URL_MEMBER_LOGOUT,
   URL_NAVER_SEARCH,
+  URL_SAVINGS,
 } from '../store/urlStore';
 
 const StyledButton = styled(Button)`
@@ -29,7 +32,8 @@ const StyledButton = styled(Button)`
 
 const Main = () => {
   const userInfo = useSelector((state) => state.isLogin.userInfo);
-  console.log(userInfo);
+  const dispatch = useDispatch();
+
   const goalCreate = () => {
     axios
       .post(
@@ -62,12 +66,12 @@ const Main = () => {
   };
   const goalEdit = () => {
     //예를들어 골아이디가 1
-    const goalID = 1;
+    const goalID = 79;
     axios
       .patch(
         getURL_GOALS(goalID),
         {
-          goalName: '수정감자',
+          goalName: '11111111한글날은좋아',
           price: 99990000,
           monthlyPayment: 11100,
         },
@@ -83,9 +87,9 @@ const Main = () => {
   };
   const goalDetail = () => {
     //예를들어 골아이디가 1
-    const goalID = 1;
+    const goalID = 79;
     axios
-      .get(getURL_GOALS(goalID))
+      .get(getURL_GOALS(goalID), getWITH_TOKEN())
       .then((response) => {
         const { data } = response;
         console.log(data);
@@ -96,9 +100,9 @@ const Main = () => {
   };
   const goalDelete = () => {
     //예를들어 골아이디가 1
-    const goalID = 1;
+    const goalID = 79;
     axios
-      .delete(getURL_GOALS(goalID))
+      .delete(getURL_GOALS(goalID), getWITH_TOKEN())
       .then((response) => {
         const { data } = response;
         console.log(data);
@@ -108,21 +112,50 @@ const Main = () => {
       });
   };
 
-  const memberDel = () => {
+  const memberLogOut = () => {
     axios
-      .delete(
-        'http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/members',
+      .post(URL_MEMBER_LOGOUT, getWITH_TOKEN())
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const memberDetail = () => {
+    axios
+      .get(URL_MEMBER, getWITH_TOKEN())
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const memberEdit = () => {
+    axios
+      .patch(
+        URL_MEMBER,
         {
           email: userInfo.email,
           name: userInfo.name,
+          picture: userInfo.picture,
         },
-        {
-          headers: {
-            Authorization: getACCESS_TOKEN(),
-          },
-          withCredentials: true,
-        }
+        getWITH_TOKEN()
       )
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const memberDel = () => {
+    axios
+      .delete(URL_MEMBER, getWITH_TOKEN())
       .then((response) => {
         const { data } = response;
         console.log(data);
@@ -151,20 +184,16 @@ const Main = () => {
   const fixedSaving = () => {
     axios
       .post(
-        'http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/savings',
+        URL_SAVINGS,
         {
           monthlySavings: 10000,
           saveTrm: 36,
           joinDeny: 3,
-        } /*//TODO 참고 https://junglast.com/blog/http-ajax-withcredential
-        쿼리파라메타가 아닌 경우, option -> params: {key:value} 추가*/,
-        {
-          headers: { withCredentials: true },
-          params: {
-            page: 1,
-            size: 10,
-          },
-        }
+        },
+        getWITH_PARAMS({
+          page: 1,
+          size: 10,
+        })
       )
       .then((response) => {
         const { data } = response;
@@ -172,64 +201,68 @@ const Main = () => {
       })
       .catch((error) => {
         console.log(error);
-
-        //TODO 에러처리 error에서 넘어오는 정보확인하고 번호만 짤라서
-        /*         let errorText;
-        const { message } = error;
-        const code = Number(message.slice(-3));
-        switch (code) {
-          case 400:
-            errorText = 'Bad request';
-            break;
-          case 401:
-            errorText = 'Unauthorized';
-            break;
-          case 403:
-            errorText = 'Forbidden';
-            break;
-          case 404:
-            errorText = 'Data not found';
-            break;
-          case 405:
-            errorText = 'Method not allowed';
-            break;
-          case 415:
-            errorText = 'Unsupported media type';
-            break;
-          case 429:
-            errorText = 'Rate limit exceeded';
-            break;
-          case 500:
-            errorText = 'Internal server error';
-            break;
-          case 502:
-            errorText = 'Bad gateway';
-            break;
-          case 503:
-            errorText = 'Service unavailable';
-            break;
-          case 504:
-            errorText = 'Gateway timeout';
-            break;
-          default:
-            errorText = error;
-        }
-        return alert(errorText); */
+      });
+  };
+  const fixedSavingCreate = () => {
+    axios
+      .post(getURL_SAVINGS_INTEREST(), {
+        finPrdtCd: 'WR0001L',
+        intrRateType: 'S',
+        rsrvType: 'S',
+        saveTrm: '12',
+      })
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const fixedSavingList = () => {
+    axios
+      .get(getURL_SAVINGS_INTEREST(), getWITH_TOKEN())
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const fixedSavingDelete = () => {
+    //관심목록 ID
+    const interestID = 1;
+    axios
+      .delete(getURL_SAVINGS_INTEREST(interestID), getWITH_TOKEN())
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
-  const dispatch = useDispatch();
   return (
     <AnimateGroup play>
       <Box>
+        <StyledButton variant="contained" onClick={memberLogOut}>
+          로그아웃
+        </StyledButton>
+        <StyledButton variant="contained" onClick={memberDetail}>
+          회원정보상세
+        </StyledButton>
+        <StyledButton variant="contained" onClick={memberEdit}>
+          회원정보수정
+        </StyledButton>
         <StyledButton variant="contained" onClick={memberDel}>
           회원삭제
         </StyledButton>
+      </Box>
+      <Box>
         <StyledButton variant="contained" onClick={goalCreate}>
           목표등록
-        </StyledButton>
-        <StyledButton variant="contained" onClick={openapi}>
-          물품검색
         </StyledButton>
         <StyledButton variant="contained" onClick={goalList}>
           물품조회
@@ -243,8 +276,10 @@ const Main = () => {
         <StyledButton variant="contained" onClick={goalDelete}>
           물품삭제
         </StyledButton>
-        <StyledButton variant="contained" onClick={fixedSaving}>
-          적금
+      </Box>
+      <Box>
+        <StyledButton variant="contained" onClick={openapi}>
+          물품검색
         </StyledButton>
         <Button
           variant="outlined"
@@ -252,7 +287,21 @@ const Main = () => {
             dispatch(setModalType(MODAL_TYPE_SEARCH));
             dispatch(setModalOpen());
           }}
-        ></Button>
+        >
+          네이버검색모달
+        </Button>
+        <StyledButton variant="contained" onClick={fixedSaving}>
+          적금추천
+        </StyledButton>
+        <StyledButton variant="contained" onClick={fixedSavingList}>
+          관심적금목록
+        </StyledButton>
+        <StyledButton variant="contained" onClick={fixedSavingCreate}>
+          관심적금등록
+        </StyledButton>
+        <StyledButton variant="contained" onClick={fixedSavingDelete}>
+          관심적금삭제
+        </StyledButton>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Animate

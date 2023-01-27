@@ -4,9 +4,9 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import styled from '@emotion/styled';
+import { Button, styled } from '@mui/material';
 
-const PaginationButton = styled.button`
+const PaginationButton = styled(Button)`
   font-size: 15px;
   border: 1px solid grey;
   background-color: ${(props) => (props.select ? 'orange' : 'white')};
@@ -28,6 +28,7 @@ export default class Page extends Component {
     linkClass: PropTypes.string,
     disabledClass: PropTypes.string,
     href: PropTypes.string,
+    ariaLabel: PropTypes.string,
   };
 
   static defaultProps = {

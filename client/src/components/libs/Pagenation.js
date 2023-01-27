@@ -4,14 +4,7 @@ import PropTypes from 'prop-types';
 import paginator from 'paginator';
 import Page from './Page';
 import cx from 'classnames';
-import styled from 'styled-components';
-import { RowDiv } from '../../styles/StyledStore';
-
-const PaginationContainer = styled(RowDiv)`
-  margin: 4px 8px;
-  width: 100%;
-  justify-content: end;
-`;
+import { Stack } from '@mui/material';
 
 export default class Pagination extends Component {
   static propTypes = {
@@ -215,9 +208,9 @@ export default class Pagination extends Component {
   render() {
     const pages = this.buildPages();
     return (
-      <PaginationContainer className={this.props.innerClass}>
+      <Stack className={this.props.innerClass} direction="row">
         {pages}
-      </PaginationContainer>
+      </Stack>
     );
   }
 }

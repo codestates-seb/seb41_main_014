@@ -4,37 +4,52 @@ import {
   Grid,
   Input,
   Link,
-  Pagination,
   Stack,
   Tooltip,
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setModalClose } from '../../reducer/modaSlice';
 import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
 import { getLOCALE_MONEY } from '../../helper/unitHelper';
 import axios from 'axios';
-import { setSearchsPageInfo } from '../../reducer/searchsSlice';
-import { getACCESS_TOKEN, getREFRESH_TOKEN } from '../../helper/cookieHelper';
+import { getWITH_PARAMS, URL_NAVER_SEARCH } from '../../store/urlStore';
+import Pagination from '../libs/Pagenation';
 
 const ModalSearchs = () => {
   const [query, setQuery] = useState('');
-  const searchs = useSelector((state) => state.searchs);
+  const [start, setStart] = useState(1);
+  const [searchs, setSearchs] = useState([]);
+  const [total, setTotal] = useState(0);
+  // display: size / start: page / sort: sim: 정확도, date: 날짜순
+  const pageInfo = {
+    display: 8,
+    sort: 'sim',
+  };
 
   useEffect(() => {
-    // axios
-    //   .get('접속문', {
-    //     withCredentials: true,
-    //     params: {},
-    //   })
-    //   .then((response) => {
-    //     const { data } = response;
-    //     console.log(data);
-    //   })
-    //   .catch((error) => alert(error));
-  }, [searchs.pageInfo.origin.start]);
+    axios
+      .get(
+        URL_NAVER_SEARCH,
+        getWITH_PARAMS({
+          query: query,
+          start: start,
+          ...pageInfo,
+        })
+      )
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+        setSearchs(data.items);
+        setTotal(data.total);
+        console.log(total);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [start]);
 
   //7~12는 필터링해야될듯.
   const productType = {
@@ -52,83 +67,36 @@ const ModalSearchs = () => {
     12: '판매예정/가격비교 매칭 일반상품',
   };
 
-  const searchsData = searchs.data.origin;
-
   const dispatch = useDispatch();
 
   const handleSearchInput = (e) => {
     setQuery(e.target.value);
   };
+
   const handleSearchStart = () => {
-    console.log(getREFRESH_TOKEN());
-    console.log(getACCESS_TOKEN());
     if (query === '') {
       alert('빈값');
       return;
     }
     axios
       .get(
-        'http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080//api/search',
-        {
-          headers: {
-            Authorization: getREFRESH_TOKEN(),
-          },
-          params: {
-            query: query,
-          },
-        } /* ,  //TODO 참고 https://junglast.com/blog/http-ajax-withcredential
-        쿼리파라메타가 아닌 경우, option -> params: {key:value} 추가
-        { headers: { withCredentials: true } }*/
+        URL_NAVER_SEARCH,
+        getWITH_PARAMS({
+          query: query,
+          start: start,
+          ...pageInfo,
+        })
       )
       .then((response) => {
         const { data } = response;
         console.log(data);
+        setSearchs(data.items);
+        setTotal(data.total);
+        setTotal(data.total);
+        console.log(total);
       })
       .catch((error) => {
         console.log(error);
-
-        //TODO 에러처리 error에서 넘어오는 정보확인하고 번호만 짤라서
-        /*         let errorText;
-        const { message } = error;
-        const code = Number(message.slice(-3));
-        switch (code) {
-          case 400:
-            errorText = 'Bad request';
-            break;
-          case 401:
-            errorText = 'Unauthorized';
-            break;
-          case 403:
-            errorText = 'Forbidden';
-            break;
-          case 404:
-            errorText = 'Data not found';
-            break;
-          case 405:
-            errorText = 'Method not allowed';
-            break;
-          case 415:
-            errorText = 'Unsupported media type';
-            break;
-          case 429:
-            errorText = 'Rate limit exceeded';
-            break;
-          case 500:
-            errorText = 'Internal server error';
-            break;
-          case 502:
-            errorText = 'Bad gateway';
-            break;
-          case 503:
-            errorText = 'Service unavailable';
-            break;
-          case 504:
-            errorText = 'Gateway timeout';
-            break;
-          default:
-            errorText = error;
-        }
-        return alert(errorText); */
       });
   };
   const handleCloseModal = () => {
@@ -136,8 +104,7 @@ const ModalSearchs = () => {
   };
 
   const handlePageChange = (buttonNumber) => {
-    const newPageInfo = { ...searchs.pageInfo.origin, start: buttonNumber };
-    dispatch(setSearchsPageInfo(newPageInfo));
+    setStart(buttonNumber);
   };
 
   return (
@@ -177,14 +144,12 @@ const ModalSearchs = () => {
           검색
         </Button>
       </Stack>
-      {!!searchsData &&
-      Array.isArray(searchsData) &&
-      searchsData.length === 0 ? (
+      {!searchs || !Array.isArray(searchs) || searchs.length === 0 ? (
         <Typography>불러올 정보가 없어요.</Typography>
       ) : (
         <Stack spacing={1} alignItems="center">
           <Grid container>
-            {searchsData.map((search) => (
+            {searchs.map((search) => (
               <Grid item key={search.productId} xs={3}>
                 <Tooltip
                   title={
@@ -227,9 +192,9 @@ const ModalSearchs = () => {
             ))}
           </Grid>
           <Pagination
-            activePage={searchs.pageInfo.origin.start}
-            itemsCountPerPage={searchs.pageInfo.origin.display}
-            totalItemsCount={10000}
+            activePage={start}
+            itemsCountPerPage={pageInfo.display}
+            totalItemsCount={total}
             pageRangeDisplayed={5}
             onChange={handlePageChange}
           />
