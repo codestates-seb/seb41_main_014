@@ -20,7 +20,21 @@ const ModalMainMenu = forwardRef((props, ref) => {
     dispatch(setModalClose());
   };
   return (
-    <Stack {...props} ref={ref}>
+    <Stack
+      {...props}
+      ref={ref}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        p: 4,
+      }}
+    >
       <Link
         to={ROUTE_PATH_BASE}
         style={{ textDecoration: 'none', padding: '24px' }}
