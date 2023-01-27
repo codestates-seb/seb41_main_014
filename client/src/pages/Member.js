@@ -8,10 +8,14 @@ import {
   Modal,
   Box,
   TextField,
+  CircularProgress,
+  Typography,
 } from '@mui/material';
 import axios from 'axios';
 import { getACCESS_TOKEN } from '../helper/cookieHelper';
 import empty from '../asset/images/no_data.png';
+import { useNavigate } from 'react-router-dom';
+import { ROUTE_PATH_BASE } from '../store/routerStore';
 
 const MemberContainer = styled(Container)`
   display: flex;
@@ -19,6 +23,14 @@ const MemberContainer = styled(Container)`
   height: 60vh;
   margin-top: 8px;
   background-color: ${(props) => props.theme.colors.white};
+  .NotLogin {
+    margin-top: 20vh;
+    text-align: center;
+    div {
+      margin-top: 24px;
+      font-size: ${(props) => props.theme.fontSizes.xxxl};
+    }
+  }
 `;
 
 const InfoContainer = styled(Container)`
@@ -92,7 +104,7 @@ const DeleteButton = styled(Button)`
   width: 10%;
 `;
 
-const style = {
+const editStyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -105,13 +117,32 @@ const style = {
   p: 4,
 };
 
+const deleteStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  height: 200,
+  bgcolor: 'background.paper',
+  border: '2px solid #d2daff',
+  boxShadow: 24,
+  p: 4,
+};
+
 const Member = () => {
+  const navigate = useNavigate();
   const userInfo = useSelector((state) => state.isLogin.userInfo);
   const isLogin = useSelector((state) => state.isLogin.isLogin);
-  const [open, setOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
 
   const changeEditHandler = () => {
-    setOpen(!open);
+    setEditOpen(!editOpen);
+  };
+
+  const changeDeleteHandler = () => {
+    setDeleteOpen(!deleteOpen);
   };
 
   const deleteHandler = () => {
@@ -127,6 +158,7 @@ const Member = () => {
       )
       .then((response) => console.log(response))
       .catch((err) => console.log(err));
+    navigate(ROUTE_PATH_BASE);
   };
 
   return (
@@ -141,19 +173,21 @@ const Member = () => {
               <div className="userButton">
                 <EditButton onClick={changeEditHandler}>EDIT</EditButton>
                 <Modal
-                  open={open}
+                  open={editOpen}
                   onClose={changeEditHandler}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
+                  aria-labelledby="회원정보 수정"
                 >
-                  <Box sx={style}>
-                    <h3>회원정보 수정</h3>
+                  <Box sx={editStyle}>
+                    <h2 style={{ textDecoration: 'none', padding: '24px' }}>
+                      회원정보 수정
+                    </h2>
                     <form>
                       <TextField
                         id="outlined-helperText"
                         label="이름"
                         variant="outlined"
                         defaultValue={userInfo.name}
+                        style={{ margin: '24px', width: 300 }}
                       />
                       <br />
                       <TextField
@@ -161,13 +195,43 @@ const Member = () => {
                         label="이메일"
                         variant="outlined"
                         defaultValue={userInfo.email}
+                        style={{ margin: '24px', width: 300 }}
                       />
                       <br />
-                      <Button>CONFIRM</Button>
+                      <Button style={{ padding: '24px', textAlign: 'center' }}>
+                        CONFIRM
+                      </Button>
                     </form>
                   </Box>
                 </Modal>
-                <DeleteButton onClick={deleteHandler}>DELETE</DeleteButton>
+                <DeleteButton onClick={changeDeleteHandler}>
+                  DELETE
+                </DeleteButton>
+                <Modal
+                  open={deleteOpen}
+                  onClose={changeDeleteHandler}
+                  aria-labelledby="삭제 확인"
+                >
+                  <Box sx={deleteStyle}>
+                    <Typography
+                      sx={{ mt: 2, fontSize: '2rem' }}
+                      style={{ textDecoration: 'none', margin: '12px' }}
+                    >
+                      회원 정보를 삭제하시겠습니까?
+                    </Typography>
+                    <Button
+                      onClick={deleteHandler}
+                      style={{
+                        backgroundColor: '#eef1ff',
+                        textDecoration: 'none',
+                        margin: '12px',
+                        marginTop: '40px',
+                      }}
+                    >
+                      CONFIRM
+                    </Button>
+                  </Box>
+                </Modal>
               </div>
               <div className="userName">{userInfo.name}</div>
               <div className="userEmail">{userInfo.email}</div>
@@ -185,7 +249,10 @@ const Member = () => {
       )}
       {!isLogin && (
         <MemberContainer>
-          <div>로그인을 해주세요.</div>
+          <div className="NotLogin">
+            <CircularProgress />
+            <div>로그인을 해주세요 !</div>
+          </div>
         </MemberContainer>
       )}
     </>
