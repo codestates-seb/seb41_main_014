@@ -4,16 +4,7 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { Button, styled } from '@mui/material';
-
-const PaginationButton = styled(Button)`
-  font-size: 15px;
-  border: 1px solid grey;
-  background-color: ${(props) => (props.select ? 'orange' : 'white')};
-  width: 50px;
-  height: 50px;
-  margin: 4px;
-`;
+import { Box, Button, Link, Typography } from '@mui/material';
 
 export default class Page extends Component {
   static propTypes = {
@@ -76,15 +67,26 @@ export default class Page extends Component {
     });
 
     return (
-      <PaginationButton
+      <Box
+        sx={(theme) => ({
+          p: 3,
+          borderRadius: '4px',
+          fontSize: theme.fontSizes.basic,
+          backgroundColor: isActive ? theme.colors.mainMiddleLight : '',
+        })}
         className={css}
         onClick={this.handleClick.bind(this)}
-        select={isActive}
       >
-        <a className={linkCss} href={href} aria-label={ariaLabel}>
-          {pageText}
-        </a>
-      </PaginationButton>
+        <Link className={linkCss} href={href} aria-label={ariaLabel}>
+          <Typography
+            sx={(theme) => ({
+              color: isActive ? theme.colors.white : '',
+            })}
+          >
+            {pageText}
+          </Typography>
+        </Link>
+      </Box>
     );
   }
 }

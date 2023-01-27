@@ -44,8 +44,8 @@ const StyledApp = styled(Container)`
 
 const ContentContainer = styled(Container)`
   ${column}
+  width: 100%;
   max-width: 600px;
-  width: 600px;
   min-width: 360px;
   padding-top: 74px;
 `;

@@ -114,7 +114,7 @@ const Main = () => {
 
   const memberLogOut = () => {
     axios
-      .post(URL_MEMBER_LOGOUT, getWITH_TOKEN())
+      .delete(URL_MEMBER_LOGOUT, getWITH_TOKEN())
       .then((response) => {
         const { data } = response;
         console.log(data);

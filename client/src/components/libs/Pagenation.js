@@ -49,7 +49,7 @@ export default class Pagination extends Component {
     itemClass: undefined,
     linkClass: undefined,
     activeLinkClass: undefined,
-    hideFirstLastPages: false,
+    hideFirstLastPages: true,
     getPageUrl: (i) => '#',
   };
 
@@ -208,7 +208,7 @@ export default class Pagination extends Component {
   render() {
     const pages = this.buildPages();
     return (
-      <Stack className={this.props.innerClass} direction="row">
+      <Stack className={this.props.innerClass} direction="row" spacing={1}>
         {pages}
       </Stack>
     );

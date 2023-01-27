@@ -1,4 +1,4 @@
-import { getACCESS_TOKEN } from '../helper/cookieHelper';
+import { getACCESS_TOKEN, getREFRESH_TOKEN } from '../helper/cookieHelper';
 
 // const TYPE_DEPLOY = false;
 const base = process.env.REACT_APP_BASEURL;
@@ -28,6 +28,7 @@ export const getWITH_TOKEN = (params) => {
     ...getWITH_PARAMS(params),
     headers: {
       Authorization: getACCESS_TOKEN(),
+      RefreshToken: getREFRESH_TOKEN(),
     },
     withCredentials: true,
   };
