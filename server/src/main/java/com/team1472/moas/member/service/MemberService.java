@@ -70,15 +70,16 @@ public class MemberService {
     }
 
     //회원 삭제 메서드
-    public void deleteMember(Member member, String email){
+    public void deleteMember(Member member, String email,String email_inbody){
 
-        Member findMember = verifyExistsMemberbyemail(email);
+        Member findMember = verifyExistsMemberbyemail(email_inbody);
+
+        Member findMember_2 = verifyExistsMemberbyemail(email);
 
         long memberId = findMember.getId();
 
-
         // 기존닉네임과 Patch요청의 닉네임이 다른경우
-        if (!member.getName().equals(findMember.getName())){
+        if (findMember.getName().equals(findMember_2.getName())){
             // 요청 닉네임이 존재하는지 조회
             if(memberRepository.existsByName(member.getName())){
                 // 닉네임이 있으면 계속 진행
@@ -87,9 +88,9 @@ public class MemberService {
                 throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_EXISTS);
             }
         }
+
         Optional.ofNullable(member.getName())
                 .ifPresent(name -> findMember.setName(name));
-
 
         memberRepository.deleteById(memberId);
 
