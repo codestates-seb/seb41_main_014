@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
 //                        .antMatchers(HttpMethod.PATCH,"/**").hasRole("USER")
-                        .antMatchers(HttpMethod.DELETE,"/api/members/**").hasRole("USER")
+//                        .antMatchers(HttpMethod.DELETE,"/api/members/**").hasRole("USER")
                         .antMatchers("/**").permitAll()
                         .anyRequest().permitAll())
                 .logout().logoutSuccessUrl("/")
