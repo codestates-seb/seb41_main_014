@@ -91,7 +91,7 @@ public class MemberController {
 
         service.logoutMember(email);
 
-        return new ResponseEntity<>("Logout", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("Logout", HttpStatus.OK);
     }
     //refreshToken 메서드 (토큰 재발급)
 
