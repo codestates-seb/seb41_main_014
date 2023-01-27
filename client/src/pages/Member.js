@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Container,
   styled,
@@ -12,10 +12,19 @@ import {
   Typography,
 } from '@mui/material';
 import axios from 'axios';
-import { getACCESS_TOKEN } from '../helper/cookieHelper';
+import {
+  removeACCESS_TOKEN,
+  removeREFRESH_TOKEN,
+} from '../helper/cookieHelper';
 import empty from '../asset/images/no_data.png';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH_BASE } from '../store/routerStore';
+import { logout } from '../reducer/isLoginSlice';
+import {
+  URL_MEMBER_LOGOUT,
+  URL_MEMBER,
+  getWITH_TOKEN,
+} from '../store/urlStore';
 
 const MemberContainer = styled(Container)`
   display: flex;
@@ -26,6 +35,7 @@ const MemberContainer = styled(Container)`
   .NotLogin {
     margin-top: 20vh;
     text-align: center;
+    height: 60%;
     div {
       margin-top: 24px;
       font-size: ${(props) => props.theme.fontSizes.xxxl};
@@ -45,6 +55,7 @@ const InfoContainer = styled(Container)`
       height: fit-content;
       border-radius: 8px;
       margin-top: 20%;
+      margin-bottom: 10%;
       border: 2px solid ${(props) => props.theme.colors.mainLight};
     }
   }
@@ -74,8 +85,10 @@ const SummaryContainer = styled(Container)`
     border: 2px solid ${(props) => props.theme.colors.mainHeavy};
     border-radius: 4px;
     margin-top: 8px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
     width: 100%;
-    height: 18vh;
+    height: fit-content;
     text-align: center;
     img {
       width: 25%;
@@ -132,6 +145,7 @@ const deleteStyle = {
 
 const Member = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.isLogin.userInfo);
   const isLogin = useSelector((state) => state.isLogin.isLogin);
   const [editOpen, setEditOpen] = useState(false);
@@ -147,17 +161,33 @@ const Member = () => {
 
   const deleteHandler = () => {
     axios
-      .delete(
-        `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/members`,
-        {
-          headers: {
-            withCredentials: true,
-            Authorization: getACCESS_TOKEN(),
-          },
-        }
-      )
-      .then((response) => console.log(response))
-      .catch((err) => console.log(err));
+      .delete(URL_MEMBER, getWITH_TOKEN())
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    removeACCESS_TOKEN();
+    removeREFRESH_TOKEN();
+    dispatch(logout());
+    navigate(ROUTE_PATH_BASE);
+  };
+
+  const logoutHandler = () => {
+    axios
+      .delete(URL_MEMBER_LOGOUT, getWITH_TOKEN())
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    removeACCESS_TOKEN();
+    removeREFRESH_TOKEN();
+    dispatch(logout());
     navigate(ROUTE_PATH_BASE);
   };
 
@@ -245,6 +275,7 @@ const Member = () => {
               <h4>희망 물품이 없어요</h4>
             </div>
           </SummaryContainer>
+          <Button onClick={logoutHandler}>LOGOUT</Button>
         </MemberContainer>
       )}
       {!isLogin && (

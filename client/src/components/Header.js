@@ -31,6 +31,12 @@ import {
   setModalOpen,
   setModalType,
 } from '../reducer/modaSlice';
+import axios from 'axios';
+import { URL_MEMBER_LOGOUT, getWITH_TOKEN } from '../store/urlStore';
+import {
+  removeACCESS_TOKEN,
+  removeREFRESH_TOKEN,
+} from '../helper/cookieHelper';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -85,6 +91,19 @@ const Header = () => {
         navigate(ROUTE_PATH_MEMBER_EDIT);
         break;
       case memberLogout:
+        axios
+          .delete(URL_MEMBER_LOGOUT, getWITH_TOKEN())
+          .then((response) => {
+            const { data } = response;
+            console.log(data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        removeACCESS_TOKEN();
+        removeREFRESH_TOKEN();
+        dispatch(logout());
+        navigate(ROUTE_PATH_BASE);
         dispatch(logout());
         navigate(ROUTE_PATH_BASE);
         break;
