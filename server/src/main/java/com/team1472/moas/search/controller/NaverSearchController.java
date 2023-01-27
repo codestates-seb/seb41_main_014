@@ -23,11 +23,15 @@ public class NaverSearchController {
      * @param query
      * */
     @GetMapping("/search")
-    public JSONObject search(@RequestParam String query) {
+    public JSONObject search(@RequestParam String query,
+                             @RequestParam Integer display,
+                             @RequestParam Integer start) {
         Mono<JSONObject> mono = WebClient.builder().baseUrl("https://openapi.naver.com")
                 .build().get()
                 .uri(builder -> builder.path("/v1/search/shop.json")
                         .queryParam("query",query)
+                        .queryParam("display",display)
+                        .queryParam("start",start)
                         .build()
                 )
                 .header("X-Naver-Client-Id", authKey.getNaverClientId())
