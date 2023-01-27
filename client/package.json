@@ -19,7 +19,6 @@
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
     "react-google-button": "^0.7.2",
-    "react-helmet": "^6.1.0",
     "react-infinite-scroll-component": "^6.1.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.1",
@@ -31,7 +30,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "aws s3 sync ./build s3://moas1472 --profile=moas-deploy-s3"
   },
   "eslintConfig": {
     "extends": [

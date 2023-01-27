@@ -597,8 +597,7 @@ const Main = () => {
               fontWeight: theme.fontWeight.bold,
             })}
           >
-            동그랑 한푼 동그랑 두푼 여러푼 모아 푼돈 ㅜㅡㅜ 레버리지로 코인떡상
-            가즈아~!~!
+            첫 월급부터 은퇴자금까지 당신을 위한 저축플래너
           </Typography>
         </Animate>
         <Box
