@@ -30,6 +30,84 @@ const StyledButton = styled(Button)`
 const Main = () => {
   const userInfo = useSelector((state) => state.isLogin.userInfo);
   console.log(userInfo);
+  const goalCreate = () => {
+    axios
+      .post(
+        getURL_GOALS(),
+        {
+          goalName: '감자',
+          price: 10000,
+          monthlyPayment: -1,
+        },
+        getWITH_TOKEN()
+      )
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const goalList = () => {
+    axios
+      .get(getURL_GOALS(), getWITH_TOKEN())
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const goalEdit = () => {
+    //예를들어 골아이디가 1
+    const goalID = 1;
+    axios
+      .patch(
+        getURL_GOALS(goalID),
+        {
+          goalName: '수정감자',
+          price: 99990000,
+          monthlyPayment: 11100,
+        },
+        getWITH_TOKEN()
+      )
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const goalDetail = () => {
+    //예를들어 골아이디가 1
+    const goalID = 1;
+    axios
+      .get(getURL_GOALS(goalID))
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const goalDelete = () => {
+    //예를들어 골아이디가 1
+    const goalID = 1;
+    axios
+      .delete(getURL_GOALS(goalID))
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const memberDel = () => {
     axios
       .delete(
@@ -53,25 +131,7 @@ const Main = () => {
         console.log(error);
       });
   };
-  const create = () => {
-    axios
-      .post(
-        getURL_GOALS(),
-        {
-          goalName: '감자',
-          price: 10000,
-          monthlyPayment: -1,
-        },
-        getWITH_TOKEN()
-      )
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+
   const openapi = () => {
     axios
       .get(
@@ -88,65 +148,6 @@ const Main = () => {
         console.log(error);
       });
   };
-  const getList = () => {
-    axios
-      .get(getURL_GOALS(), getWITH_TOKEN())
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const edit = () => {
-    //예를들어 골아이디가 1
-    const goalID = 1;
-    axios
-      .patch(
-        getURL_GOALS(goalID),
-        {
-          goalName: '수정감자',
-          price: 99990000,
-          monthlyPayment: 11100,
-        },
-        getWITH_TOKEN()
-      )
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const readDetail = () => {
-    //예를들어 골아이디가 1
-    const goalID = 1;
-    axios
-      .get(getURL_GOALS(goalID))
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const deleteGoal = () => {
-    //예를들어 골아이디가 1
-    const goalID = 1;
-    axios
-      .delete(getURL_GOALS(goalID))
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   const fixedSaving = () => {
     axios
       .post(
@@ -224,22 +225,22 @@ const Main = () => {
         <StyledButton variant="contained" onClick={memberDel}>
           회원삭제
         </StyledButton>
-        <StyledButton variant="contained" onClick={create}>
+        <StyledButton variant="contained" onClick={goalCreate}>
           목표등록
         </StyledButton>
         <StyledButton variant="contained" onClick={openapi}>
           물품검색
         </StyledButton>
-        <StyledButton variant="contained" onClick={getList}>
+        <StyledButton variant="contained" onClick={goalList}>
           물품조회
         </StyledButton>
-        <StyledButton variant="contained" onClick={readDetail}>
+        <StyledButton variant="contained" onClick={goalDetail}>
           물품상세조회
         </StyledButton>
-        <StyledButton variant="contained" onClick={edit}>
+        <StyledButton variant="contained" onClick={goalEdit}>
           물품수정
         </StyledButton>
-        <StyledButton variant="contained" onClick={deleteGoal}>
+        <StyledButton variant="contained" onClick={goalDelete}>
           물품삭제
         </StyledButton>
         <StyledButton variant="contained" onClick={fixedSaving}>
