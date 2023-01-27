@@ -84,12 +84,10 @@ public class MemberController {
 
     //logout 메서드 (로그아웃, 토큰 삭제 )
     @Operation(summary = "로그아웃, 토큰 삭제")
-    @PostMapping("/logout")
-    public ResponseEntity logout(Principal principal ) {
+    @DeleteMapping("/logout")
+    public ResponseEntity logout( HttpServletRequest request ) {
 
-        String email = principal.getName();
-
-        service.logoutMember(email);
+        service.logoutMember(request);
 
         return new ResponseEntity<>("Logout", HttpStatus.OK);
     }
