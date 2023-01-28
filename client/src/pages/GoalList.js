@@ -17,7 +17,6 @@ const GoalList = () => {
         .get(getURL_GOALS(), getWITH_TOKEN())
         .then((response) => {
           const { data } = response;
-          // console.log(data.data);
           setList(data.data);
         })
         .catch((error) => {
@@ -26,25 +25,6 @@ const GoalList = () => {
     };
     goalGet();
   }, []);
-
-  // const goalDelete = async (goalId) => {
-  //   try {
-  //     // eslint-disable-next-line no-unused-vars
-  //     const res = await axios.delete(
-  //       `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/goals/${goalId}`,
-  //       {
-  //         headers: getACCESS_TOKEN(),
-  //       }
-  //     );
-  //     setRender((el) => el + 1);
-  //     // console.log('DELETE', res);
-  //   } catch (err) {
-  //     // console.log('deleteError', err);
-  //   }
-  // };
-
-  // const handleDelete = (id) =>
-  //   setGoals(goals.filter((goal) => goal.goalId !== id));
 
   return (
     <>

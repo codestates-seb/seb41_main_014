@@ -2,7 +2,7 @@ import { Stack, Typography } from '@mui/material';
 import { forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setModalClose } from '../../reducer/modaSlice';
+import { setModalClose } from '../../reducer/modalSlice';
 import {
   ROUTE_PATH_BASE,
   ROUTE_PATH_FIXED_SAVING,

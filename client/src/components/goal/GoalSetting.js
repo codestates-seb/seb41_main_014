@@ -1,9 +1,8 @@
-// import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Button } from '@mui/material';
 import PropTypes from 'prop-types';
-// import { ROUTE_PATH_GOAL_LIST } from '../../store/routerStore';
-// import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setGoalCreate } from '../../reducer/goalCreateSlice';
 
 const ComponentContain = styled.div`
   display: flex;
@@ -64,33 +63,15 @@ const LineBox = styled.div`
   width: 600px;
   justify-content: space-around;
 `;
-// const TextBox = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   text-align: center;
-//   justify-content: center;
-//   align-items: center;
-//   line-height: normal;
-//   box-sizing: border-box;
-//   margin: auto;
-//   height: 70px;
-//   width: 300px;
-//   color: red;
-//   font-size: 30px;
-// `;
 
-const AssetSetting = ({
-  goal,
-  goalPrice,
-  monthPrice,
-  goalPost,
-  setGoal,
-  setMonthPrice,
-  setGoalPrice,
-  // handlerGoal,
-  // handlerGoalPrice,
-  // handlerMonthPrice,
-}) => {
+const AssetSetting = ({ goalPost }) => {
+  const goalData = useSelector((state) => state.goalCreate);
+  const dispatch = useDispatch();
+  const setInputChange = (e) => {
+    const result = {};
+    result[e.target.name] = e.target.value;
+    dispatch(setGoalCreate(result));
+  };
   return (
     <>
       <div style={{ display: 'flex' }}>
@@ -99,28 +80,31 @@ const AssetSetting = ({
           <LineBox>
             <Header>나의 목표</Header>
             <SettingInput
+              name="goalName"
               placeholder="제네시스 GV80"
               type="text"
-              onChange={(e) => setGoal(e.target.value)}
-              value={goal}
+              onChange={setInputChange}
+              value={goalData.data.goalName}
             />
           </LineBox>
           <LineBox>
             <Header>목표 금액</Header>
             <SettingInput
+              name="price"
               placeholder="61,360,000"
               type="number"
-              onChange={(e) => setGoalPrice(e.target.value)}
-              value={goalPrice}
+              onChange={setInputChange}
+              value={goalData.data.price}
             />
           </LineBox>
           <LineBox>
             <Header>월 입금액</Header>
             <SettingInput
+              name="monthlyPayment"
               placeholder="300,000"
               type="number"
-              onChange={(e) => setMonthPrice(e.target.value)}
-              value={monthPrice}
+              onChange={setInputChange}
+              value={goalData.data.monthlyPayment}
             />
           </LineBox>
           <p className="p">목표달성을 위한 기간은?</p>
@@ -136,16 +120,7 @@ const AssetSetting = ({
 };
 
 AssetSetting.propTypes = {
-  goal: PropTypes.string,
-  goalPrice: PropTypes.number,
-  monthPrice: PropTypes.number,
   goalPost: PropTypes.func,
-  handlerGoal: PropTypes.func,
-  handlerGoalPrice: PropTypes.func,
-  handlerMonthPrice: PropTypes.func,
-  setGoal: PropTypes.string,
-  setGoalPrice: PropTypes.number,
-  setMonthPrice: PropTypes.number,
 };
 
 export default AssetSetting;

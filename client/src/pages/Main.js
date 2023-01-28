@@ -12,16 +12,12 @@ import {
   MODAL_TYPE_SEARCH,
   setModalOpen,
   setModalType,
-} from '../reducer/modaSlice';
-import { useDispatch, useSelector } from 'react-redux';
+} from '../reducer/modalSlice';
+import { useDispatch } from 'react-redux';
 import {
-  getURL_GOALS,
   getURL_SAVINGS_INTEREST,
   getWITH_PARAMS,
   getWITH_TOKEN,
-  URL_MEMBER,
-  URL_MEMBER_LOGOUT,
-  URL_NAVER_SEARCH,
   URL_SAVINGS,
 } from '../store/urlStore';
 
@@ -31,156 +27,8 @@ const StyledButton = styled(Button)`
 `;
 
 const Main = () => {
-  const userInfo = useSelector((state) => state.isLogin.userInfo);
   const dispatch = useDispatch();
 
-  const goalCreate = () => {
-    axios
-      .post(
-        getURL_GOALS(),
-        {
-          goalName: '감자',
-          price: 10000,
-          monthlyPayment: -1,
-        },
-        getWITH_TOKEN()
-      )
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const goalList = () => {
-    axios
-      .get(getURL_GOALS(), getWITH_TOKEN())
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const goalEdit = () => {
-    //예를들어 골아이디가 1
-    const goalID = 79;
-    axios
-      .patch(
-        getURL_GOALS(goalID),
-        {
-          goalName: '11111111한글날은좋아',
-          price: 99990000,
-          monthlyPayment: 11100,
-        },
-        getWITH_TOKEN()
-      )
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const goalDetail = () => {
-    //예를들어 골아이디가 1
-    const goalID = 79;
-    axios
-      .get(getURL_GOALS(goalID), getWITH_TOKEN())
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const goalDelete = () => {
-    //예를들어 골아이디가 1
-    const goalID = 79;
-    axios
-      .delete(getURL_GOALS(goalID), getWITH_TOKEN())
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const memberLogOut = () => {
-    axios
-      .delete(URL_MEMBER_LOGOUT, getWITH_TOKEN())
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const memberDetail = () => {
-    axios
-      .get(URL_MEMBER, getWITH_TOKEN())
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const memberEdit = () => {
-    axios
-      .patch(
-        URL_MEMBER,
-        {
-          email: userInfo.email,
-          name: userInfo.name,
-          picture: userInfo.picture,
-        },
-        getWITH_TOKEN()
-      )
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const memberDel = () => {
-    axios
-      .delete(URL_MEMBER, getWITH_TOKEN())
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const openapi = () => {
-    axios
-      .get(
-        URL_NAVER_SEARCH,
-        getWITH_PARAMS({
-          query: '만두',
-        })
-      )
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
   const fixedSaving = () => {
     axios
       .post(
@@ -248,40 +96,6 @@ const Main = () => {
     <AnimateGroup play>
       <Stack sx={{ maxWidth: 600, minWidth: 360, width: '100%' }}>
         <Box>
-          <StyledButton variant="contained" onClick={memberLogOut}>
-            로그아웃
-          </StyledButton>
-          <StyledButton variant="contained" onClick={memberDetail}>
-            회원정보상세
-          </StyledButton>
-          <StyledButton variant="contained" onClick={memberEdit}>
-            회원정보수정
-          </StyledButton>
-          <StyledButton variant="contained" onClick={memberDel}>
-            회원삭제
-          </StyledButton>
-        </Box>
-        <Box>
-          <StyledButton variant="contained" onClick={goalCreate}>
-            목표등록
-          </StyledButton>
-          <StyledButton variant="contained" onClick={goalList}>
-            물품조회
-          </StyledButton>
-          <StyledButton variant="contained" onClick={goalDetail}>
-            물품상세조회
-          </StyledButton>
-          <StyledButton variant="contained" onClick={goalEdit}>
-            물품수정
-          </StyledButton>
-          <StyledButton variant="contained" onClick={goalDelete}>
-            물품삭제
-          </StyledButton>
-        </Box>
-        <Box>
-          <StyledButton variant="contained" onClick={openapi}>
-            물품검색
-          </StyledButton>
           <Button
             variant="outlined"
             onClick={() => {

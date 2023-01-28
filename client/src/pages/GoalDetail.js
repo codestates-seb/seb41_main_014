@@ -7,7 +7,6 @@ import {
 import { getURL_GOALS, getWITH_TOKEN } from '../store/urlStore';
 import axios from 'axios';
 import { useState } from 'react';
-// import { getACCESS_TOKEN } from '../helper/cookieHelper.js';
 import { TextField, Button, Box, Modal } from '@mui/material';
 import PropTypes from 'prop-types';
 import noimage from '../asset/images/noimage.png';
@@ -23,7 +22,6 @@ const GoalDetail = () => {
   // 날짜 변환 =>  뭐가 다른거지?
   const date = new Date(detailData.createdAt);
   const createDate = date.toISOString().replace('T', ' ').substring(0, 19);
-  console.log(createDate);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -55,9 +53,7 @@ const GoalDetail = () => {
     }).then((result) => {
       axios
         .delete(getURL_GOALS(goalID), getWITH_TOKEN())
-        .then((response) => {
-          const { data } = response;
-          console.log(data);
+        .then(() => {
           navigate('/goalList');
         })
         .catch((error) => {
@@ -69,9 +65,9 @@ const GoalDetail = () => {
     });
   };
 
-  const [goal, setGoal] = useState(''); // 수기 목표 이름
-  const [goalPrice, setGoalPrice] = useState(''); // 수기 가격
-  const [monthPrice, setMonthPrice] = useState(''); // 수기 한 달 입금
+  const [goal, setGoal] = useState(detailData.goalName); // 수기 목표 이름
+  const [goalPrice, setGoalPrice] = useState(detailData.price); // 수기 가격
+  const [monthPrice, setMonthPrice] = useState(detailData.monthlyPayment); // 수기 한 달 입금
 
   const goalPatch = async () => {
     const patchdata = {
@@ -79,12 +75,9 @@ const GoalDetail = () => {
       price: goalPrice,
       monthlyPayment: monthPrice,
     };
-
     axios
       .patch(getURL_GOALS(goalID), patchdata, getWITH_TOKEN())
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
+      .then(() => {
         Swal.fire({
           text: '목표가 수정되었어요!',
           icon: 'success',

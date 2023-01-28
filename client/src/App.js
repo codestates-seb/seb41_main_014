@@ -31,7 +31,7 @@ import { Container, Modal } from '@mui/material';
 import NotFound from './pages/NotFound';
 import ModalMainMenu from './components/modal/ModalMainMenu';
 import { useDispatch, useSelector } from 'react-redux';
-import { MODAL_TYPE_MAIN_MENU, setModalClose } from './reducer/modaSlice';
+import { MODAL_TYPE_MAIN_MENU, setModalClose } from './reducer/modalSlice';
 import ModalSearchs from './components/modal/ModalSearchs';
 
 // TODO theme사용예시, theme의경우 typeScript ts, tsx설정안되면

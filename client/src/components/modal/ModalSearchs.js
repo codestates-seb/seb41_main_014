@@ -9,20 +9,23 @@ import {
   Typography,
 } from '@mui/material';
 import { forwardRef, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setModalClose } from '../../reducer/modaSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setModalClose } from '../../reducer/modalSlice';
 import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
 import { getLOCALE_MONEY } from '../../helper/unitHelper';
 import axios from 'axios';
 import { getWITH_PARAMS, URL_NAVER_SEARCH } from '../../store/urlStore';
 import Pagination from '../libs/Pagenation';
+import { setGoalCreate } from '../../reducer/goalCreateSlice';
 
 const ModalSearchs = forwardRef((props, ref) => {
-  const [query, setQuery] = useState('');
-  const [start, setStart] = useState(1);
+  const goalCreate = useSelector((state) => state.goalCreate);
+  const [query, setQuery] = useState(goalCreate.data.goalName);
+  const [start, setStart] = useState(0);
   const [searchs, setSearchs] = useState([]);
   const [total, setTotal] = useState(0);
+  const [selectId, setSelectId] = useState(-1);
   // display: size / start: page / sort: sim: 정확도, date: 날짜순
   const pageInfo = {
     display: 8,
@@ -30,7 +33,7 @@ const ModalSearchs = forwardRef((props, ref) => {
   };
 
   useEffect(() => {
-    if (start !== 1) {
+    if (query !== '') {
       axios
         .get(
           URL_NAVER_SEARCH,
@@ -42,7 +45,6 @@ const ModalSearchs = forwardRef((props, ref) => {
         )
         .then((response) => {
           const { data } = response;
-          console.log(data);
           setSearchs(data.items);
           setTotal(data.total);
         })
@@ -90,7 +92,7 @@ const ModalSearchs = forwardRef((props, ref) => {
       )
       .then((response) => {
         const { data } = response;
-        console.log(data);
+        setStart(1);
         setSearchs(data.items);
         setTotal(data.total);
       })
@@ -104,6 +106,38 @@ const ModalSearchs = forwardRef((props, ref) => {
 
   const handlePageChange = (buttonNumber) => {
     setStart(buttonNumber);
+  };
+
+  const handleItemSelected = (e, productId) => {
+    console.log(productId);
+    if (productId === selectId) {
+      setSelectId(-1);
+      return;
+    }
+    setSelectId(productId);
+  };
+
+  const handleItemFinalSelect = () => {
+    if (selectId === -1) {
+      alert('선택한 값이 없습니다.');
+      return;
+    }
+    let tempSearch;
+    for (const search of searchs) {
+      if (search.productId === selectId) {
+        tempSearch = search;
+        break;
+      }
+    }
+    console.log(tempSearch);
+    dispatch(
+      setGoalCreate({
+        goalName: query,
+        price: tempSearch.lprice,
+        url: tempSearch.image,
+      })
+    );
+    handleCloseModal();
   };
 
   return (
@@ -150,7 +184,19 @@ const ModalSearchs = forwardRef((props, ref) => {
         <Stack spacing={1} alignItems="center">
           <Grid container>
             {searchs.map((search) => (
-              <Grid item key={search.productId} xs={3}>
+              <Grid
+                item
+                key={search.productId}
+                xs={3}
+                sx={(theme) => ({
+                  background:
+                    selectId === search.productId
+                      ? theme.colors.mainMiddleLight
+                      : '',
+                  borderRadius: 2,
+                })}
+                onClick={(e) => handleItemSelected(e, search.productId)}
+              >
                 <Tooltip
                   title={
                     <Stack spacing={1}>
@@ -171,18 +217,18 @@ const ModalSearchs = forwardRef((props, ref) => {
                     <img src={search.image} alt={search.title} height={80} />
                     <Stack alignItems="end">
                       <Typography>
-                        최저: {getLOCALE_MONEY(search.lprice)} 원
+                        최저: {getLOCALE_MONEY(Number(search.lprice))} 원
                       </Typography>
-                      {search.hprice === 0 ? (
+                      {search.hprice === 0 || search.hprice === '' ? (
                         ''
                       ) : (
                         <Typography variant="h6">
-                          최고: {getLOCALE_MONEY(search.hprice)} 원
+                          최고: {getLOCALE_MONEY(Number(search.hprice))} 원
                         </Typography>
                       )}
                     </Stack>
                     <Button endIcon={<InsertLinkIcon />} color="info">
-                      <Link href={search.link} underline="none">
+                      <Link href={search.link} underline="none" target="_blank">
                         쇼핑가기
                       </Link>
                     </Button>
@@ -204,7 +250,9 @@ const ModalSearchs = forwardRef((props, ref) => {
         <Button variant="contained" color="warning" onClick={handleCloseModal}>
           취소
         </Button>
-        <Button variant="contained">선택</Button>
+        <Button variant="contained" onClick={handleItemFinalSelect}>
+          선택
+        </Button>
       </Stack>
     </Stack>
   );

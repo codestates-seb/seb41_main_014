@@ -29,7 +29,7 @@ import {
   MODAL_TYPE_MAIN_MENU,
   setModalOpen,
   setModalType,
-} from '../reducer/modaSlice';
+} from '../reducer/modalSlice';
 import axios from 'axios';
 import { URL_MEMBER_LOGOUT, getWITH_TOKEN } from '../store/urlStore';
 import {

@@ -6,7 +6,7 @@ export const MODAL_TYPE_SEARCH = 10002;
 const initialState = { type: MODAL_TYPE_MAIN_MENU, open: false };
 
 // 로그인, 로그아웃 리듀서 설정 => 로그인 상태 변경 및 유저 정보 추가 or 초기화
-const modaSlice = createSlice({
+const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
@@ -22,6 +22,6 @@ const modaSlice = createSlice({
   },
 });
 
-export const { setModalType, setModalClose, setModalOpen } = modaSlice.actions;
+export const { setModalType, setModalClose, setModalOpen } = modalSlice.actions;
 
-export default modaSlice.reducer;
+export default modalSlice.reducer;

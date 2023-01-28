@@ -1,12 +1,18 @@
-// import { Button } from '@mui/material';
 import styled from '@emotion/styled';
-import { useState } from 'react';
-// import { getACCESS_TOKEN } from '../helper/cookieHelper.js';
 import { getURL_GOALS, getWITH_TOKEN } from '../store/urlStore';
 import axios from 'axios';
 import GoalSetting from '../components/goal/GoalSetting';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { Box, Button } from '@mui/material';
+import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  MODAL_TYPE_SEARCH,
+  setModalOpen,
+  setModalType,
+} from '../reducer/modalSlice';
+import { setGoalCreateInit } from '../reducer/goalCreateSlice';
 
 const GuideBox = styled.div`
   display: flex;
@@ -45,47 +51,26 @@ const CreatePage = styled.div`
 
 const GoalCreatePage = () => {
   const navigate = useNavigate();
-
-  const [goal, setGoal] = useState(''); // 수기 목표 이름
-  const [goalPrice, setGoalPrice] = useState(''); // 수기 가격
-  const [monthPrice, setMonthPrice] = useState(''); // 수기 한 달 입금
-
-  // console.log(setGoalPrice);
-  // console.log(setMonthPrice);
-
-  // 코드 리팩토링
-  const handlerGoal = (e) => {
-    // console.log(e.target.value);
-    setGoal(e.target.value);
-  };
-
-  const handlerGoalPrice = (e) => {
-    // console.log(e.target.value);
-    setGoalPrice(e.target.value);
-  };
-
-  const handlerMonthPrice = (e) => {
-    setMonthPrice(e.target.value);
-  };
+  const dispatch = useDispatch();
+  const goalData = useSelector((state) => state.goalCreate);
 
   const goalPost = () => {
     const postdata = {
-      goalName: goal,
-      price: goalPrice,
-      monthlyPayment: monthPrice,
+      goalName: goalData.data.goalName,
+      price: goalData.data.price,
+      monthlyPayment: goalData.data.monthlyPayment,
+      url: goalData.data.url,
     };
+    console.log(postdata.url);
+
     axios
       .post(getURL_GOALS(), postdata, getWITH_TOKEN())
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
+      .then(() => {
         Swal.fire({
           text: '목표가 등록되었어요!',
           icon: 'success',
         });
-        setGoal('');
-        setGoalPrice('');
-        setMonthPrice('');
+        setGoalCreateInit();
         navigate('/goalList');
       })
       .catch((error) => {
@@ -93,6 +78,10 @@ const GoalCreatePage = () => {
       });
   };
 
+  const handleOpenSearchModal = () => {
+    dispatch(setModalType(MODAL_TYPE_SEARCH));
+    dispatch(setModalOpen());
+  };
   return (
     <CreatePage>
       <GuideBox>
@@ -124,18 +113,16 @@ const GoalCreatePage = () => {
         </p>
         <br />
       </GuideBox>
-      <GoalSetting
-        goal={goal}
-        goalPrice={goalPrice}
-        monthPrice={monthPrice}
-        setGoal={setGoal}
-        setGoalPrice={setGoalPrice}
-        setMonthPrice={setMonthPrice}
-        goalPost={goalPost}
-        handlerGoal={handlerGoal}
-        handlerExtended={handlerGoalPrice}
-        handlerPeriod={handlerMonthPrice}
-      />
+      <Box width="100%" mr={18} display="flex" justifyContent="flex-end">
+        <Button
+          onClick={handleOpenSearchModal}
+          variant="outlined"
+          startIcon={<SearchTwoToneIcon />}
+        >
+          물품 검색
+        </Button>
+      </Box>
+      <GoalSetting goalPost={goalPost} />
     </CreatePage>
   );
 };
