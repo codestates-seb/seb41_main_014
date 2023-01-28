@@ -2,7 +2,7 @@ import { useState, useEffect, Fragment } from 'react';
 import styled from '@emotion/styled';
 // import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-// import { ROUTE_PATH_GOAL_DETAIL } from '../../store/routerStore';
+import { ROUTE_PATH_GOAL_DETAIL } from '../../store/routerStore';
 import PropTypes from 'prop-types';
 // import { color } from '@mui/system';
 
@@ -19,7 +19,9 @@ const GoalListGroup = ({ _list }) => {
         return (
           <Fragment key={index}>
             <Link
-              to={`/api/goals/${item.id}`}
+              // to={`/api/goals/${item.id}`}
+              to={ROUTE_PATH_GOAL_DETAIL}
+              // to={`goalDetail/${item.id}`}
               style={{ textDecoration: 'none', color: '#b1b2ff' }}
               state={{ data: item, goalId: item.id }}
             >
