@@ -25,7 +25,7 @@ import FixedSaving from './pages/FixedSaving';
 
 import Footer from './components/Footer';
 import Header from './components/Header';
-import { column, columnCenter } from './styles/theme';
+import { columnCenter } from './styles/theme';
 import { useEffect, useState } from 'react';
 import { Container, Modal } from '@mui/material';
 import NotFound from './pages/NotFound';
@@ -43,7 +43,7 @@ const StyledApp = styled(Container)`
 `;
 
 const ContentContainer = styled(Container)`
-  ${column}
+  ${columnCenter}
   width: 100%;
   max-width: 600px;
   min-width: 360px;

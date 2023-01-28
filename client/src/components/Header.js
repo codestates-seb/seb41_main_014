@@ -120,18 +120,14 @@ const Header = () => {
         borderBottom: `4px solid ${theme.colors.mainHeavy}`,
       })}
     >
-      <Toolbar sx={{ maxWidth: 600, minWidth: 360 }}>
-        <IconButton
-          size="large"
-          edge="start"
-          onClick={() => {
-            dispatch(setModalType(MODAL_TYPE_MAIN_MENU));
-            dispatch(setModalOpen());
-          }}
-        >
-          <MenuIcon />
-        </IconButton>
-
+      <Toolbar
+        sx={{
+          maxWidth: 600,
+          minWidth: 360,
+          width: '100%',
+          justifyContent: 'space-between',
+        }}
+      >
         <Link to={ROUTE_PATH_BASE}>
           <IconButton size="large">
             <img src={logo} alt="logo" style={{ height: '48px' }} />
@@ -151,7 +147,7 @@ const Header = () => {
                 to={ROUTE_PATH_FIXED_SAVING}
                 style={{ textDecoration: 'none' }}
               >
-                적금
+                적금추천
               </Link>
             </Typography>
           </>
@@ -218,6 +214,16 @@ const Header = () => {
             </Box>
           </>
         )}
+        <IconButton
+          size="large"
+          edge="start"
+          onClick={() => {
+            dispatch(setModalType(MODAL_TYPE_MAIN_MENU));
+            dispatch(setModalOpen());
+          }}
+        >
+          <MenuIcon />
+        </IconButton>
       </Toolbar>
     </AppBar>
   );

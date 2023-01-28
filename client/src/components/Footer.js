@@ -1,4 +1,4 @@
-import { Box, Grid, styled, Typography, Link } from '@mui/material';
+import { Box, Grid, styled, Typography, Link, Stack } from '@mui/material';
 import moas from '../asset/images/logo_name.png';
 import codestates from '../asset/images/logo_codestates.png';
 import start from '../asset/images/footer_start_man.svg';
@@ -6,7 +6,7 @@ import github from '../asset/images/logo_github.png';
 import PropTypes from 'prop-types';
 
 const StyeldFooter = styled(Box)(() => ({
-  width: '100%',
+  width: '100vw',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -27,7 +27,7 @@ const StyledGithub = ({ herf, imgSrc, personInCharge, name }) => {
       <img
         src={imgSrc}
         alt="github"
-        style={{ height: '50px', borderRadius: '50%', padding: '4px' }}
+        style={{ width: '40px', borderRadius: '50%', padding: '4px' }}
       />
       <Box>
         <Typography variant="h2">{personInCharge}</Typography>
@@ -54,12 +54,11 @@ StyledGithub.propTypes = {
 const Footer = () => {
   return (
     <StyeldFooter as="footer">
-      <Box
+      <Stack
         sx={(theme) => ({
-          width: '100vw',
+          minWidth: '360px',
+          width: '100%',
           backgroundColor: theme.colors.mainLight,
-          display: 'flex',
-          flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
         })}
@@ -80,12 +79,13 @@ const Footer = () => {
         />
         <img src={codestates} alt="codestates" style={{ height: '60px' }} />
         <img src={start} alt="start" style={{ width: '300px' }} />
-      </Box>
+      </Stack>
       <Box
         sx={() => ({
           p: 10,
           minWidth: '360px',
           maxWidth: '600px',
+          width: '100%',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
@@ -198,27 +198,6 @@ const Footer = () => {
           </Typography>
           <Typography variant="h3" padding={1}>
             {`Copyright (c) 2023 MOAS`}
-          </Typography>
-          <Typography variant="h4" padding={1}>
-            {`Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:`}
-          </Typography>
-          <Typography variant="h4" padding={1}>
-            {`The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.`}
-          </Typography>
-          <Typography variant="h4" padding={1}>
-            {`THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.`}
           </Typography>
         </Box>
         <Box>
