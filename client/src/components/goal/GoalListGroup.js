@@ -1,100 +1,63 @@
-// import { useState } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import styled from '@emotion/styled';
-import { Button } from '@mui/material';
+// import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import {
-  ROUTE_PATH_GOAL_CREATE,
-  ROUTE_PATH_GOAL_DETAIL,
-} from '../../store/routerStore';
+// import { ROUTE_PATH_GOAL_DETAIL } from '../../store/routerStore';
 import PropTypes from 'prop-types';
+// import { color } from '@mui/system';
 
-const GoalListGroup = ({
-  // goalDelete,
-  // goals,
-  // setGoal,
-  // setGoalPrice,
-  // setMonthPrice,
-  // goal,
-  // goalPrice,
-  // monthPrice,
-  goals,
-  handleDelete,
-}) => (
-  <>
-    <TopButton>
-      <div>
-        {<h2>💜 총 {goals.length} 개의 목표가 있습니다 💜</h2>}
-        <LinkButton>
-          <Link to={ROUTE_PATH_GOAL_CREATE} style={{ textDecoration: 'none' }}>
-            {' '}
-            새로 등록하러 가기{' '}
-          </Link>
-        </LinkButton>
-      </div>
-    </TopButton>
+const GoalListGroup = ({ _list }) => {
+  const [list, setList] = useState([]);
 
-    <ComponentContain>
-      <ul>
-        {goals.map((goal) => (
-          <li key={goal.goalId}>
-            <div style={{ display: 'flex' }}>
-              <Header>나의 목표: </Header>{' '}
-              <input className="SettingInput" value={goal.goalName} />
-            </div>
-            <div style={{ display: 'flex' }}>
-              <Header>목표 금액: </Header>{' '}
-              <input className="SettingInput" value={goal.price} />
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'right' }}>
-              <Button onClick={handleDelete}>삭제하기</Button>
-              <Button>
-                <Link
-                  to={ROUTE_PATH_GOAL_DETAIL}
-                  style={{ textDecoration: 'none' }}
-                >
-                  {' '}
-                  상세보기{' '}
-                </Link>
-              </Button>
-            </div>
-          </li>
-        ))}
-      </ul>
+  useEffect(() => {
+    setList(_list);
+  }, [_list]);
 
-      {/* 등록 페이지 사용 x 
-      <br />
-      <Header>나의 목표</Header>
-      <Input
-        className="SettingInput"
-        placeholder="제네시스 GV80"
-        type="text"
-        onChange={(e) => setGoal(e.target.value)}
-        value={goal}
-      ></Input>
-      <p className="p">목표 금액</p>
-      <Input
-        className="SettingInput"
-        placeholder="61,360,000"
-        type="number"
-        onChange={(e) => setGoalPrice(e.target.value)}
-        value={goalPrice}
-      >
-        원
-      </Input>
-      <p className="p">한 달 납입금</p>
-      <Input
-        className="SettingInput"
-        placeholder="300,000"
-        type="number"
-        onChange={(e) => setMonthPrice(e.target.value)}
-        value={monthPrice}
-      >
-        원{goal}
-        {goalPrice}
-      </Input> */}
-    </ComponentContain>
-  </>
-);
+  return (
+    <>
+      {list.map((item, index) => {
+        return (
+          <Fragment key={index}>
+            <Link
+              to={`/goalDetail/${item.id}`}
+              style={{ textDecoration: 'none', color: 'purple' }} //색상 바꿔야 함
+              state={{ data: item, goalId: item.id }}
+            >
+              <ComponentContain>
+                <div style={{ display: 'flex' }}>
+                  <Header>나의 목표: </Header>{' '}
+                  <input className="SettingInput" value={item.goalName} />
+                </div>
+                <div style={{ display: 'flex' }}>
+                  <Header>목표 금액: </Header>{' '}
+                  <input className="SettingInput" value={item.price} />
+                </div>
+                <div style={{ display: 'flex' }}>
+                  <Header>월 납입금: </Header>{' '}
+                  <input className="SettingInput" value={item.monthlyPayment} />
+                </div>
+                {/* 어떻게 해결해야하니...?  */}
+                <h2>목표치에 도달하기 까지 {{item.price}/{item.monthlyPayment}}개월 남았어요!</h2> 
+                {/* 버튼부분 */}
+                {/* <div style={{ display: 'flex', justifyContent: 'right' }}>
+                <Button>
+                    <Link
+                      to={ROUTE_PATH_GOAL_DETAIL}
+                      style={{ textDecoration: 'none' }}
+                    >
+                      {' '}
+                      상세보기{' '}
+                    </Link>
+                  </Button>
+              </div> */}
+              </ComponentContain>
+            </Link>
+          </Fragment>
+        );
+      })}
+    </>
+  );
+};
 
 GoalListGroup.propTypes = {
   goalDelete: PropTypes.func,
@@ -107,6 +70,7 @@ GoalListGroup.propTypes = {
   handleDelete: PropTypes.func,
   goals: PropTypes.object,
   listItems: PropTypes.func,
+  _list: PropTypes.array,
 };
 
 export default GoalListGroup;
@@ -164,23 +128,6 @@ const ComponentContain = styled.div`
 // const Header = styled.h3`
 //   margin-top: 30px;
 // `;
-
-const LinkButton = styled.button`
-  width: 214px;
-  height: 36px;
-  border: 0;
-  background-color: #b1b2ff;
-  margin: 10px 0 10px;
-  border-radius: 6px;
-`;
-
-const TopButton = styled.div`
-  width: 600px;
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  margin-top: 30px;
-`;
 
 const Header = styled.h2`
   margin: 30px 20px 0px 10px;
