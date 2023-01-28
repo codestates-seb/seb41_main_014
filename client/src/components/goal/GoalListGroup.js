@@ -19,8 +19,8 @@ const GoalListGroup = ({ _list }) => {
         return (
           <Fragment key={index}>
             <Link
-              to={`/goalDetail/${item.id}`}
-              style={{ textDecoration: 'none', color: 'purple' }} //색상 바꿔야 함
+              to={`/api/goals/${item.id}`}
+              style={{ textDecoration: 'none', color: '#b1b2ff' }}
               state={{ data: item, goalId: item.id }}
             >
               <ComponentContain>
@@ -36,8 +36,13 @@ const GoalListGroup = ({ _list }) => {
                   <Header>월 납입금: </Header>{' '}
                   <input className="SettingInput" value={item.monthlyPayment} />
                 </div>
-                {/* 어떻게 해결해야하니...?  */}
-                <h2>목표치에 도달하기 까지 {{item.price}/{item.monthlyPayment}}개월 남았어요!</h2> 
+                <h2 className="Font">
+                  목표치에 도달하기 까지{' '}
+                  <span className="Hilight">
+                    {Math.ceil(item.price / item.monthlyPayment)}개월
+                  </span>{' '}
+                  남았어요!
+                </h2>
                 {/* 버튼부분 */}
                 {/* <div style={{ display: 'flex', justifyContent: 'right' }}>
                 <Button>
@@ -82,9 +87,11 @@ const ComponentContain = styled.div`
   align-items: center;
   margin: 30px 0 30px;
   box-sizing: border-box;
+  max-width: 600px;
   width: 100%;
   height: auto;
   border: 5px solid #aac4ff;
+  border-radius: 5px;
   .trashicon {
     margin-left: 500px;
   }
@@ -109,7 +116,7 @@ const ComponentContain = styled.div`
     border: none;
     border-radius: 6px;
     border-bottom: solid 2px #b1b2ff;
-    margin-top: 20px;
+    margin: 20px 30px 0px 5px;
     color: grey;
     &:focus {
       outline: none;
@@ -123,6 +130,15 @@ const ComponentContain = styled.div`
     height: 50px;
     margin-top: 30px;
   }
+
+  /* 목표치 계산 폰트 */
+  .Font {
+    margin: 20px 0 20px 0;
+    color: #b1b2ff;
+  }
+  .Hilight {
+    color: #ff6f6f;
+  }
 `;
 
 // const Header = styled.h3`
@@ -130,5 +146,5 @@ const ComponentContain = styled.div`
 // `;
 
 const Header = styled.h2`
-  margin: 30px 20px 0px 10px;
+  margin: 30px 20px 0px 20px;
 `;

@@ -48,34 +48,36 @@ const GoalList = () => {
 
   return (
     <>
-      <TopButton>
-        <div>
-          {<h2>💜 총 {list.length}개의 목표가 있습니다 💜</h2>}
-          <LinkButton>
-            <Link
-              to={ROUTE_PATH_GOAL_CREATE}
-              style={{ textDecoration: 'none' }}
-            >
-              {' '}
-              새로 등록하러 가기{' '}
-            </Link>
-          </LinkButton>
-        </div>
-      </TopButton>
-      <GoalListGroup
-        _list={list}
-        // goal={goal}
-        // goalPrice={goalPrice}
-        // monthPrice={monthPrice}
-        // setGoal={setGoal}
-        // setGoalPrice={setGoalPrice}
-        // setMonthPrice={setMonthPrice}
-        // // goalDelete={goalDelete}
-        // // handleDelete={handleDelete}
-        // // goalNameonChange={goalNameonChange}
-        // // goalPriceonChange={goalPriceonChange}
-        // // goalMonthlypaymentonChange={goalMonthlypaymentonChange}
-      />
+      <TotalListPage>
+        <TopButton>
+          <div>
+            {<h2>💜 총 {list.length}개의 목표가 있습니다 💜</h2>}
+            <LinkButton>
+              <Link
+                to={ROUTE_PATH_GOAL_CREATE}
+                style={{ textDecoration: 'none' }}
+              >
+                {' '}
+                새로 등록하러 가기{' '}
+              </Link>
+            </LinkButton>
+          </div>
+        </TopButton>
+        <GoalListGroup
+          _list={list}
+          // goal={goal}
+          // goalPrice={goalPrice}
+          // monthPrice={monthPrice}
+          // setGoal={setGoal}
+          // setGoalPrice={setGoalPrice}
+          // setMonthPrice={setMonthPrice}
+          // // goalDelete={goalDelete}
+          // // handleDelete={handleDelete}
+          // // goalNameonChange={goalNameonChange}
+          // // goalPriceonChange={goalPriceonChange}
+          // // goalMonthlypaymentonChange={goalMonthlypaymentonChange}
+        />
+      </TotalListPage>
     </>
   );
 };
@@ -91,6 +93,13 @@ GoalList.propTypes = {
   monthPrice: PropTypes.number,
   id: PropTypes.number,
 };
+
+const TotalListPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 const LinkButton = styled.button`
   width: 214px;
