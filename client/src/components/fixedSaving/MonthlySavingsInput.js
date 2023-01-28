@@ -1,4 +1,4 @@
-import { Box, Input, styled, Typography } from '@mui/material';
+import { Box, Input, Stack, styled, Typography } from '@mui/material';
 import { rowCenter } from '../../styles/theme';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -33,12 +33,12 @@ const MonthlySavingsInput = () => {
   };
 
   return (
-    <Box sx={{ margin: 3, width: '40%' }}>
+    <Stack sx={{ margin: 3, width: '40%' }}>
       <h3>{monthlySavings.fixed.title}</h3>
       <StyledColorRow sx={{ marginTop: 1 }}>
         <Input
           disableUnderline
-          sx={{ input: { textAlign: 'end' } }}
+          sx={{ width: '100%', input: { textAlign: 'end' } }}
           value={monthlySavings.value}
           type="number"
           onChange={handleOnChange}
@@ -52,7 +52,7 @@ const MonthlySavingsInput = () => {
           {monthlySavings.fixed.unit}
         </span>
       </StyledRow>
-    </Box>
+    </Stack>
   );
 };
 

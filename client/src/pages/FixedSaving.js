@@ -3,7 +3,7 @@ import BankCheck from '../components/fixedSaving/BankCheck';
 import Notice from '../components/fixedSaving/Notice';
 import FixedSavingContents from '../components/fixedSaving/FixedSavingContents';
 import { useSelector } from 'react-redux';
-import { Box, Divider } from '@mui/material';
+import { Box, Divider, Stack } from '@mui/material';
 import FixedSavingButtonGroup from '../components/fixedSaving/FixedSavingButtonGroup';
 import UserSelected from '../components/fixedSaving/UserSelected';
 import FinishSavings from '../components/fixedSaving/FinishSavings';
@@ -12,7 +12,7 @@ import MonthlySavingsInput from '../components/fixedSaving/MonthlySavingsInput';
 const FixedSaving = () => {
   const conditions = useSelector((state) => state.savingConditions);
   return (
-    <>
+    <Stack justifyContent="start">
       <Notice />
       <Divider />
       <MonthlySavingsInput />
@@ -49,7 +49,7 @@ const FixedSaving = () => {
         <UserSelected />
         <FixedSavingButtonGroup />
       </Box>
-    </>
+    </Stack>
   );
 };
 

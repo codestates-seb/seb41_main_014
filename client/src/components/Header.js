@@ -18,7 +18,6 @@ import {
   ROUTE_PATH_GOAL_LIST,
   ROUTE_PATH_LOGIN,
   ROUTE_PATH_MEMBER,
-  ROUTE_PATH_MEMBER_EDIT,
 } from '../store/routerStore';
 import MenuIcon from '@mui/icons-material/Menu';
 import logo from '../asset/images/logo_main_light.png';
@@ -78,7 +77,6 @@ const Header = () => {
   };
 
   const member = 111;
-  const memberEdit = 112;
   const memberLogout = 113;
 
   const handleCloseUserMenu = (type) => {
@@ -86,9 +84,6 @@ const Header = () => {
     switch (type) {
       case member:
         navigate(ROUTE_PATH_MEMBER);
-        break;
-      case memberEdit:
-        navigate(ROUTE_PATH_MEMBER_EDIT);
         break;
       case memberLogout:
         axios
@@ -203,9 +198,6 @@ const Header = () => {
               >
                 <MenuItem onClick={() => handleCloseUserMenu(member)}>
                   회원정보
-                </MenuItem>
-                <MenuItem onClick={() => handleCloseUserMenu(memberEdit)}>
-                  정보수정
                 </MenuItem>
                 <MenuItem onClick={() => handleCloseUserMenu(memberLogout)}>
                   로그아웃
