@@ -6,6 +6,7 @@ import { getURL_GOALS, getWITH_TOKEN } from '../store/urlStore';
 import axios from 'axios';
 import GoalSetting from '../components/goal/GoalSetting';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const GuideBox = styled.div`
   display: flex;
@@ -78,6 +79,10 @@ const GoalCreatePage = () => {
       .then((response) => {
         const { data } = response;
         console.log(data);
+        Swal.fire({
+          text: '목표가 등록되었어요!',
+          icon: 'success',
+        });
         setGoal('');
         setGoalPrice('');
         setMonthPrice('');
