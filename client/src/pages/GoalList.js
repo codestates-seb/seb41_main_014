@@ -85,13 +85,12 @@ const GoalList = () => {
 export default GoalList;
 
 GoalList.propTypes = {
-  setGoal: PropTypes.func,
-  setGoalPrice: PropTypes.func,
-  setMonthPrice: PropTypes.func,
+  setGoal: PropTypes.string,
+  setGoalPrice: PropTypes.number,
+  setMonthPrice: PropTypes.number,
   goal: PropTypes.string,
   goalPrice: PropTypes.number,
   monthPrice: PropTypes.number,
-  id: PropTypes.number,
 };
 
 const TotalListPage = styled.div`

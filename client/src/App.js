@@ -6,7 +6,7 @@ import {
   ROUTE_PATH_FIXED_SAVING,
   ROUTE_PATH_GOAL_CREATE,
   ROUTE_PATH_GOAL_DETAIL,
-  ROUTE_PATH_GOAL_EDIT,
+  // ROUTE_PATH_GOAL_EDIT,
   ROUTE_PATH_GOAL_LIST,
   ROUTE_PATH_LOGIN,
   ROUTE_PATH_LOGINCALLBACK,
@@ -20,7 +20,7 @@ import Member from './pages/Member';
 import GoalCreate from './pages/GoalCreate';
 import GoalList from './pages/GoalList';
 import GoalDetail from './pages/GoalDetail';
-import GoalEdit from './pages/GoalEdit';
+// import GoalEdit from './pages/GoalEdit';
 import FixedSaving from './pages/FixedSaving';
 
 import Footer from './components/Footer';
@@ -73,7 +73,7 @@ function App() {
           <Route path={ROUTE_PATH_GOAL_CREATE} element={<GoalCreate />} />
           <Route path={ROUTE_PATH_GOAL_LIST} element={<GoalList />} />
           <Route path={ROUTE_PATH_GOAL_DETAIL} element={<GoalDetail />} />
-          <Route path={ROUTE_PATH_GOAL_EDIT} element={<GoalEdit />} />
+          {/* <Route path={ROUTE_PATH_GOAL_EDIT} element={<GoalEdit />} /> */}
 
           <Route path={ROUTE_PATH_FIXED_SAVING} element={<FixedSaving />} />
           <Route path={ROUTE_PATH_NOT_FOUND} element={<NotFound />} />
