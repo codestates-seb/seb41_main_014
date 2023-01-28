@@ -84,9 +84,12 @@ const AssetSetting = ({
   goalPrice,
   monthPrice,
   goalPost,
-  handlerGoal,
-  handlerGoalPrice,
-  handlerMonthPrice,
+  setGoal,
+  setMonthPrice,
+  setGoalPrice,
+  // handlerGoal,
+  // handlerGoalPrice,
+  // handlerMonthPrice,
 }) => {
   return (
     <>
@@ -98,25 +101,25 @@ const AssetSetting = ({
             <SettingInput
               placeholder="제네시스 GV80"
               type="text"
-              onChange={handlerGoal}
+              onChange={(e) => setGoal(e.target.value)}
               value={goal}
             />
           </LineBox>
           <LineBox>
             <Header>목표 금액</Header>
             <SettingInput
-              placeholder="61,360,000원"
+              placeholder="61,360,000"
               type="number"
-              onChange={handlerGoalPrice}
+              onChange={(e) => setGoalPrice(e.target.value)}
               value={goalPrice}
             />
           </LineBox>
           <LineBox>
             <Header>월 입금액</Header>
             <SettingInput
-              placeholder="300,000원"
+              placeholder="300,000"
               type="number"
-              onChange={handlerMonthPrice}
+              onChange={(e) => setMonthPrice(e.target.value)}
               value={monthPrice}
             />
           </LineBox>
@@ -140,6 +143,9 @@ AssetSetting.propTypes = {
   handlerGoal: PropTypes.func,
   handlerGoalPrice: PropTypes.func,
   handlerMonthPrice: PropTypes.func,
+  setGoal: PropTypes.string,
+  setGoalPrice: PropTypes.number,
+  setMonthPrice: PropTypes.number,
 };
 
 export default AssetSetting;

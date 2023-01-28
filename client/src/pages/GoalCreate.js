@@ -1,10 +1,12 @@
 // import { Button } from '@mui/material';
 import styled from '@emotion/styled';
 import { useState } from 'react';
-import { getACCESS_TOKEN } from '../helper/cookieHelper.js';
+// import { getACCESS_TOKEN } from '../helper/cookieHelper.js';
+import { getURL_GOALS, getWITH_TOKEN } from '../store/urlStore';
 import axios from 'axios';
 import GoalSetting from '../components/goal/GoalSetting';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const GuideBox = styled.div`
   display: flex;
@@ -48,15 +50,17 @@ const GoalCreatePage = () => {
   const [goalPrice, setGoalPrice] = useState(''); // 수기 가격
   const [monthPrice, setMonthPrice] = useState(''); // 수기 한 달 입금
 
-  console.log(setGoalPrice);
-  console.log(setMonthPrice);
+  // console.log(setGoalPrice);
+  // console.log(setMonthPrice);
 
   // 코드 리팩토링
   const handlerGoal = (e) => {
+    // console.log(e.target.value);
     setGoal(e.target.value);
   };
 
   const handlerGoalPrice = (e) => {
+    // console.log(e.target.value);
     setGoalPrice(e.target.value);
   };
 
@@ -64,28 +68,29 @@ const GoalCreatePage = () => {
     setMonthPrice(e.target.value);
   };
 
-  const goalPost = async () => {
+  const goalPost = () => {
     const postdata = {
       goalName: goal,
       price: goalPrice,
       monthlyPayment: monthPrice,
     };
-    try {
-      const res = await axios.post(
-        `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/goals`,
-        postdata,
-        {
-          headers: getACCESS_TOKEN(),
-        }
-      );
-      setGoal('');
-      setGoalPrice('');
-      setMonthPrice('');
-      navigate(`/goalList`);
-      console.log('post', res);
-    } catch (err) {
-      console.log('error', err);
-    }
+    axios
+      .post(getURL_GOALS(), postdata, getWITH_TOKEN())
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+        Swal.fire({
+          text: '목표가 등록되었어요!',
+          icon: 'success',
+        });
+        setGoal('');
+        setGoalPrice('');
+        setMonthPrice('');
+        navigate('/goalList');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -120,9 +125,12 @@ const GoalCreatePage = () => {
         <br />
       </GuideBox>
       <GoalSetting
-        // goal={goal}
-        // goalPrice={goalPrice}
-        // monthPrice={monthPrice}
+        goal={goal}
+        goalPrice={goalPrice}
+        monthPrice={monthPrice}
+        setGoal={setGoal}
+        setGoalPrice={setGoalPrice}
+        setMonthPrice={setMonthPrice}
         goalPost={goalPost}
         handlerGoal={handlerGoal}
         handlerExtended={handlerGoalPrice}

@@ -1,80 +1,83 @@
 import GoalListGroup from '../components/goal/GoalListGroup';
 import { useEffect, useState } from 'react';
-import { getACCESS_TOKEN } from '../helper/cookieHelper.js';
+// import { getACCESS_TOKEN } from '../helper/cookieHelper.js';
+import { getURL_GOALS, getWITH_TOKEN } from '../store/urlStore';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-// import styled from '@emotion/styled';
+import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
+import { ROUTE_PATH_GOAL_CREATE } from '../store/routerStore';
 
-const GoalList = ({
-  setGoal,
-  setGoalPrice,
-  setMonthPrice,
-  goal,
-  goalPrice,
-  monthPrice,
-}) => {
-  const [render, setRender] = useState(0);
-
-  const [goals, setGoals] = useState([
-    { goalId: 0, goalName: '닌텐도', price: 10000, monthlyPayment: 100 },
-    { goalId: 1, goalName: '맥북 pro', price: 20000, monthlyPayment: 200 },
-    { goalId: 2, goalName: '갤럭시 z플립5', price: 30000, monthlyPayment: 300 },
-    { goalId: 3, goalName: '다이슨 청소기', price: 40000, monthlyPayment: 400 },
-  ]);
-  console.log(goals[0].goalName);
+const GoalList = () => {
+  const [list, setList] = useState([]);
 
   useEffect(() => {
     const goalGet = async () => {
-      try {
-        const res = await axios.get(
-          `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/goals`,
-          {
-            headers: getACCESS_TOKEN(),
-          }
-        );
-        console.log('get', res);
-      } catch (err) {
-        console.log('error', err);
-      }
+      axios
+        .get(getURL_GOALS(), getWITH_TOKEN())
+        .then((response) => {
+          const { data } = response;
+          // console.log(data.data);
+          setList(data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     };
     goalGet();
-  }, [render]);
+  }, []);
 
-  const goalDelete = async (goalId) => {
-    try {
-      // eslint-disable-next-line no-unused-vars
-      const res = await axios.delete(
-        `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/goals/${goalId}`,
-        {
-          headers: getACCESS_TOKEN(),
-        }
-      );
-      setRender((el) => el + 1);
-      // console.log('DELETE', res);
-    } catch (err) {
-      // console.log('deleteError', err);
-    }
-  };
+  // const goalDelete = async (goalId) => {
+  //   try {
+  //     // eslint-disable-next-line no-unused-vars
+  //     const res = await axios.delete(
+  //       `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/goals/${goalId}`,
+  //       {
+  //         headers: getACCESS_TOKEN(),
+  //       }
+  //     );
+  //     setRender((el) => el + 1);
+  //     // console.log('DELETE', res);
+  //   } catch (err) {
+  //     // console.log('deleteError', err);
+  //   }
+  // };
 
-  const handleDelete = (id) =>
-    setGoals(goals.filter((goal) => goal.goalId !== id));
+  // const handleDelete = (id) =>
+  //   setGoals(goals.filter((goal) => goal.goalId !== id));
 
   return (
     <>
-      <GoalListGroup
-        goals={goals}
-        goal={goal}
-        goalPrice={goalPrice}
-        monthPrice={monthPrice}
-        setGoal={setGoal}
-        setGoalPrice={setGoalPrice}
-        setMonthPrice={setMonthPrice}
-        goalDelete={goalDelete}
-        handleDelete={handleDelete}
-        // goalNameonChange={goalNameonChange}
-        // goalPriceonChange={goalPriceonChange}
-        // goalMonthlypaymentonChange={goalMonthlypaymentonChange}
-      />
+      <TotalListPage>
+        <TopButton>
+          <div>
+            {<h2>💜 총 {list.length}개의 목표가 있습니다 💜</h2>}
+            <LinkButton>
+              <Link
+                to={ROUTE_PATH_GOAL_CREATE}
+                style={{ textDecoration: 'none' }}
+              >
+                {' '}
+                새로 등록하러 가기{' '}
+              </Link>
+            </LinkButton>
+          </div>
+        </TopButton>
+        <GoalListGroup
+          _list={list}
+          // goal={goal}
+          // goalPrice={goalPrice}
+          // monthPrice={monthPrice}
+          // setGoal={setGoal}
+          // setGoalPrice={setGoalPrice}
+          // setMonthPrice={setMonthPrice}
+          // // goalDelete={goalDelete}
+          // // handleDelete={handleDelete}
+          // // goalNameonChange={goalNameonChange}
+          // // goalPriceonChange={goalPriceonChange}
+          // // goalMonthlypaymentonChange={goalMonthlypaymentonChange}
+        />
+      </TotalListPage>
     </>
   );
 };
@@ -82,14 +85,37 @@ const GoalList = ({
 export default GoalList;
 
 GoalList.propTypes = {
-  setGoal: PropTypes.func,
-  setGoalPrice: PropTypes.func,
-  setMonthPrice: PropTypes.func,
+  setGoal: PropTypes.string,
+  setGoalPrice: PropTypes.number,
+  setMonthPrice: PropTypes.number,
   goal: PropTypes.string,
   goalPrice: PropTypes.number,
   monthPrice: PropTypes.number,
-  id: PropTypes.number,
 };
+
+const TotalListPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const LinkButton = styled.button`
+  width: 214px;
+  height: 36px;
+  border: 0;
+  background-color: #b1b2ff;
+  margin: 10px 0 10px;
+  border-radius: 6px;
+`;
+
+const TopButton = styled.div`
+  width: 600px;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+`;
 
 // import { useState } from 'react';
 // import { getLOCALE_MONEY } from '../helper/unitHelper';

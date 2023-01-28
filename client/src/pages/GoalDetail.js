@@ -1,87 +1,103 @@
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
-import { ROUTE_PATH_GOAL_LIST } from '../store/routerStore';
-// import axios from 'axios';
-// import { useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import {
+  // ROUTE_PATH_GOAL_EDIT,
+  ROUTE_PATH_GOAL_LIST,
+} from '../store/routerStore';
+import { getURL_GOALS, getWITH_TOKEN } from '../store/urlStore';
+import axios from 'axios';
+import { useState } from 'react';
 // import { getACCESS_TOKEN } from '../helper/cookieHelper.js';
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, Box, Modal } from '@mui/material';
 import PropTypes from 'prop-types';
 import noimage from '../asset/images/noimage.png';
+import Swal from 'sweetalert2';
 
-const GoalDetail = () =>
-  // {
-  //   goal,
-  //   goalPrice,
-  //   monthPrice,
-  //   setGoal,
-  //   setGoalPrice,
-  //   setMonthPrice,
-  // }
-  {
-    // const [goalName, setGoalName] = useState('');
-    // const [price, setPrice] = useState('');
-    // const [monthlyPayment, setMonthlyPayment] = useState('');
-    // const [render, setRender] = useState(0);
+const GoalDetail = () => {
+  const navigate = useNavigate();
+  // GoalListGroup에서 받은 props
+  const location = useLocation();
+  const detailData = location.state.data;
+  console.log(detailData);
 
-    // const goalNameonChange = (e) => {
-    //   setGoalName(e.target.value);
-    // };
+  // 날짜 변환 =>  뭐가 다른거지?
+  const date = new Date(detailData.createdAt);
+  const createDate = date.toISOString().replace('T', ' ').substring(0, 19);
+  console.log(createDate);
 
-    // const goalPriceonChange = (e) => {
-    //   setPrice(e.target.value);
-    // };
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-    // const goalMonthlypaymentonChange = (e) => {
-    //   setMonthlyPayment(e.target.value);
-    // };
-    //목표 상세 조회
-    // useEffect(() => {
-    //   const goalGet = async (memberId, goalId) => {
-    //     try {
-    //       const res = await axios.get(
-    //         `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/goals/${memberId}/${goalId}`,
-    //         {
-    //           headers: { getACCESS_TOKEN },
-    //         }
-    //       );
-    //       console.log(`get`, res);
-    //     } catch (err) {
-    //       console.log(`error`, err);
-    //     }
-    //   };
-    //   goalGet();
-    // }, [render]);
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    height: 500,
+    bgcolor: 'background.paper',
+    border: '2px solid #d2daff',
+    boxShadow: 24,
+    p: 4,
+  };
 
-    // 수정
-    // const goalPatch = async (memberId) => {
-    //   const patchdata = {
-    //     goalName: goalName,
-    //     price: price,
-    //     monthlyPayment: monthlyPayment,
-    //   };
+  const goalID = detailData.id;
+  const goalDelete = () => {
+    Swal.fire({
+      title: '정말로 삭제하시겠습니까?',
+      text: '아직 달성하지 못했을 수도 있어요!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: '네, 삭제할래요!',
+    }).then((result) => {
+      axios
+        .delete(getURL_GOALS(goalID), getWITH_TOKEN())
+        .then((response) => {
+          const { data } = response;
+          console.log(data);
+          navigate('/goalList');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      if (result.isConfirmed) {
+        Swal.fire('삭제되었어요.', 'See You Again!', 'success');
+      }
+    });
+  };
 
-    //   try {
-    //     const res = await axios.patch(
-    //       `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/goals/${memberId}`,
-    //       patchdata,
-    //       {
-    //         headers: { getACCESS_TOKEN },
-    //       }
-    //     );
-    //     setRender((el) => el + 1);
-    //     console.log(`patch`, res);
-    //   } catch (err) {
-    //     console.log(`patcherror`, err);
-    //   }
-    // };
-    // const goals = [
-    //   { goalId: 0, goalName: '닌텐도', price: 10000, monthlyPayment: 100 },
-    //   { goalId: 1, goalName: '맥북 pro', price: 20000, monthlyPayment: 200 },
-    //   { goalId: 2, goalName: '갤럭시 z플립5', price: 30000, monthlyPayment: 300 },
-    //   { goalId: 3, goalName: '다이슨 청소기', price: 40000, monthlyPayment: 400 },
-    // ];
+  const [goal, setGoal] = useState(''); // 수기 목표 이름
+  const [goalPrice, setGoalPrice] = useState(''); // 수기 가격
+  const [monthPrice, setMonthPrice] = useState(''); // 수기 한 달 입금
 
-    return (
+  const goalPatch = async () => {
+    const patchdata = {
+      goalName: goal,
+      price: goalPrice,
+      monthlyPayment: monthPrice,
+    };
+
+    axios
+      .patch(getURL_GOALS(goalID), patchdata, getWITH_TOKEN())
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+        Swal.fire({
+          text: '목표가 수정되었어요!',
+          icon: 'success',
+        });
+        navigate('/goalList');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  return (
+    <>
       <GDetailPage>
         <h2 style={{ marginTop: '30px' }}>💜 상세 위시 정보 💜</h2>
         <GDetail>
@@ -105,11 +121,11 @@ const GoalDetail = () =>
             <img src={noimage} alt="no_image" style={{ width: '300px' }} />
           </div>
           <div style={{ display: 'flex' }}>
-            <Title>나의 목표</Title>
+            <Title> 나의 목표&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Title>
             <TextField
               className="textField"
               id="standard-read-only-input"
-              defaultValue="목표 이름"
+              defaultValue={detailData.goalName}
               InputProps={{
                 readOnly: true,
               }}
@@ -117,11 +133,11 @@ const GoalDetail = () =>
             />
           </div>
           <div style={{ display: 'flex' }}>
-            <Title>목표 금액</Title>
+            <Title>목표 금액(원)</Title>
             <TextField
               className="textField"
               id="standard-read-only-input"
-              defaultValue="30,000,000원"
+              defaultValue={detailData.price}
               InputProps={{
                 readOnly: true,
               }}
@@ -129,11 +145,11 @@ const GoalDetail = () =>
             />
           </div>
           <div style={{ display: 'flex' }}>
-            <Title>월 저축액</Title>
+            <Title>월 저축액(원)</Title>
             <TextField
               className="textField"
               id="standard-read-only-input"
-              defaultValue="30,000원"
+              defaultValue={detailData.monthlyPayment}
               InputProps={{
                 readOnly: true,
               }}
@@ -141,11 +157,13 @@ const GoalDetail = () =>
             />
           </div>
           <div style={{ display: 'flex' }}>
-            <Title>기 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;간</Title>
+            <Title>기 &nbsp;&nbsp;&nbsp;&nbsp;간(개월)</Title>
             <TextField
               className="textField"
               id="standard-read-only-input"
-              defaultValue="100개월"
+              defaultValue={Math.ceil(
+                detailData.price / detailData.monthlyPayment
+              )}
               InputProps={{
                 readOnly: true,
               }}
@@ -153,24 +171,87 @@ const GoalDetail = () =>
             />
           </div>
           <div style={{ display: 'flex' }}>
-            <Title>생성 날짜</Title>
+            <Title>생성 날짜&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Title>
             <TextField
               className="textField"
               id="standard-read-only-input"
-              defaultValue="2022-12-25"
+              defaultValue={createDate}
               InputProps={{
                 readOnly: true,
               }}
               variant="standard"
             />
           </div>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <Button className="postButton">EDIT</Button>
+          <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+            {
+              <Button>
+                <Button className="postButton" onClick={handleOpen}>
+                  EDIT
+                </Button>
+                <Modal
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={style}>
+                    <h2 style={{ textDecoration: 'none', padding: '24px' }}>
+                      목표 수정
+                    </h2>
+                    <form>
+                      <TextField
+                        id="outlined-helperText"
+                        label="목표 이름"
+                        variant="outlined"
+                        defaultValue={detailData.goalName}
+                        onChange={(e) => setGoal(e.target.value)}
+                        style={{ margin: '24px', width: 300 }}
+                      />
+                      <br />
+                      <TextField
+                        id="outlined-helperText"
+                        label="목표 금액"
+                        variant="outlined"
+                        defaultValue={detailData.price}
+                        onChange={(e) => setGoalPrice(e.target.value)}
+                        style={{ margin: '24px', width: 300 }}
+                      />
+                      <br />
+                      <TextField
+                        id="outlined-helperText"
+                        label="월 입금액"
+                        variant="outlined"
+                        defaultValue={detailData.monthlyPayment}
+                        onChange={(e) => setMonthPrice(e.target.value)}
+                        style={{ margin: '24px', width: 300 }}
+                      />
+                      <br />
+                      <Button
+                        style={{
+                          padding: '24px',
+                          textAlign: 'center',
+                          marginRight: '10px',
+                        }}
+                        onClick={goalPatch}
+                      >
+                        CONFIRM
+                      </Button>
+                    </form>
+                  </Box>
+                </Modal>
+              </Button>
+            }
+            {
+              <Button className="deleteButton" onClick={goalDelete}>
+                DELETE
+              </Button>
+            }
           </div>
         </GDetail>
       </GDetailPage>
-    );
-  };
+    </>
+  );
+};
 
 export default GoalDetail;
 
@@ -178,9 +259,9 @@ GoalDetail.propTypes = {
   goal: PropTypes.string,
   goalPrice: PropTypes.number,
   monthPrice: PropTypes.number,
-  setGoal: PropTypes.func,
-  setGoalPrice: PropTypes.func,
-  setMonthPrice: PropTypes.func,
+  setGoal: PropTypes.string,
+  setGoalPrice: PropTypes.number,
+  setMonthPrice: PropTypes.number,
 };
 
 const GDetailPage = styled.div`
@@ -191,7 +272,8 @@ const GDetailPage = styled.div`
 `;
 
 const GDetail = styled.div`
-  width: 100%;
+  /* 여기서 width를 100% 나 max-width를 설정할시 박스가 찌그러지는데 왜그러는건지 모르곘어서 일단 600 */
+  width: 600px;
   height: auto;
   border-radius: 6px;
   background-color: #eef1ff;
@@ -215,7 +297,21 @@ const GDetail = styled.div`
     margin: 30px 0px 30px 0px;
     font-size: 20px;
     color: #aac4ff;
-    width: 30%;
+    width: 150px;
+    height: 50px;
+    &:hover {
+      outline: none;
+      border-color: #aac4ff;
+      box-shadow: 0px 0px 0px 4px hsla(206, 100%, 40%, 0.15);
+    }
+  }
+  .deleteButton {
+    background-color: #ff6f6f;
+    margin: 35px 0px 30px 0px;
+    font-size: 20px;
+    color: white;
+    width: 150px;
+    height: 50px;
     &:hover {
       outline: none;
       border-color: #aac4ff;
