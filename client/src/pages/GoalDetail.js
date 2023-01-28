@@ -1,177 +1,189 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import { ROUTE_PATH_GOAL_LIST } from '../store/routerStore';
-// import axios from 'axios';
-// import { useEffect } from 'react';
+import {
+  ROUTE_PATH_GOAL_EDIT,
+  ROUTE_PATH_GOAL_LIST,
+} from '../store/routerStore';
+import { getURL_GOALS, getWITH_TOKEN } from '../store/urlStore';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 // import { getACCESS_TOKEN } from '../helper/cookieHelper.js';
 import { TextField, Button } from '@mui/material';
 import PropTypes from 'prop-types';
 import noimage from '../asset/images/noimage.png';
 
-const GoalDetail = () =>
-  // {
-  //   goal,
-  //   goalPrice,
-  //   monthPrice,
-  //   setGoal,
-  //   setGoalPrice,
-  //   setMonthPrice,
-  // }
-  {
-    // const [goalName, setGoalName] = useState('');
-    // const [price, setPrice] = useState('');
-    // const [monthlyPayment, setMonthlyPayment] = useState('');
-    // const [render, setRender] = useState(0);
+// const [goalName, setGoalName] = useState('');
+// const [price, setPrice] = useState('');
+// const [monthlyPayment, setMonthlyPayment] = useState('');
+// const [render, setRender] = useState(0);
 
-    // const goalNameonChange = (e) => {
-    //   setGoalName(e.target.value);
-    // };
+// const goalNameonChange = (e) => {
+//   setGoalName(e.target.value);
+// };
 
-    // const goalPriceonChange = (e) => {
-    //   setPrice(e.target.value);
-    // };
+// const goalPriceonChange = (e) => {
+//   setPrice(e.target.value);
+// };
 
-    // const goalMonthlypaymentonChange = (e) => {
-    //   setMonthlyPayment(e.target.value);
-    // };
-    //목표 상세 조회
-    // useEffect(() => {
-    //   const goalGet = async (memberId, goalId) => {
-    //     try {
-    //       const res = await axios.get(
-    //         `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/goals/${memberId}/${goalId}`,
-    //         {
-    //           headers: { getACCESS_TOKEN },
-    //         }
-    //       );
-    //       console.log(`get`, res);
-    //     } catch (err) {
-    //       console.log(`error`, err);
-    //     }
-    //   };
-    //   goalGet();
-    // }, [render]);
+// const goalMonthlypaymentonChange = (e) => {
+//   setMonthlyPayment(e.target.value);
+// };
+// 목표 상세 조회
+// useEffect(() => {
+//   const goalGet = async (goalId) => {
+//     try {
+//       const res = await axios.get(
+//         `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/goals/${goalId}`,
+//         {
+//           headers: { getACCESS_TOKEN },
+//         }
+//       );
+//       console.log(`get`, res);
+//     } catch (err) {
+//       console.log(`error`, err);
+//     }
+//   };
+//   goalGet();
+// }, [render]);
 
-    // 수정
-    // const goalPatch = async (memberId) => {
-    //   const patchdata = {
-    //     goalName: goalName,
-    //     price: price,
-    //     monthlyPayment: monthlyPayment,
-    //   };
+const GoalDetail = (goalId) => {
+  const [pageData, setPageData] = useState(null);
 
-    //   try {
-    //     const res = await axios.patch(
-    //       `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/goals/${memberId}`,
-    //       patchdata,
-    //       {
-    //         headers: { getACCESS_TOKEN },
-    //       }
-    //     );
-    //     setRender((el) => el + 1);
-    //     console.log(`patch`, res);
-    //   } catch (err) {
-    //     console.log(`patcherror`, err);
-    //   }
-    // };
-    // const goals = [
-    //   { goalId: 0, goalName: '닌텐도', price: 10000, monthlyPayment: 100 },
-    //   { goalId: 1, goalName: '맥북 pro', price: 20000, monthlyPayment: 200 },
-    //   { goalId: 2, goalName: '갤럭시 z플립5', price: 30000, monthlyPayment: 300 },
-    //   { goalId: 3, goalName: '다이슨 청소기', price: 40000, monthlyPayment: 400 },
-    // ];
+  useEffect(() => {
+    // setPageData(data);
+    init(goalId);
+  }, []);
 
-    return (
-      <GDetailPage>
-        <h2 style={{ marginTop: '30px' }}>💜 상세 위시 정보 💜</h2>
-        <GDetail>
-          <div>
-            <button className="BackButton">
-              <Link
-                to={ROUTE_PATH_GOAL_LIST}
-                style={{ textDecoration: 'none' }}
-              >
-                ⬅️
-              </Link>
-            </button>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <img src={noimage} alt="no_image" style={{ width: '300px' }} />
-          </div>
-          <div style={{ display: 'flex' }}>
-            <Title>나의 목표</Title>
-            <TextField
-              className="textField"
-              id="standard-read-only-input"
-              defaultValue="목표 이름"
-              InputProps={{
-                readOnly: true,
-              }}
-              variant="standard"
-            />
-          </div>
-          <div style={{ display: 'flex' }}>
-            <Title>목표 금액</Title>
-            <TextField
-              className="textField"
-              id="standard-read-only-input"
-              defaultValue="30,000,000원"
-              InputProps={{
-                readOnly: true,
-              }}
-              variant="standard"
-            />
-          </div>
-          <div style={{ display: 'flex' }}>
-            <Title>월 저축액</Title>
-            <TextField
-              className="textField"
-              id="standard-read-only-input"
-              defaultValue="30,000원"
-              InputProps={{
-                readOnly: true,
-              }}
-              variant="standard"
-            />
-          </div>
-          <div style={{ display: 'flex' }}>
-            <Title>기 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;간</Title>
-            <TextField
-              className="textField"
-              id="standard-read-only-input"
-              defaultValue="100개월"
-              InputProps={{
-                readOnly: true,
-              }}
-              variant="standard"
-            />
-          </div>
-          <div style={{ display: 'flex' }}>
-            <Title>생성 날짜</Title>
-            <TextField
-              className="textField"
-              id="standard-read-only-input"
-              defaultValue="2022-12-25"
-              InputProps={{
-                readOnly: true,
-              }}
-              variant="standard"
-            />
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <Button className="postButton">EDIT</Button>
-          </div>
-        </GDetail>
-      </GDetailPage>
-    );
+  useEffect(() => {}, [pageData]);
+
+  const init = async (goalId) => {
+    const result = await axios.get(getURL_GOALS(goalId));
+    setPageData(result.data);
   };
 
+  axios
+    .get(getURL_GOALS(goalId), getWITH_TOKEN())
+    .then((response) => {
+      const { data } = response;
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  // 수정
+  // const goalPatch = async (memberId) => {
+  //   const patchdata = {
+  //     goalName: goalName,
+  //     price: price,
+  //     monthlyPayment: monthlyPayment,
+  //   };
+
+  //   try {
+  //     const res = await axios.patch(
+  //       `http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/goals/${memberId}`,
+  //       patchdata,
+  //       {
+  //         headers: { getACCESS_TOKEN },
+  //       }
+  //     );
+  //     setRender((el) => el + 1);
+  //     console.log(`patch`, res);
+  //   } catch (err) {
+  //     console.log(`patcherror`, err);
+  //   }
+  // };
+
+  return (
+    <GDetailPage>
+      <h2 style={{ marginTop: '30px' }}>💜 상세 위시 정보 💜</h2>
+      <GDetail>
+        <div>
+          <button className="BackButton">
+            <Link to={ROUTE_PATH_GOAL_LIST} style={{ textDecoration: 'none' }}>
+              ⬅️
+            </Link>
+          </button>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <img src={noimage} alt="no_image" style={{ width: '300px' }} />
+        </div>
+        <div style={{ display: 'flex' }}>
+          <Title>나의 목표</Title>
+          <TextField
+            className="textField"
+            id="standard-read-only-input"
+            defaultValue="목표 이름"
+            InputProps={{
+              readOnly: true,
+            }}
+            variant="standard"
+          />
+        </div>
+        <div style={{ display: 'flex' }}>
+          <Title>목표 금액</Title>
+          <TextField
+            className="textField"
+            id="standard-read-only-input"
+            defaultValue="30,000,000원"
+            InputProps={{
+              readOnly: true,
+            }}
+            variant="standard"
+          />
+        </div>
+        <div style={{ display: 'flex' }}>
+          <Title>월 저축액</Title>
+          <TextField
+            className="textField"
+            id="standard-read-only-input"
+            defaultValue="30,000원"
+            InputProps={{
+              readOnly: true,
+            }}
+            variant="standard"
+          />
+        </div>
+        <div style={{ display: 'flex' }}>
+          <Title>기 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;간</Title>
+          <TextField
+            className="textField"
+            id="standard-read-only-input"
+            defaultValue="100개월"
+            InputProps={{
+              readOnly: true,
+            }}
+            variant="standard"
+          />
+        </div>
+        <div style={{ display: 'flex' }}>
+          <Title>생성 날짜</Title>
+          <TextField
+            className="textField"
+            id="standard-read-only-input"
+            defaultValue="2022-12-25"
+            InputProps={{
+              readOnly: true,
+            }}
+            variant="standard"
+          />
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Button className="postButton">
+            <Link to={ROUTE_PATH_GOAL_EDIT} style={{ textDecoration: 'none' }}>
+              EDIT
+            </Link>
+          </Button>
+        </div>
+      </GDetail>
+    </GDetailPage>
+  );
+};
 export default GoalDetail;
 
 GoalDetail.propTypes = {

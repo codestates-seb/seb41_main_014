@@ -26,15 +26,21 @@ const GoalListGroup = ({ _list }) => {
               <ComponentContain>
                 <div style={{ display: 'flex' }}>
                   <Header>나의 목표: </Header>{' '}
-                  <input className="SettingInput" value={item.goalName} />
+                  <input
+                    className="SettingInput"
+                    defaultValue={item.goalName}
+                  />
                 </div>
                 <div style={{ display: 'flex' }}>
                   <Header>목표 금액: </Header>{' '}
-                  <input className="SettingInput" value={item.price} />
+                  <input className="SettingInput" defaultValue={item.price} />
                 </div>
                 <div style={{ display: 'flex' }}>
                   <Header>월 납입금: </Header>{' '}
-                  <input className="SettingInput" value={item.monthlyPayment} />
+                  <input
+                    className="SettingInput"
+                    defaultValue={item.monthlyPayment}
+                  />
                 </div>
                 <h2 className="Font">
                   목표치에 도달하기 까지{' '}
