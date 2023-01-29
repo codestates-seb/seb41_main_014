@@ -24,13 +24,10 @@ public class Goal extends Auditable {
     private long price; //목표 금액
 
     @Column(nullable = false)
-    private long principle; //원금
-
-    @Column(nullable = false)
     private long monthlyPayment; //월 납입금
 
     @Column
-    private int period; //납입 기간 = (목표금액 - 원금)/월 납입금
+    private int period; //납입 기간 = 목표금액 / 월 납입금
 
     @Column
     private String url; //이미지 url
