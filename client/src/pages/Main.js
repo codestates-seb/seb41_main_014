@@ -1,6 +1,4 @@
-import { Box, Stack, styled, Typography } from '@mui/material';
-import Button from '@mui/material/Button';
-import axios from 'axios';
+import { Box, Stack, Typography } from '@mui/material';
 import cart from '../../src/asset/images/main_cart_woman.svg';
 import goal from '../../src/asset/images/main_goal_woman.svg';
 import plan from '../../src/asset/images/main_plan_man.svg';
@@ -8,116 +6,11 @@ import logo_main from '../../src/asset/images/logo_main.png';
 import coin from '../../src/asset/images/main_coin.svg';
 import { Animate, AnimateGroup } from 'react-simple-animate';
 import 'animate.css';
-import {
-  MODAL_TYPE_SEARCH,
-  setModalOpen,
-  setModalType,
-} from '../reducer/modalSlice';
-import { useDispatch } from 'react-redux';
-import {
-  getURL_SAVINGS_INTEREST,
-  getWITH_PARAMS,
-  getWITH_TOKEN,
-  URL_SAVINGS,
-} from '../store/urlStore';
-
-const StyledButton = styled(Button)`
-  padding: ${(props) => props.theme.spacing(2)};
-  margin: ${(props) => props.theme.spacing(1)};
-`;
 
 const Main = () => {
-  const dispatch = useDispatch();
-
-  const fixedSaving = () => {
-    axios
-      .post(
-        URL_SAVINGS,
-        {
-          monthlySavings: 10000,
-          saveTrm: 36,
-          joinDeny: 3,
-        },
-        getWITH_PARAMS({
-          page: 1,
-          size: 10,
-        })
-      )
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const fixedSavingCreate = () => {
-    axios
-      .post(getURL_SAVINGS_INTEREST(), {
-        finPrdtCd: 'WR0001L',
-        intrRateType: 'S',
-        rsrvType: 'S',
-        saveTrm: '12',
-      })
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const fixedSavingList = () => {
-    axios
-      .get(getURL_SAVINGS_INTEREST(), getWITH_TOKEN())
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const fixedSavingDelete = () => {
-    //관심목록 ID
-    const interestID = 1;
-    axios
-      .delete(getURL_SAVINGS_INTEREST(interestID), getWITH_TOKEN())
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   return (
     <AnimateGroup play>
       <Stack sx={{ maxWidth: 600, minWidth: 360, width: '100%' }}>
-        <Box>
-          <Button
-            variant="outlined"
-            onClick={() => {
-              dispatch(setModalType(MODAL_TYPE_SEARCH));
-              dispatch(setModalOpen());
-            }}
-          >
-            네이버검색모달
-          </Button>
-          <StyledButton variant="contained" onClick={fixedSaving}>
-            적금추천
-          </StyledButton>
-          <StyledButton variant="contained" onClick={fixedSavingList}>
-            관심적금목록
-          </StyledButton>
-          <StyledButton variant="contained" onClick={fixedSavingCreate}>
-            관심적금등록
-          </StyledButton>
-          <StyledButton variant="contained" onClick={fixedSavingDelete}>
-            관심적금삭제
-          </StyledButton>
-        </Box>
         <Stack direction="row" alignItems="center">
           <Box width="30%">
             <Animate

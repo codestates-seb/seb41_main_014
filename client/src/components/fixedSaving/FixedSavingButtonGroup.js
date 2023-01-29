@@ -14,6 +14,8 @@ import {
   setFixedSavingsIsExtendable,
   setFixedSavingsPageInfo,
 } from '../../reducer/fixedSavingsSlice';
+import { getWITH_PARAMS, URL_SAVINGS } from '../../store/urlStore';
+import { getFS_BANKS } from '../../helper/fixedSavingHelper';
 
 const StyledButton = styled(Button)`
   width: 100%;
@@ -48,7 +50,6 @@ const StyledButton = styled(Button)`
 const FixedSavingButtonGroup = () => {
   const navigate = useNavigate();
   const conditions = useSelector((state) => state.savingConditions.origin);
-  const fixedSavings = useSelector((state) => state.fixedSavings);
   const dispatch = useDispatch();
 
   const handleBack = () => {
@@ -84,7 +85,7 @@ const FixedSavingButtonGroup = () => {
 
     axios
       .post(
-        'http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/savings',
+        URL_SAVINGS,
         {
           monthlySavings: conditions.monthlySavings.value,
           saveTrm: conditions.saveTrm.value,
@@ -102,13 +103,10 @@ const FixedSavingButtonGroup = () => {
               ? undefined
               : conditions.joinDeny.value,
         },
-        {
-          headers: { withCredentials: true },
-          params: {
-            page: fixedSavings.pageInfo.origin.page,
-            size: fixedSavings.pageInfo.origin.size,
-          },
-        }
+        getWITH_PARAMS({
+          page: 1,
+          size: 10,
+        })
       )
       .then((response) => {
         const { data } = response;
@@ -116,8 +114,18 @@ const FixedSavingButtonGroup = () => {
           alert('succeed: No data');
           return;
         }
-        console.log(data);
         // 데이터 세팅
+        const originData = data.data;
+
+        const banks = getFS_BANKS();
+        for (const data of originData) {
+          for (const bank of banks) {
+            if (data.korCoNm === bank.korCoNm) {
+              data.dcls_chrg_man = bank.dcls_chrg_man;
+              continue;
+            }
+          }
+        }
         dispatch(setFixedSavings(data.data));
         // accordion extendable boolean 세팅
         dispatch(setFixedSavingsIsExtendable(false));
@@ -133,7 +141,7 @@ const FixedSavingButtonGroup = () => {
         );
       })
       .catch((error) => {
-        alert(error);
+        console.log(error);
       });
   };
   return (

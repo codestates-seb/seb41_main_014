@@ -179,7 +179,7 @@ const hana = setBank(
   '15991111'
 );
 const k = setBank(
-  '주식회사케이뱅크',
+  '주식회사 케이뱅크',
   '0014674',
   '수신팀\n02-3210-7312',
   'https://ib.kbanknow.com/ib20/mnu/FPMDPT010000',
@@ -193,14 +193,14 @@ const suhyup = setBank(
   '15881515'
 );
 const kakao = setBank(
-  '주식회사카카오뱅크',
+  '주식회사 카카오뱅크',
   '0015130',
   '수신팀\n1599-3333\n여신팀\n1599-3333',
   'https://www.kakaobank.com/',
   '15993333'
 );
 const toss = setBank(
-  '토스뱅크\n주식회사',
+  '토스뱅크 주식회사',
   '0017801',
   '수신스쿼드\n02-6713-1952\n여신스쿼드\n02-6713-1970',
   'https://www.tossbank.com/product-service/savings/account',

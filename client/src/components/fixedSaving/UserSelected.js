@@ -26,6 +26,11 @@ const UserSelected = () => {
             {conditions.monthlySavings.fixed.title}
           </Typography>
         </Grid>
+        <Grid item xs={3}>
+          <Typography sx={TypographyStyle(true)}>
+            {conditions.finishSavings.fixed.title}
+          </Typography>
+        </Grid>
         <Grid item xs={2}>
           <Typography sx={TypographyStyle(true)}>
             {conditions.saveTrm.fixed.title}
@@ -34,11 +39,6 @@ const UserSelected = () => {
         <Grid item xs={2}>
           <Typography sx={TypographyStyle(true)}>
             {conditions.rsrvType.fixed.title}
-          </Typography>
-        </Grid>
-        <Grid item xs={3}>
-          <Typography sx={TypographyStyle(true)}>
-            {conditions.banks.fixed.title}
           </Typography>
         </Grid>
         <Grid item xs={2}>
@@ -58,6 +58,11 @@ const UserSelected = () => {
             {getLOCALE_MONEY(conditions.monthlySavings.value)} 원
           </Typography>
         </Grid>
+        <Grid item xs={3}>
+          <Typography sx={TypographyStyle()}>
+            {getLOCALE_MONEY(conditions.finishSavings.value)} 원
+          </Typography>
+        </Grid>
         <Grid item xs={2}>
           <Typography sx={TypographyStyle()}>
             {conditions.saveTrm.value} 개월
@@ -66,11 +71,6 @@ const UserSelected = () => {
         <Grid item xs={2}>
           <Typography sx={TypographyStyle()}>
             {getRSRV_TYPE(conditions.rsrvType.value)}
-          </Typography>
-        </Grid>
-        <Grid item xs={3}>
-          <Typography sx={TypographyStyle()}>
-            {conditions.banks.isSelectedValue}
           </Typography>
         </Grid>
         <Grid item xs={2}>

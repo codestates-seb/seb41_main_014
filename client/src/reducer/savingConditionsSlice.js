@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getFS_BANKS } from '../helper/fixedSavingHelper';
+import { getLOCALE_MONEY } from '../helper/unitHelper';
 
 // title, unit, value
 const monthlySavings = {
@@ -105,9 +106,9 @@ const savingConditionsSlice = createSlice({
   initialState,
   reducers: {
     setConditionsInit: (state) => {
-      state.origin.monthlySavings.value = 0;
+      state.origin.monthlySavings.value = 10000;
       state.origin.saveTrm.value = 6;
-      state.origin.finishSavings.value = 0;
+      state.origin.finishSavings.value = getLOCALE_MONEY(60000);
       state.origin.rsrvType.value = -1;
       state.origin.banks.isCheckeds = getCheckeds();
       state.origin.intrRateType.value = -1;

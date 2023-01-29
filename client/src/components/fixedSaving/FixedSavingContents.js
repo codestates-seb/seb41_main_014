@@ -5,7 +5,11 @@ import {
   Box,
   Grid,
 } from '@mui/material';
-import { getFS_DATA } from '../../helper/fixedSavingHelper';
+import {
+  getFS_BANKS,
+  getFS_DATA,
+  getJOIN_DENY,
+} from '../../helper/fixedSavingHelper';
 import { useState } from 'react';
 import { getLOCALE_MONEY, getPERCENT_WITH_TEXT } from '../../helper/unitHelper';
 import GridColumn from './GridColumn';
@@ -18,6 +22,7 @@ import {
   setFixedSavings,
   setFixedSavingsPageInfo,
 } from '../../reducer/fixedSavingsSlice';
+import { getWITH_PARAMS, URL_SAVINGS } from '../../store/urlStore';
 
 const FixedSavingContents = () => {
   const conditions = useSelector((state) => state.savingConditions.origin);
@@ -54,7 +59,7 @@ const FixedSavingContents = () => {
     setTimeout(() => {
       axios
         .post(
-          'http://ec2-43-201-0-232.ap-northeast-2.compute.amazonaws.com:8080/api/savings',
+          URL_SAVINGS,
           {
             monthlySavings: conditions.monthlySavings.value,
             saveTrm: conditions.saveTrm.value,
@@ -72,19 +77,29 @@ const FixedSavingContents = () => {
                 ? undefined
                 : conditions.joinDeny.value,
           },
-          {
-            headers: { withCredentials: true },
-            params: {
-              page: fixedSavings.pageInfo.origin.page + 1,
-              size: fixedSavings.pageInfo.origin.size,
-            },
-          }
+          getWITH_PARAMS({
+            page: fixedSavings.pageInfo.origin.page + 1,
+            size: fixedSavings.pageInfo.origin.size,
+          })
         )
         .then((response) => {
           const { data } = response;
+          console.log(data.data);
           if (data.data.length === 0) {
             alert('succeed: No data');
             return;
+          }
+          // 데이터 세팅
+          const originData = data.data;
+
+          const banks = getFS_BANKS();
+          for (const data of originData) {
+            for (const bank of banks) {
+              if (data.korCoNm === bank.korCoNm) {
+                data.dcls_chrg_man = bank.dcls_chrg_man;
+                continue;
+              }
+            }
           }
 
           const hasMore = data.pageInfo.page < data.pageInfo.totalPages;
@@ -92,12 +107,12 @@ const FixedSavingContents = () => {
             setFixedSavingsPageInfo({ origin: data.pageInfo, hasMore: hasMore })
           );
 
-          const newData = fixedSavings.origin.concat(data.data);
+          const newData = fixedSavings.origin.concat(originData);
           dispatch(setFixedSavings(newData));
           //페이지 정보
         })
         .catch((error) => {
-          alert(error);
+          console.log(error);
         });
     }, 1500);
   };
@@ -154,9 +169,9 @@ const FixedSavingContents = () => {
           </Box>
         }
       >
-        {fixedSavings.origin.map((fixedSaving) => (
+        {fixedSavings.origin.map((fixedSaving, index) => (
           <Accordion
-            key={fixedSaving.interestId}
+            key={index}
             sx={(theme) => ({
               backgroundColor: theme.colors.mainLight,
               borderRadius: 1,
@@ -168,8 +183,8 @@ const FixedSavingContents = () => {
                 opacity: 0.6,
               },
             })}
-            expanded={expanded === fixedSaving.interestId}
-            onChange={handleChange(fixedSaving.interestId)}
+            expanded={expanded === index}
+            onChange={handleChange(index)}
           >
             <AccordionSummary sx={{ p: 0 }}>
               <Grid
@@ -181,7 +196,11 @@ const FixedSavingContents = () => {
               >
                 <GridRow data={fixedSaving.korCoNm} xs={3} />
                 <GridRow data={fixedSaving.finPrdtNm} xs={3.5} />
-                <GridRow data={fixedSaving.joinDeny} xs={1.5} align="center" />
+                <GridRow
+                  data={getJOIN_DENY(Number(fixedSaving.joinDeny))}
+                  xs={1.5}
+                  align="center"
+                />
                 <GridRow
                   data={getPERCENT_WITH_TEXT(fixedSaving.intrRate)}
                   xs={1}
