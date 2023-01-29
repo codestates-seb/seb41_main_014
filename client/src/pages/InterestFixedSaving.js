@@ -72,7 +72,10 @@ const InterestFixedSaving = () => {
       .then((response) => {
         const { data } = response;
         if (data.data.length === 0) {
-          alert('succeed: No data');
+          enqueueSnackbar('해당 정보가 없습니다.', {
+            variant: 'success',
+          });
+
           return;
         }
         // 데이터 세팅
@@ -127,7 +130,9 @@ const InterestFixedSaving = () => {
     axios
       .delete(getURL_SAVINGS_INTEREST(likeSavingId), getWITH_TOKEN())
       .then(() => {
-        alert('정상적으로 삭제되었습니다.');
+        enqueueSnackbar('정상적으로 삭제되었습니다.', {
+          variant: 'success',
+        });
         //값바꿔치기
         getInterestSavings(pageInfo);
       })

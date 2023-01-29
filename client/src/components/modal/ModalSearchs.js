@@ -84,8 +84,9 @@ const ModalSearchs = forwardRef((props, ref) => {
 
   const handleSearchStart = () => {
     if (query === '') {
-      alert('빈값');
-      return;
+      enqueueSnackbar('빈값은 올 수 없습니다.', {
+        variant: 'info',
+      });
     }
     axios
       .get(
@@ -127,7 +128,9 @@ const ModalSearchs = forwardRef((props, ref) => {
 
   const handleItemFinalSelect = () => {
     if (selectId === -1) {
-      alert('선택한 값이 없습니다.');
+      enqueueSnackbar('선택한 값이 없습니다.', {
+        variant: 'info',
+      });
       return;
     }
     let tempSearch;

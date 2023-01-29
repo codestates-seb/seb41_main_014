@@ -100,7 +100,9 @@ const FixedSavingContents = () => {
         .then((response) => {
           const { data } = response;
           if (data.data.length === 0) {
-            alert('succeed: No data');
+            enqueueSnackbar('해당 정보가 없습니다.', {
+              variant: 'success',
+            });
             return;
           }
           // 데이터 세팅
@@ -141,7 +143,9 @@ const FixedSavingContents = () => {
   const navigate = useNavigate();
   const handelInterestSavings = (e, saving) => {
     if (userInfo.id === -1) {
-      alert('로그인 후 시도해주세요');
+      enqueueSnackbar('로그인 후 시도해주세요.', {
+        variant: 'warning',
+      });
       navigate(ROUTE_PATH_LOGIN);
       return;
     }

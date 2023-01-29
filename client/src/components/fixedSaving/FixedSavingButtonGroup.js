@@ -113,7 +113,9 @@ const FixedSavingButtonGroup = () => {
       .then((response) => {
         const { data } = response;
         if (data.data.length === 0) {
-          alert('succeed: No data');
+          enqueueSnackbar('해당 정보가 없습니다.', {
+            variant: 'success',
+          });
           return;
         }
         // 데이터 세팅
