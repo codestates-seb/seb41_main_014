@@ -2,8 +2,9 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 
 import {
+  ROUTE_PATH_INTEREST_FIXED_SAVINGS,
   ROUTE_PATH_BASE,
-  ROUTE_PATH_FIXED_SAVING,
+  ROUTE_PATH_FIXED_SAVINGS,
   ROUTE_PATH_GOAL_CREATE,
   ROUTE_PATH_GOAL_DETAIL,
   // ROUTE_PATH_GOAL_EDIT,
@@ -33,6 +34,7 @@ import ModalMainMenu from './components/modal/ModalMainMenu';
 import { useDispatch, useSelector } from 'react-redux';
 import { MODAL_TYPE_MAIN_MENU, setModalClose } from './reducer/modalSlice';
 import ModalSearchs from './components/modal/ModalSearchs';
+import InterestFixedSaving from './pages/InterestFixedSaving';
 
 // TODO theme사용예시, theme의경우 typeScript ts, tsx설정안되면
 // 단순 theme interface(명세)라 자동완성안되니 style/theme.js 참조
@@ -73,9 +75,12 @@ function App() {
           <Route path={ROUTE_PATH_GOAL_CREATE} element={<GoalCreate />} />
           <Route path={ROUTE_PATH_GOAL_LIST} element={<GoalList />} />
           <Route path={ROUTE_PATH_GOAL_DETAIL} element={<GoalDetail />} />
-          {/* <Route path={ROUTE_PATH_GOAL_EDIT} element={<GoalEdit />} /> */}
 
-          <Route path={ROUTE_PATH_FIXED_SAVING} element={<FixedSaving />} />
+          <Route path={ROUTE_PATH_FIXED_SAVINGS} element={<FixedSaving />} />
+          <Route
+            path={ROUTE_PATH_INTEREST_FIXED_SAVINGS}
+            element={<InterestFixedSaving />}
+          />
           <Route path={ROUTE_PATH_NOT_FOUND} element={<NotFound />} />
         </Routes>
       </ContentContainer>

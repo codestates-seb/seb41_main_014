@@ -17,6 +17,8 @@ const GoalDetail = () => {
   // GoalListGroup에서 받은 props
   const location = useLocation();
   const detailData = location.state.data;
+  console.log('detailData');
+
   console.log(detailData);
 
   // 날짜 변환 =>  뭐가 다른거지?
@@ -111,7 +113,18 @@ const GoalDetail = () => {
               alignItems: 'center',
             }}
           >
-            <img src={noimage} alt="no_image" style={{ width: '300px' }} />
+            <img
+              src={
+                detailData.url === null ||
+                detailData.url === 'null' ||
+                !detailData.url ||
+                detailData.url === ''
+                  ? noimage
+                  : detailData.url
+              }
+              alt="no_image"
+              style={{ width: '300px' }}
+            />
           </div>
           <div style={{ display: 'flex' }}>
             <Title> 나의 목표&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Title>

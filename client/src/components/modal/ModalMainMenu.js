@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { setModalClose } from '../../reducer/modalSlice';
 import {
   ROUTE_PATH_BASE,
-  ROUTE_PATH_FIXED_SAVING,
+  ROUTE_PATH_FIXED_SAVINGS,
   ROUTE_PATH_GOAL_LIST,
   ROUTE_PATH_LOGIN,
 } from '../../store/routerStore';
@@ -69,7 +69,7 @@ const ModalMainMenu = forwardRef((props, ref) => {
         </Link>
       )}
       <Link
-        to={ROUTE_PATH_FIXED_SAVING}
+        to={ROUTE_PATH_FIXED_SAVINGS}
         style={{ textDecoration: 'none', padding: '24px' }}
         onClick={handleCloseModal}
       >

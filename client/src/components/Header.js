@@ -13,8 +13,9 @@ import {
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import {
+  ROUTE_PATH_INTEREST_FIXED_SAVINGS,
   ROUTE_PATH_BASE,
-  ROUTE_PATH_FIXED_SAVING,
+  ROUTE_PATH_FIXED_SAVINGS,
   ROUTE_PATH_GOAL_LIST,
   ROUTE_PATH_LOGIN,
   ROUTE_PATH_MEMBER,
@@ -139,7 +140,7 @@ const Header = () => {
             </Typography>
             <Typography variant="h2" sx={{ mr: 4 }}>
               <Link
-                to={ROUTE_PATH_FIXED_SAVING}
+                to={ROUTE_PATH_FIXED_SAVINGS}
                 style={{ textDecoration: 'none' }}
               >
                 적금추천
@@ -159,7 +160,15 @@ const Header = () => {
             </Typography>
             <Typography variant="h2" sx={{ mr: 4 }}>
               <Link
-                to={ROUTE_PATH_FIXED_SAVING}
+                to={ROUTE_PATH_FIXED_SAVINGS}
+                style={{ textDecoration: 'none' }}
+              >
+                적금추천
+              </Link>
+            </Typography>
+            <Typography variant="h2" sx={{ mr: 4 }}>
+              <Link
+                to={ROUTE_PATH_INTEREST_FIXED_SAVINGS}
                 style={{ textDecoration: 'none' }}
               >
                 적금추천

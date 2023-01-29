@@ -12,5 +12,6 @@ export const ROUTE_PATH_GOAL_EDIT = '/goalEdit';
 export const ROUTE_PATH_GOAL_DETAIL = '/goalDetail';
 
 //윤
-export const ROUTE_PATH_FIXED_SAVING = '/fixedSaving';
+export const ROUTE_PATH_FIXED_SAVINGS = '/fixedSaving';
+export const ROUTE_PATH_INTEREST_FIXED_SAVINGS = '/interestFixedSaving';
 export const ROUTE_PATH_NOT_FOUND = '/*';
