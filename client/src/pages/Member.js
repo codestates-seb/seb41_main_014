@@ -27,6 +27,8 @@ import {
   getURL_GOALS,
 } from '../store/urlStore';
 import wish from '../asset/images/wish_list.png';
+import { useSnackbar } from 'notistack';
+import { getERROR_TEXT } from '../helper/axiosHelper';
 
 const MemberContainer = styled(Container)`
   display: flex;
@@ -153,6 +155,7 @@ const Member = () => {
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [list, setList] = useState([]);
+  const { enqueueSnackbar } = useSnackbar();
 
   const changeEditHandler = () => {
     setEditOpen(!editOpen);
@@ -165,12 +168,14 @@ const Member = () => {
   const deleteHandler = () => {
     axios
       .delete(URL_MEMBER, getWITH_TOKEN())
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
+      .then(() => {
+        //TODO
       })
       .catch((error) => {
-        console.log(error);
+        const { message } = error;
+        enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+          variant: 'error',
+        });
       });
     removeACCESS_TOKEN();
     removeREFRESH_TOKEN();
@@ -181,12 +186,14 @@ const Member = () => {
   const logoutHandler = () => {
     axios
       .delete(URL_MEMBER_LOGOUT, getWITH_TOKEN())
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
+      .then(() => {
+        //TODO
       })
       .catch((error) => {
-        console.log(error);
+        const { message } = error;
+        enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+          variant: 'error',
+        });
       });
     removeACCESS_TOKEN();
     removeREFRESH_TOKEN();
@@ -200,11 +207,13 @@ const Member = () => {
         .get(getURL_GOALS(), getWITH_TOKEN())
         .then((response) => {
           const { data } = response;
-          console.log(data);
           setList(data.data);
         })
         .catch((error) => {
-          console.log(error);
+          const { message } = error;
+          enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+            variant: 'error',
+          });
         });
     };
     goalGet();
