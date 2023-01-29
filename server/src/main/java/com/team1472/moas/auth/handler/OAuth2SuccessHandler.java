@@ -137,8 +137,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         return UriComponentsBuilder
                 .newInstance()
                 .scheme("http")
-                .host("localhost")
-                .port(3000)
+                .host("moas1472.s3-website.ap-northeast-2.amazonaws.com")
+//                .port(8080)
                 .path("/loginCallback")
                 .queryParams(queryParams)
                 .build()
