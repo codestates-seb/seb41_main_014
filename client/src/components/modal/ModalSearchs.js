@@ -18,6 +18,8 @@ import axios from 'axios';
 import { getWITH_PARAMS, URL_NAVER_SEARCH } from '../../store/urlStore';
 import Pagination from '../libs/Pagenation';
 import { setGoalCreate } from '../../reducer/goalCreateSlice';
+import { useSnackbar } from 'notistack';
+import { getERROR_TEXT } from '../helper/axiosHelper';
 
 const ModalSearchs = forwardRef((props, ref) => {
   const goalCreate = useSelector((state) => state.goalCreate);
@@ -26,6 +28,7 @@ const ModalSearchs = forwardRef((props, ref) => {
   const [searchs, setSearchs] = useState([]);
   const [total, setTotal] = useState(0);
   const [selectId, setSelectId] = useState(-1);
+  const { enqueueSnackbar } = useSnackbar();
   // display: size / start: page / sort: sim: 정확도, date: 날짜순
   const pageInfo = {
     display: 8,
@@ -49,7 +52,10 @@ const ModalSearchs = forwardRef((props, ref) => {
           setTotal(data.total);
         })
         .catch((error) => {
-          console.log(error);
+          const { message } = error;
+          enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+            variant: 'error',
+          });
         });
     }
   }, [start]);
@@ -97,7 +103,10 @@ const ModalSearchs = forwardRef((props, ref) => {
         setTotal(data.total);
       })
       .catch((error) => {
-        console.log(error);
+        const { message } = error;
+        enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+          variant: 'error',
+        });
       });
   };
   const handleCloseModal = () => {

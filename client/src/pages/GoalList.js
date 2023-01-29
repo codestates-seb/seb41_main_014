@@ -24,7 +24,7 @@ const GoalList = () => {
           setList(data.data);
         })
         .catch((error) => {
-          const [message] = error;
+          const { message } = error;
           enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
             variant: 'error',
           });

@@ -16,6 +16,8 @@ import {
 } from '../../reducer/fixedSavingsSlice';
 import { getWITH_PARAMS, URL_SAVINGS } from '../../store/urlStore';
 import { getFS_BANKS } from '../../helper/fixedSavingHelper';
+import { useSnackbar } from 'notistack';
+import { getERROR_TEXT } from '../helper/axiosHelper';
 
 const StyledButton = styled(Button)`
   width: 100%;
@@ -51,13 +53,13 @@ const FixedSavingButtonGroup = () => {
   const navigate = useNavigate();
   const conditions = useSelector((state) => state.savingConditions.origin);
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleBack = () => {
     navigate(-1);
   };
   const handleInit = () => {
     dispatch(setConditionsInit());
-    console.log(conditions);
   };
   const handleSearch = () => {
     // if (conditions.monthlySavings.value < 1) return alert('1이상 입력');
@@ -142,7 +144,10 @@ const FixedSavingButtonGroup = () => {
         );
       })
       .catch((error) => {
-        console.log(error);
+        const { message } = error;
+        enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+          variant: 'error',
+        });
       });
   };
   return (

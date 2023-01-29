@@ -37,6 +37,8 @@ import {
   removeACCESS_TOKEN,
   removeREFRESH_TOKEN,
 } from '../helper/cookieHelper';
+import { useSnackbar } from 'notistack';
+import { getERROR_TEXT } from '../helper/axiosHelper';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -79,6 +81,7 @@ const Header = () => {
   const isLogin = useSelector((state) => state.isLogin);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -101,7 +104,10 @@ const Header = () => {
             console.log(data);
           })
           .catch((error) => {
-            console.log(error);
+            const { message } = error;
+            enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+              variant: 'error',
+            });
           });
         removeACCESS_TOKEN();
         removeREFRESH_TOKEN();

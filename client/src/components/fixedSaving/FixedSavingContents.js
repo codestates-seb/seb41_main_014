@@ -35,10 +35,13 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import { useNavigate } from 'react-router';
 import { ROUTE_PATH_LOGIN } from '../../store/routerStore';
+import { useSnackbar } from 'notistack';
+import { getERROR_TEXT } from '../helper/axiosHelper';
 
 const FixedSavingContents = () => {
   const conditions = useSelector((state) => state.savingConditions.origin);
   const [expanded, setExpanded] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const dispatch = useDispatch();
 
@@ -125,7 +128,10 @@ const FixedSavingContents = () => {
           //페이지 정보
         })
         .catch((error) => {
-          console.log(error);
+          const { message } = error;
+          enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+            variant: 'error',
+          });
         });
     }, 1500);
   };
@@ -154,7 +160,10 @@ const FixedSavingContents = () => {
           //TODO likeId 갱신시켜 버튼 채워지도록해야됨.
         })
         .catch((error) => {
-          console.log(error);
+          const { message } = error;
+          enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+            variant: 'error',
+          });
         });
     } else {
       axios
@@ -166,7 +175,10 @@ const FixedSavingContents = () => {
           //TODO likeId 갱신시켜 버튼 비워지도록해야됨.
         })
         .catch((error) => {
-          console.log(error);
+          const { message } = error;
+          enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+            variant: 'error',
+          });
         });
     }
   };

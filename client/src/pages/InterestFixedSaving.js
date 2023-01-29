@@ -101,7 +101,7 @@ const InterestFixedSaving = () => {
         console.log(originData);
       })
       .catch((error) => {
-        const [message] = error;
+        const { message } = error;
         enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
           variant: 'error',
         });
@@ -136,7 +136,7 @@ const InterestFixedSaving = () => {
         getInterestSavings(pageInfo);
       })
       .catch((error) => {
-        const [message] = error;
+        const { message } = error;
         enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
           variant: 'error',
         });

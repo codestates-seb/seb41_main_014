@@ -170,7 +170,7 @@ const Member = () => {
         console.log(data);
       })
       .catch((error) => {
-        const [message] = error;
+        const { message } = error;
         enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
           variant: 'error',
         });
@@ -188,7 +188,7 @@ const Member = () => {
         //TODO logout
       })
       .catch((error) => {
-        const [message] = error;
+        const { message } = error;
         enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
           variant: 'error',
         });
