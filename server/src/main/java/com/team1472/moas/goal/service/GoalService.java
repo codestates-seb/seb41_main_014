@@ -93,8 +93,8 @@ public class GoalService{
 
     //납입기간 설정
     private Goal savePeriod(Goal goal) {
-        //납입 기간(단위: 월) = {(목표금액 - 원금)/월 납입금}
-        int period = (int) Math.ceil((goal.getPrice() - goal.getPrinciple()) / goal.getMonthlyPayment());
+        //납입 기간(단위: 월) = {(목표금액)/월 납입금}
+        int period = (int) Math.ceil((double) goal.getPrice() / goal.getMonthlyPayment());
         goal.setPeriod(period);
         return goal;
     }
