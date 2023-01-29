@@ -61,14 +61,10 @@ public class MemberController {
     //deleteMember 메서드 (member 삭제)
     @Operation(summary = "회원 정보 삭제")
     @DeleteMapping()
-    public ResponseEntity deleteMember(
-                                       @Valid @RequestBody MemberDeleteDto memberDeleteDto,Principal principal) {
+    public ResponseEntity deleteMember(Principal principal) {
+
         String email = principal.getName();
-
-
-        Member member = mapper.memberDeleteDtoToMember(memberDeleteDto);
-        service.deleteMember(member, email);
-
+        service.deleteMember(email);
 
         return new ResponseEntity<>("MEMBER DELETED", HttpStatus.OK);
     }
@@ -88,11 +84,12 @@ public class MemberController {
 
     //logout 메서드 (로그아웃, 토큰 삭제 )
     @Operation(summary = "로그아웃, 토큰 삭제")
-    @PostMapping("/logout")
-    public ResponseEntity logout(HttpServletRequest request) {
+    @DeleteMapping("/logout")
+    public ResponseEntity logout( HttpServletRequest request ) {
+
         service.logoutMember(request);
 
-        return new ResponseEntity<>("Logout", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("Logout", HttpStatus.OK);
     }
     //refreshToken 메서드 (토큰 재발급)
 
