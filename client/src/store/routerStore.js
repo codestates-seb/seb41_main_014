@@ -8,7 +8,6 @@ export const ROUTE_PATH_MEMBER = '/member';
 //TODO 일
 export const ROUTE_PATH_GOAL_LIST = '/goalList';
 export const ROUTE_PATH_GOAL_CREATE = '/goalCreate';
-export const ROUTE_PATH_GOAL_EDIT = '/goalEdit';
 export const ROUTE_PATH_GOAL_DETAIL = '/goalDetail';
 
 //윤

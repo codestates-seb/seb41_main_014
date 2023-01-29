@@ -67,6 +67,13 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
+const styleMenuTypography = (theme) => {
+  const style = {};
+  style.color = theme.colors.mainHeavy;
+  style.borderRadius = '2';
+  return style;
+};
+
 const Header = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const isLogin = useSelector((state) => state.isLogin);
@@ -132,48 +139,60 @@ const Header = () => {
         </Link>
         {isLogin.userInfo.id === -1 ? (
           <>
-            {/* 비로그인시 */}
-            <Typography variant="h2" sx={{ mr: 4 }}>
-              <Link to={ROUTE_PATH_LOGIN} style={{ textDecoration: 'none' }}>
+            <Link to={ROUTE_PATH_LOGIN} style={{ textDecoration: 'none' }}>
+              {/* 비로그인시 */}
+              <Typography
+                variant="h2"
+                sx={(theme) => styleMenuTypography(theme)}
+              >
                 로그인
-              </Link>
-            </Typography>
-            <Typography variant="h2" sx={{ mr: 4 }}>
-              <Link
-                to={ROUTE_PATH_FIXED_SAVINGS}
-                style={{ textDecoration: 'none' }}
+              </Typography>
+            </Link>
+            <Link
+              to={ROUTE_PATH_FIXED_SAVINGS}
+              style={{ textDecoration: 'none' }}
+            >
+              <Typography
+                variant="h2"
+                sx={(theme) => styleMenuTypography(theme)}
               >
                 적금추천
-              </Link>
-            </Typography>
+              </Typography>
+            </Link>
           </>
         ) : (
           <>
             {/* 로그인 시 */}
-            <Typography variant="h2" sx={{ mr: 4 }}>
-              <Link
-                to={ROUTE_PATH_GOAL_LIST}
-                style={{ textDecoration: 'none' }}
+            <Link to={ROUTE_PATH_GOAL_LIST} style={{ textDecoration: 'none' }}>
+              <Typography
+                variant="h2"
+                sx={(theme) => styleMenuTypography(theme)}
               >
                 희망목록
-              </Link>
-            </Typography>
-            <Typography variant="h2" sx={{ mr: 4 }}>
-              <Link
-                to={ROUTE_PATH_FIXED_SAVINGS}
-                style={{ textDecoration: 'none' }}
+              </Typography>
+            </Link>
+            <Link
+              to={ROUTE_PATH_FIXED_SAVINGS}
+              style={{ textDecoration: 'none' }}
+            >
+              <Typography
+                variant="h2"
+                sx={(theme) => styleMenuTypography(theme)}
               >
                 적금추천
-              </Link>
-            </Typography>
-            <Typography variant="h2" sx={{ mr: 4 }}>
-              <Link
-                to={ROUTE_PATH_INTEREST_FIXED_SAVINGS}
-                style={{ textDecoration: 'none' }}
+              </Typography>
+            </Link>
+            <Link
+              to={ROUTE_PATH_INTEREST_FIXED_SAVINGS}
+              style={{ textDecoration: 'none' }}
+            >
+              <Typography
+                variant="h2"
+                sx={(theme) => styleMenuTypography(theme)}
               >
-                적금추천
-              </Link>
-            </Typography>
+                관심적금
+              </Typography>
+            </Link>
             <Box>
               <Tooltip title={isLogin.userInfo.name}>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

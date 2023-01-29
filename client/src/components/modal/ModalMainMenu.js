@@ -7,7 +7,9 @@ import {
   ROUTE_PATH_BASE,
   ROUTE_PATH_FIXED_SAVINGS,
   ROUTE_PATH_GOAL_LIST,
+  ROUTE_PATH_INTEREST_FIXED_SAVINGS,
   ROUTE_PATH_LOGIN,
+  ROUTE_PATH_MEMBER,
 } from '../../store/routerStore';
 
 const ModalMainMenu = forwardRef((props, ref) => {
@@ -56,17 +58,41 @@ const ModalMainMenu = forwardRef((props, ref) => {
           </Typography>
         </Link>
       ) : (
-        <Link
-          to={ROUTE_PATH_GOAL_LIST}
-          style={{ textDecoration: 'none', padding: '24px' }}
-          onClick={handleCloseModal}
-        >
-          <Typography
-            sx={{ fontSize: '3rem', fontWeight: '900', color: 'white' }}
+        <>
+          <Link
+            to={ROUTE_PATH_GOAL_LIST}
+            style={{ textDecoration: 'none', padding: '24px' }}
+            onClick={handleCloseModal}
           >
-            희망목록
-          </Typography>
-        </Link>
+            <Typography
+              sx={{ fontSize: '3rem', fontWeight: '900', color: 'white' }}
+            >
+              희망목록
+            </Typography>
+          </Link>
+          <Link
+            to={ROUTE_PATH_INTEREST_FIXED_SAVINGS}
+            style={{ textDecoration: 'none', padding: '24px' }}
+            onClick={handleCloseModal}
+          >
+            <Typography
+              sx={{ fontSize: '3rem', fontWeight: '900', color: 'white' }}
+            >
+              관심적금
+            </Typography>
+          </Link>
+          <Link
+            to={ROUTE_PATH_MEMBER}
+            style={{ textDecoration: 'none', padding: '24px' }}
+            onClick={handleCloseModal}
+          >
+            <Typography
+              sx={{ fontSize: '3rem', fontWeight: '900', color: 'white' }}
+            >
+              회원정보
+            </Typography>
+          </Link>
+        </>
       )}
       <Link
         to={ROUTE_PATH_FIXED_SAVINGS}
