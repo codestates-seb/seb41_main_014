@@ -17,7 +17,7 @@ import {
 import { getWITH_PARAMS, URL_SAVINGS } from '../../store/urlStore';
 import { getFS_BANKS } from '../../helper/fixedSavingHelper';
 import { useSnackbar } from 'notistack';
-import { getERROR_TEXT } from '../helper/axiosHelper';
+import { getERROR_TEXT } from '../../helper/axiosHelper';
 
 const StyledButton = styled(Button)`
   width: 100%;

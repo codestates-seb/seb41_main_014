@@ -36,7 +36,7 @@ import StarIcon from '@mui/icons-material/Star';
 import { useNavigate } from 'react-router';
 import { ROUTE_PATH_LOGIN } from '../../store/routerStore';
 import { useSnackbar } from 'notistack';
-import { getERROR_TEXT } from '../helper/axiosHelper';
+import { getERROR_TEXT } from '../../helper/axiosHelper';
 
 const FixedSavingContents = () => {
   const conditions = useSelector((state) => state.savingConditions.origin);

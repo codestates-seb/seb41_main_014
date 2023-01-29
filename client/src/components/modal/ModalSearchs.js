@@ -19,7 +19,7 @@ import { getWITH_PARAMS, URL_NAVER_SEARCH } from '../../store/urlStore';
 import Pagination from '../libs/Pagenation';
 import { setGoalCreate } from '../../reducer/goalCreateSlice';
 import { useSnackbar } from 'notistack';
-import { getERROR_TEXT } from '../helper/axiosHelper';
+import { getERROR_TEXT } from '../../helper/axiosHelper';
 
 const ModalSearchs = forwardRef((props, ref) => {
   const goalCreate = useSelector((state) => state.goalCreate);
