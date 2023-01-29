@@ -21,7 +21,6 @@ import Member from './pages/Member';
 import GoalCreate from './pages/GoalCreate';
 import GoalList from './pages/GoalList';
 import GoalDetail from './pages/GoalDetail';
-// import GoalEdit from './pages/GoalEdit';
 import FixedSaving from './pages/FixedSaving';
 
 import Footer from './components/Footer';

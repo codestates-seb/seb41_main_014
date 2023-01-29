@@ -7,9 +7,12 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { ROUTE_PATH_GOAL_CREATE } from '../store/routerStore';
+import { useSnackbar } from 'notistack';
+import { getERROR_TEXT } from '../helper/axiosHelper';
 
 const GoalList = () => {
   const [list, setList] = useState([]);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     const goalGet = async () => {
@@ -21,7 +24,10 @@ const GoalList = () => {
           setList(data.data);
         })
         .catch((error) => {
-          console.log(error);
+          const [message] = error;
+          enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+            variant: 'error',
+          });
         });
     };
     goalGet();

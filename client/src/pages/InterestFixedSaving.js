@@ -33,6 +33,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { getLOCALE_MONEY, getPERCENT_WITH_TEXT } from '../helper/unitHelper';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useSnackbar } from 'notistack';
+import { getERROR_TEXT } from '../helper/axiosHelper';
 
 const ExpandMore = styled((props) => {
   const { ...other } = props;
@@ -51,6 +53,7 @@ const InterestFixedSaving = () => {
   const [expandeds, setExpandeds] = useState([]);
 
   const fixedSavingStaticData = getFS_DATA();
+  const { enqueueSnackbar } = useSnackbar();
 
   const getInterestSavings = (pageInfo, isInfiniteScroll = false) => {
     axios
@@ -98,7 +101,10 @@ const InterestFixedSaving = () => {
         console.log(originData);
       })
       .catch((error) => {
-        console.log(error);
+        const [message] = error;
+        enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+          variant: 'error',
+        });
       });
   };
   useEffect(() => {
@@ -130,7 +136,10 @@ const InterestFixedSaving = () => {
         getInterestSavings(pageInfo);
       })
       .catch((error) => {
-        console.log(error);
+        const [message] = error;
+        enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+          variant: 'error',
+        });
       });
   };
   const nextHandle = () => {

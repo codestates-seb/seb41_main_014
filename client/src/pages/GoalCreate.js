@@ -13,6 +13,8 @@ import {
   setModalType,
 } from '../reducer/modalSlice';
 import { setGoalCreateInit } from '../reducer/goalCreateSlice';
+import { getERROR_TEXT } from '../helper/axiosHelper';
+import { useSnackbar } from 'notistack';
 
 const GuideBox = styled.div`
   display: flex;
@@ -53,6 +55,7 @@ const GoalCreatePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const goalData = useSelector((state) => state.goalCreate);
+  const { enqueueSnackbar } = useSnackbar();
 
   const goalPost = () => {
     const postdata = {
@@ -64,7 +67,7 @@ const GoalCreatePage = () => {
     console.log(postdata.url);
 
     axios
-      .post(getURL_GOALS(), postdata, getWITH_TOKEN())
+      .post(getURL_GOALS(123), postdata, getWITH_TOKEN())
       .then(() => {
         Swal.fire({
           text: '목표가 등록되었어요!',
@@ -74,7 +77,10 @@ const GoalCreatePage = () => {
         navigate('/goalList');
       })
       .catch((error) => {
-        console.log(error);
+        const [message] = error;
+        enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+          variant: 'error',
+        });
       });
   };
 

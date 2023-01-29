@@ -6,6 +6,8 @@ import { setACCESS_TOKEN, setREFRESH_TOKEN } from '../helper/cookieHelper';
 import { login } from '../reducer/isLoginSlice';
 import { ROUTE_PATH_BASE } from '../store/routerStore';
 import { URL_MEMBER, getWITH_TOKEN } from '../store/urlStore';
+import { useSnackbar } from 'notistack';
+import { getERROR_TEXT } from '../helper/axiosHelper';
 
 const LoginCallback = () => {
   const dispatch = useDispatch();
@@ -21,6 +23,8 @@ const LoginCallback = () => {
   );
   // const memberId = new URL(window.location.href).searchParams.get('member_id');
 
+  const { enqueueSnackbar } = useSnackbar();
+
   useEffect(() => {
     // 토큰이 받아졌다면
     if (accessToken && refreshToken) {
@@ -32,20 +36,16 @@ const LoginCallback = () => {
       axios
         .get(URL_MEMBER, getWITH_TOKEN())
         .then((response) => {
+          enqueueSnackbar('성공', { variant: 'success' });
           const { data } = response;
           dispatch(login(data.data));
         })
         .catch((error) => {
-          console.log(error);
+          const [message] = error;
+          enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+            variant: 'error',
+          });
         });
-      // {
-      //     id: 2,
-      //     email: 'iltae94@gmail.com',
-      //     name: '김일태',
-      //     picture: 'https://lh3.googleusercontent.com/a/AEdFTp58gjnBfNQVFwzSkdfHbZTyXPLe8yIiTnlfJDr95w=s96-c'
-      // }
-      // 유저 정보가 이 객체 형태로 날라옴
-      // 리덕스로 유저 정보 저장 ?
 
       navigate(ROUTE_PATH_BASE);
     }

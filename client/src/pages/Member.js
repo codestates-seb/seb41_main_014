@@ -25,6 +25,8 @@ import {
   URL_MEMBER,
   getWITH_TOKEN,
 } from '../store/urlStore';
+import { useSnackbar } from 'notistack';
+import { getERROR_TEXT } from '../helper/axiosHelper';
 
 const MemberContainer = styled(Container)`
   display: flex;
@@ -150,6 +152,7 @@ const Member = () => {
   const isLogin = useSelector((state) => state.isLogin.isLogin);
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const changeEditHandler = () => {
     setEditOpen(!editOpen);
@@ -167,7 +170,10 @@ const Member = () => {
         console.log(data);
       })
       .catch((error) => {
-        console.log(error);
+        const [message] = error;
+        enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+          variant: 'error',
+        });
       });
     removeACCESS_TOKEN();
     removeREFRESH_TOKEN();
@@ -178,12 +184,14 @@ const Member = () => {
   const logoutHandler = () => {
     axios
       .delete(URL_MEMBER_LOGOUT, getWITH_TOKEN())
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
+      .then(() => {
+        //TODO logout
       })
       .catch((error) => {
-        console.log(error);
+        const [message] = error;
+        enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+          variant: 'error',
+        });
       });
     removeACCESS_TOKEN();
     removeREFRESH_TOKEN();

@@ -11,6 +11,8 @@ import { TextField, Button, Box, Modal } from '@mui/material';
 import PropTypes from 'prop-types';
 import noimage from '../asset/images/noimage.png';
 import Swal from 'sweetalert2';
+import { getERROR_TEXT } from '../helper/axiosHelper';
+import { useSnackbar } from 'notistack';
 
 const GoalDetail = () => {
   const navigate = useNavigate();
@@ -24,6 +26,7 @@ const GoalDetail = () => {
   // 날짜 변환 =>  뭐가 다른거지?
   const date = new Date(detailData.createdAt);
   const createDate = date.toISOString().replace('T', ' ').substring(0, 19);
+  const { enqueueSnackbar } = useSnackbar();
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -59,7 +62,10 @@ const GoalDetail = () => {
           navigate('/goalList');
         })
         .catch((error) => {
-          console.log(error);
+          const [message] = error;
+          enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+            variant: 'error',
+          });
         });
       if (result.isConfirmed) {
         Swal.fire('삭제되었어요.', 'See You Again!', 'success');
@@ -87,7 +93,10 @@ const GoalDetail = () => {
         navigate('/goalList');
       })
       .catch((error) => {
-        console.log(error);
+        const [message] = error;
+        enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+          variant: 'error',
+        });
       });
   };
 

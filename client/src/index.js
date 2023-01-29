@@ -8,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import { Provider } from 'react-redux';
 import store from './app/store';
+import { SnackbarProvider } from 'notistack';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,7 +16,9 @@ root.render(
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <BrowserRouter>
-          <App />
+          <SnackbarProvider>
+            <App />
+          </SnackbarProvider>
         </BrowserRouter>
       </Provider>
     </ThemeProvider>
