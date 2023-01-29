@@ -64,7 +64,7 @@ const GoalCreatePage = () => {
       monthlyPayment: goalData.data.monthlyPayment,
       url: goalData.data.url,
     };
-    console.log(postdata.url);
+    // console.log(postdata.url);
 
     axios
       .post(getURL_GOALS(123), postdata, getWITH_TOKEN())

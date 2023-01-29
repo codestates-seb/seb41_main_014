@@ -99,7 +99,6 @@ const FixedSavingContents = () => {
         )
         .then((response) => {
           const { data } = response;
-          console.log(data.data);
           if (data.data.length === 0) {
             alert('succeed: No data');
             return;
@@ -153,10 +152,10 @@ const FixedSavingContents = () => {
     ) {
       axios
         .post(getURL_SAVINGS_INTEREST(), saving, getWITH_TOKEN())
-        .then((response) => {
-          const { data } = response;
-          alert('정상적으로 등록되었습니다.');
-          console.log(data.data);
+        .then(() => {
+          // const { data } = response;
+          // alert('정상적으로 등록되었습니다.');
+          // console.log(data.data);
           //TODO likeId 갱신시켜 버튼 채워지도록해야됨.
         })
         .catch((error) => {
@@ -168,10 +167,10 @@ const FixedSavingContents = () => {
     } else {
       axios
         .delete(getURL_SAVINGS_INTEREST(saving.likeSavingId), getWITH_TOKEN())
-        .then((response) => {
-          const { data } = response;
-          alert('정상적으로 등록되었습니다.');
-          console.log(data.data);
+        .then(() => {
+          // const { data } = response;
+          // alert('정상적으로 등록되었습니다.');
+          // console.log(data.data);
           //TODO likeId 갱신시켜 버튼 비워지도록해야됨.
         })
         .catch((error) => {

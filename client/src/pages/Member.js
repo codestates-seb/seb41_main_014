@@ -165,9 +165,8 @@ const Member = () => {
   const deleteHandler = () => {
     axios
       .delete(URL_MEMBER, getWITH_TOKEN())
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
+      .then(() => {
+        //TODO
       })
       .catch((error) => {
         const { message } = error;

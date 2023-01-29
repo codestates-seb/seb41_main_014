@@ -118,7 +118,6 @@ const ModalSearchs = forwardRef((props, ref) => {
   };
 
   const handleItemSelected = (e, productId) => {
-    console.log(productId);
     if (productId === selectId) {
       setSelectId(-1);
       return;
@@ -138,7 +137,6 @@ const ModalSearchs = forwardRef((props, ref) => {
         break;
       }
     }
-    console.log(tempSearch);
     dispatch(
       setGoalCreate({
         goalName: query,

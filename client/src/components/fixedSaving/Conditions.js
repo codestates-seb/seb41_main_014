@@ -17,7 +17,6 @@ import {
   setSaveTrm,
 } from '../../reducer/savingConditionsSlice';
 import { getLOCALE_MONEY } from '../../helper/unitHelper';
-import { useEffect } from 'react';
 
 const styleTextBox = {
   marginTop: 1,
@@ -49,10 +48,6 @@ const Conditions = () => {
   const rsrvType = conditions.origin.rsrvType;
   const intrRateType = conditions.origin.intrRateType;
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.log(finishSavings);
-  }, [finishSavings]);
 
   const handleOnChangeMonthlySavings = (event) => {
     dispatch(setMonthlySavings(Number(event.target.value)));

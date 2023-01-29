@@ -20,7 +20,6 @@ const GoalList = () => {
         .get(getURL_GOALS(), getWITH_TOKEN())
         .then((response) => {
           const { data } = response;
-          console.log(data);
           setList(data.data);
         })
         .catch((error) => {

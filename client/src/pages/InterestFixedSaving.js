@@ -71,7 +71,6 @@ const InterestFixedSaving = () => {
       )
       .then((response) => {
         const { data } = response;
-        console.log(data.data);
         if (data.data.length === 0) {
           alert('succeed: No data');
           return;
@@ -98,7 +97,6 @@ const InterestFixedSaving = () => {
         setInterestSavings(
           !isInfiniteScroll ? originData : interestSavings.concat(originData)
         );
-        console.log(originData);
       })
       .catch((error) => {
         const { message } = error;
@@ -128,10 +126,8 @@ const InterestFixedSaving = () => {
   const handleDelete = (likeSavingId) => {
     axios
       .delete(getURL_SAVINGS_INTEREST(likeSavingId), getWITH_TOKEN())
-      .then((response) => {
-        const { data } = response;
+      .then(() => {
         alert('정상적으로 삭제되었습니다.');
-        console.log(data.data);
         //값바꿔치기
         getInterestSavings(pageInfo);
       })

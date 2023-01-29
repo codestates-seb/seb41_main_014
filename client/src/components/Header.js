@@ -99,9 +99,8 @@ const Header = () => {
       case memberLogout:
         axios
           .delete(URL_MEMBER_LOGOUT, getWITH_TOKEN())
-          .then((response) => {
-            const { data } = response;
-            console.log(data);
+          .then(() => {
+            //TODO
           })
           .catch((error) => {
             const { message } = error;

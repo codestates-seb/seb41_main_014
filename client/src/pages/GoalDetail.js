@@ -19,9 +19,6 @@ const GoalDetail = () => {
   // GoalListGroup에서 받은 props
   const location = useLocation();
   const detailData = location.state.data;
-  console.log('detailData');
-
-  console.log(detailData);
 
   // 날짜 변환 =>  뭐가 다른거지?
   const date = new Date(detailData.createdAt);
