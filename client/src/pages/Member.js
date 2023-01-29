@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Container,
@@ -24,9 +24,9 @@ import {
   URL_MEMBER_LOGOUT,
   URL_MEMBER,
   getWITH_TOKEN,
+  getURL_GOALS,
 } from '../store/urlStore';
-import { useSnackbar } from 'notistack';
-import { getERROR_TEXT } from '../helper/axiosHelper';
+import wish from '../asset/images/wish_list.png';
 
 const MemberContainer = styled(Container)`
   display: flex;
@@ -152,7 +152,7 @@ const Member = () => {
   const isLogin = useSelector((state) => state.isLogin.isLogin);
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
-  const { enqueueSnackbar } = useSnackbar();
+  const [list, setList] = useState([]);
 
   const changeEditHandler = () => {
     setEditOpen(!editOpen);
@@ -165,14 +165,12 @@ const Member = () => {
   const deleteHandler = () => {
     axios
       .delete(URL_MEMBER, getWITH_TOKEN())
-      .then(() => {
-        //TODO
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
       })
       .catch((error) => {
-        const { message } = error;
-        enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
-          variant: 'error',
-        });
+        console.log(error);
       });
     removeACCESS_TOKEN();
     removeREFRESH_TOKEN();
@@ -183,20 +181,34 @@ const Member = () => {
   const logoutHandler = () => {
     axios
       .delete(URL_MEMBER_LOGOUT, getWITH_TOKEN())
-      .then(() => {
-        //TODO logout
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
       })
       .catch((error) => {
-        const { message } = error;
-        enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
-          variant: 'error',
-        });
+        console.log(error);
       });
     removeACCESS_TOKEN();
     removeREFRESH_TOKEN();
     dispatch(logout());
     navigate(ROUTE_PATH_BASE);
   };
+
+  useEffect(() => {
+    const goalGet = async () => {
+      axios
+        .get(getURL_GOALS(), getWITH_TOKEN())
+        .then((response) => {
+          const { data } = response;
+          console.log(data);
+          setList(data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    goalGet();
+  }, []);
 
   return (
     <>
@@ -278,8 +290,24 @@ const Member = () => {
           <SummaryContainer>
             <h3>MY WISHLIST</h3>
             <div>
-              <img src={empty} alt="빈데이터" />
-              <h4>희망 물품이 없어요</h4>
+              {list.length !== 0 &&
+                list.map((item, index) => {
+                  return (
+                    <div key={index}>
+                      <div>{item.goalName}</div>
+                      <img
+                        src={item.url ? item.url : wish}
+                        alt={item.goalName}
+                      />
+                    </div>
+                  );
+                })}
+              {list.length === 0 && (
+                <div>
+                  <img src={empty} alt="빈데이터" />
+                  <h4>희망 물품이 없어요</h4>
+                </div>
+              )}
             </div>
           </SummaryContainer>
           <Button onClick={logoutHandler}>LOGOUT</Button>
