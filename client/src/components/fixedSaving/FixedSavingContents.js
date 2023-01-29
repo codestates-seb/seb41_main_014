@@ -4,6 +4,9 @@ import {
   AccordionSummary,
   Box,
   Grid,
+  IconButton,
+  Stack,
+  Typography,
 } from '@mui/material';
 import {
   getFS_BANKS,
@@ -22,7 +25,16 @@ import {
   setFixedSavings,
   setFixedSavingsPageInfo,
 } from '../../reducer/fixedSavingsSlice';
-import { getWITH_PARAMS, URL_SAVINGS } from '../../store/urlStore';
+import {
+  getURL_SAVINGS_INTEREST,
+  getWITH_PARAMS,
+  getWITH_TOKEN,
+  URL_SAVINGS,
+} from '../../store/urlStore';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from '@mui/icons-material/Star';
+import { useNavigate } from 'react-router';
+import { ROUTE_PATH_LOGIN } from '../../store/routerStore';
 
 const FixedSavingContents = () => {
   const conditions = useSelector((state) => state.savingConditions.origin);
@@ -97,7 +109,8 @@ const FixedSavingContents = () => {
             for (const bank of banks) {
               if (data.korCoNm === bank.korCoNm) {
                 data.dcls_chrg_man = bank.dcls_chrg_man;
-                continue;
+                data.homp_url = bank.homp_url;
+                break;
               }
             }
           }
@@ -118,6 +131,45 @@ const FixedSavingContents = () => {
   };
   const column = getFS_DATA();
   const fixedSavings = useSelector((state) => state.fixedSavings);
+
+  const userInfo = useSelector((state) => state.isLogin.userInfo);
+  const navigate = useNavigate();
+  const handelInterestSavings = (e, saving) => {
+    if (userInfo.id === -1) {
+      alert('로그인 후 시도해주세요');
+      navigate(ROUTE_PATH_LOGIN);
+      return;
+    }
+    if (
+      !saving.likeSavingId ||
+      saving.likeSavingId === '' ||
+      saving.likeSavingId === 'null'
+    ) {
+      axios
+        .post(getURL_SAVINGS_INTEREST(), saving, getWITH_TOKEN())
+        .then((response) => {
+          const { data } = response;
+          alert('정상적으로 등록되었습니다.');
+          console.log(data.data);
+          //TODO likeId 갱신시켜 버튼 채워지도록해야됨.
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      axios
+        .delete(getURL_SAVINGS_INTEREST(saving.likeSavingId), getWITH_TOKEN())
+        .then((response) => {
+          const { data } = response;
+          alert('정상적으로 등록되었습니다.');
+          console.log(data.data);
+          //TODO likeId 갱신시켜 버튼 비워지도록해야됨.
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
   return (
     <Box
       sx={(theme) => ({
@@ -130,29 +182,39 @@ const FixedSavingContents = () => {
         backgroundColor: theme.colors.mainMiddle,
       })}
     >
-      <Grid container>
-        <GridColumn data={column.korCoNm.headerName} xs={3} column={column} />
-        <GridColumn
-          data={column.finPrdtNm.headerName}
-          xs={3.5}
-          column={column}
-        />
-        <GridColumn
-          data={column.joinDeny.headerName}
-          xs={1.5}
-          column={column}
-        />
-        <GridColumn data={column.intrRate.headerName} xs={1} column={column} />
-        <GridColumn
-          data={column.intrRateTypeNm.headerName}
-          xs={1}
-          column={column}
-        />
-        <GridColumn
-          data={column.interestAmount.headerName}
-          xs={2}
-          column={column}
-        />
+      <Grid container alignItems="center">
+        <Stack direction="row" flexGrow={1}>
+          <GridColumn
+            data={column.korCoNm.headerName}
+            xs={3.5}
+            column={column}
+          />
+          <GridColumn
+            data={column.finPrdtNm.headerName}
+            xs={3.5}
+            column={column}
+          />
+          <GridColumn
+            data={column.joinDeny.headerName}
+            xs={1.5}
+            column={column}
+          />
+          <GridColumn
+            data={column.intrRate.headerName}
+            xs={1}
+            column={column}
+          />
+          <GridColumn
+            data={column.intrRateTypeNm.headerName}
+            xs={1}
+            column={column}
+          />
+          <GridColumn
+            data={column.interestAmount.headerName}
+            xs={2}
+            column={column}
+          />
+        </Stack>
       </Grid>
       <InfiniteScroll
         dataLength={fixedSavings.origin.length}
@@ -186,38 +248,65 @@ const FixedSavingContents = () => {
             expanded={expanded === index}
             onChange={handleChange(index)}
           >
-            <AccordionSummary sx={{ p: 0 }}>
-              <Grid
-                container
-                sx={() => ({
-                  display: 'flex',
-                  justifyContent: 'center',
-                })}
-              >
-                <GridRow data={fixedSaving.korCoNm} xs={3} />
-                <GridRow data={fixedSaving.finPrdtNm} xs={3.5} />
-                <GridRow
-                  data={getJOIN_DENY(Number(fixedSaving.joinDeny))}
-                  xs={1.5}
-                  align="center"
-                />
-                <GridRow
-                  data={getPERCENT_WITH_TEXT(fixedSaving.intrRate)}
-                  xs={1}
-                  align="end"
-                />
-                <GridRow
-                  data={fixedSaving.intrRateTypeNm}
-                  xs={1}
-                  align="center"
-                />
-                <GridRow
-                  data={getLOCALE_MONEY(fixedSaving.interestAmount)}
-                  xs={2}
-                  align="end"
-                />
-              </Grid>
-            </AccordionSummary>
+            <Stack direction="row">
+              <IconButton onClick={handelInterestSavings}>
+                {!fixedSaving.likeSavingId ||
+                fixedSaving.likeSavingId === 'null' ||
+                fixedSaving.likeSavingId === '' ? (
+                  <StarBorderIcon />
+                ) : (
+                  <StarIcon />
+                )}
+              </IconButton>
+              <AccordionSummary sx={{ p: 0, flexGrow: 1 }}>
+                <Grid
+                  container
+                  sx={() => ({
+                    display: 'flex',
+                    justifyContent: 'center',
+                  })}
+                >
+                  <Grid
+                    item
+                    xs={3}
+                    sx={() => ({
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'left',
+                      pr: 1,
+                      pl: 1,
+                    })}
+                  >
+                    <Typography
+                      sx={(theme) => ({ p: 1, fontSize: theme.fontSizes.lg })}
+                    >
+                      {fixedSaving.korCoNm}
+                    </Typography>
+                  </Grid>
+                  <GridRow data={fixedSaving.finPrdtNm} xs={3.5} />
+                  <GridRow
+                    data={getJOIN_DENY(Number(fixedSaving.joinDeny))}
+                    xs={1.5}
+                    align="center"
+                  />
+                  <GridRow
+                    data={getPERCENT_WITH_TEXT(fixedSaving.intrRate)}
+                    xs={1}
+                    align="end"
+                  />
+                  <GridRow
+                    data={fixedSaving.intrRateTypeNm}
+                    xs={1}
+                    align="center"
+                  />
+                  <GridRow
+                    data={getLOCALE_MONEY(fixedSaving.interestAmount)}
+                    xs={2}
+                    align="end"
+                  />
+                </Grid>
+              </AccordionSummary>
+            </Stack>
             <AccordionDetails
               sx={(theme) => ({
                 backgroundColor: theme.colors.white,

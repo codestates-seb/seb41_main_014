@@ -122,7 +122,8 @@ const FixedSavingButtonGroup = () => {
           for (const bank of banks) {
             if (data.korCoNm === bank.korCoNm) {
               data.dcls_chrg_man = bank.dcls_chrg_man;
-              continue;
+              data.homp_url = bank.homp_url;
+              break;
             }
           }
         }

@@ -16,8 +16,8 @@ const GridColumn = ({ data, xs = 2, column }) => {
     >
       <Typography
         sx={(theme) => ({
-          pl: data === column.joinDeny.headerName ? 2.6 : 1.6,
-          pr: data === column.joinDeny.headerName ? 2.6 : 1.6,
+          pl: data === column.joinDeny.headerName ? 4 : 1.6,
+          pr: data === column.joinDeny.headerName ? 4 : 1.6,
           fontSize: theme.fontSizes.lg,
           fontWeight: theme.fontWeight.bold,
           textAlign: 'center',

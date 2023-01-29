@@ -1,3 +1,23 @@
+import ibnk from '../asset/images/bnk.svg';
+import icity from '../asset/images/city.svg';
+import idgb from '../asset/images/dgb.svg';
+import ihana from '../asset/images/hana.svg';
+import iibk from '../asset/images/ibk.svg';
+import ijbb from '../asset/images/jbb.svg';
+import ijeju from '../asset/images/jeju.svg';
+import ik from '../asset/images/k.svg';
+import ikakao from '../asset/images/kakao.svg';
+import ikb from '../asset/images/kb.svg';
+import ikdb from '../asset/images/kdb.svg';
+import ikjb from '../asset/images/kjb.svg';
+import inh from '../asset/images/nh.svg';
+import isci from '../asset/images/sci.svg';
+import ish from '../asset/images/sh.svg';
+import isinhyup from '../asset/images/sinhyup.svg';
+import itoss from '../asset/images/toss.svg';
+import iwoo from '../asset/images/woo.svg';
+import iwoori from '../asset/images/woori.svg';
+
 const NONE = '-';
 
 //Data key
@@ -62,13 +82,21 @@ export const getFS_DATA = () => ({
   detail,
 });
 
-const setBank = (korCoNm, finCoNo, dcls_chrg_man, homp_url, cal_tel) => ({
+const setBank = (
+  korCoNm,
+  finCoNo,
+  dcls_chrg_man,
+  homp_url,
+  cal_tel,
+  image
+) => ({
   korCoNm: korCoNm,
   finCoNo: finCoNo,
   dcls_chrg_man: dcls_chrg_man,
   homp_url: homp_url,
   cal_tel: cal_tel,
   isChecked: false,
+  image: image,
 });
 
 const woori = setBank(
@@ -76,14 +104,16 @@ const woori = setBank(
   '0010001',
   '개인고객부\n1588-5000\n부동산금융부\n1588-5000',
   'https://spot.wooribank.com/pot/Dream?withyou=po',
-  '15885000'
+  '15885000',
+  iwoori
 );
 const sc = setBank(
   '한국스탠다드차타드은행',
   '0010002',
   'SC제일은행 고객센터\n1588-1599',
   'http://www.standardchartered.co.kr',
-  '15881599'
+  '15881599',
+  isci
 );
 //TODO 추가해야됨
 const city = setBank(
@@ -91,77 +121,88 @@ const city = setBank(
   '0010006',
   undefined,
   'https://www.citibank.co.kr',
-  undefined
+  undefined,
+  icity
 );
 const dg = setBank(
   '대구은행',
   '0010016',
   '개연여신기획부\n053-740-2230\n리테일마케팅부\n053-740-2162',
   'http://www.dgb.co.kr/dgb_ebz_main.jsp',
-  '15885050'
+  '15885050',
+  idgb
 );
 const busan = setBank(
   '부산은행',
   '0010017',
   '(예금)마케팅추진부\n051-620-3339\n(대출)여신기획부\n051-620-3423',
   'http://www.busanbank.co.kr',
-  '15886200'
+  '15886200',
+  ibnk
 );
 const kj = setBank(
   '광주은행',
   '0010019',
   '영업추진부/수신지원팀\n062-239-5206\n여신지원팀\n062-239-6509\n카드사업부 062-239-6107',
   'http://www.kjbank.com',
-  '15883388'
+  '15883388',
+  ikjb
 );
 const jeju = setBank(
   '제주은행',
   '0010020',
   '영업추진본부\n064-720-0287',
   'https://e-jejubank.com',
-  '15880079'
+  '15880079',
+  ijeju
 );
 const jb = setBank(
   '전북은행',
   '0010022',
   '마케팅추진부/마케팅추진팀\n063-250-7381\n여신기획부\n063-250-7370',
   'https://www.jbbank.co.kr/EFINANCE_MAIN.act',
-  '15884477'
+  '15884477',
+  ijbb
 );
 const kn = setBank(
   '경남은행',
   '0010024',
   '리테일금융부(대출문의)\n055-290-8743\n마케팅추진부(예·적금상품)\n055-290-8315',
   'https://www.knbank.co.kr/ib20/mnu/FPMDPT020000000',
-  '16008585'
+  '16008585',
+  iwoo
 );
 const ibk = setBank(
   '중소기업은행',
   '0010026',
   '고객 문의\n1566-2566',
   'http://www.ibk.co.kr',
-  '15662566'
+  '15662566',
+  iibk
 );
 const kdb = setBank(
   '한국산업은행',
   '0010030',
   '(예금)02-1588-1500\n(개인대출)네트워크지원실\n02-787-5638\n(기업대출)영업기획부\n02-787-6929',
   'http://www.kdb.co.kr',
-  '0215881500'
+  '0215881500',
+  ikdb
 );
 const kb = setBank(
   '국민은행',
   '0010927',
   '(예금)수신상품부\n02-1588-9999\n(대출)개인여신부\n02-1588-9999',
   'http://www.kbstar.com',
-  '15889999'
+  '15889999',
+  ikb
 );
 const shinhan = setBank(
   '신한은행',
   '0011625',
   '개인고객부\n1577-8000(수신)\n개인고객부\n1577-8000(여신)',
   'http://www.shinhan.com',
-  '15778000'
+  '15778000',
+  ish
 );
 //TODO 농협 finCoNo
 const nonghyup = setBank(
@@ -169,42 +210,48 @@ const nonghyup = setBank(
   undefined,
   '마케팅지원부\n02-2080-7786(여신)\n7731(수신)',
   'https://banking.nonghyup.com',
-  '16613000'
+  '16613000',
+  inh
 );
 const hana = setBank(
   '하나은행',
   '0013909',
   '가계수신(예금)\n02-1599-1111(리테일사업부)\n가계여신(대출)\n02-2002-1249(리테일사업부)',
   'http://www.hanabank.com',
-  '15991111'
+  '15991111',
+  ihana
 );
 const k = setBank(
   '주식회사 케이뱅크',
   '0014674',
   '수신팀\n02-3210-7312',
   'https://ib.kbanknow.com/ib20/mnu/FPMDPT010000',
-  '15221000'
+  '15221000',
+  ik
 );
 const suhyup = setBank(
   '수협은행',
   '0014807',
   '개인금융부(수신)\n1588-1515\n개인금융부(여신)\n1588-1515',
   'http://www.suhyup-bank.com',
-  '15881515'
+  '15881515',
+  isinhyup
 );
 const kakao = setBank(
   '주식회사 카카오뱅크',
   '0015130',
   '수신팀\n1599-3333\n여신팀\n1599-3333',
   'https://www.kakaobank.com/',
-  '15993333'
+  '15993333',
+  ikakao
 );
 const toss = setBank(
   '토스뱅크 주식회사',
   '0017801',
   '수신스쿼드\n02-6713-1952\n여신스쿼드\n02-6713-1970',
   'https://www.tossbank.com/product-service/savings/account',
-  '16617654'
+  '16617654',
+  itoss
 );
 export const getFS_BANKS = () => [
   woori,
