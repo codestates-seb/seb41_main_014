@@ -16,7 +16,7 @@ root.render(
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <BrowserRouter>
-          <SnackbarProvider>
+          <SnackbarProvider autoHideDuration={1500}>
             <App />
           </SnackbarProvider>
         </BrowserRouter>
