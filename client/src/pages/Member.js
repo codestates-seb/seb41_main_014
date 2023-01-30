@@ -85,7 +85,7 @@ const InfoContainer = styled(Container)`
 
 const SummaryContainer = styled(Container)`
   font-size: 14px;
-  div {
+  .noData {
     border: 2px solid ${(props) => props.theme.colors.mainHeavy};
     border-radius: 4px;
     margin-top: 8px;
@@ -97,6 +97,18 @@ const SummaryContainer = styled(Container)`
     img {
       width: 25%;
     }
+  }
+  .Data {
+    border: 2px solid ${(props) => props.theme.colors.mainHeavy};
+    border-radius: 4px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    width: 100%;
+      img {
+        width: 30%;
+        border-radius: 4px;
+      }
   }
   h3 {
     margin-top: 8px;
@@ -298,8 +310,8 @@ const Member = () => {
           <MemberDivider />
           <SummaryContainer>
             <h3>MY WISHLIST</h3>
-            <div>
-              {list.length !== 0 &&
+            <div className='Data'>
+              {list.length !== 0 && list.length <= 5 &&
                 list.map((item, index) => {
                   return (
                     <div key={index}>
@@ -311,8 +323,23 @@ const Member = () => {
                     </div>
                   );
                 })}
+              {list.length > 5 &&
+                list.map((item, index) => {
+                  return (
+                    <div key={index}>
+                      <div>{item.goalName}</div>
+                      <img
+                        src={item.url ? item.url : wish}
+                        alt={item.goalName}
+                      />
+                    </div>
+                  );
+                }).slice(0, 5)}
+              {list.length > 5 &&
+                <div className='excessive'>+{list.length - 1}</div>
+              }
               {list.length === 0 && (
-                <div>
+                <div className="noData" >
                   <img src={empty} alt="빈데이터" />
                   <h4>희망 물품이 없어요</h4>
                 </div>
