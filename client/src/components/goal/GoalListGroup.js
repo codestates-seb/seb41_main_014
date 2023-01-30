@@ -35,13 +35,20 @@ const GoalListGroup = ({ _list }) => {
                 </div>
                 <div style={{ display: 'flex' }}>
                   <Header>목표 금액 </Header>{' '}
-                  <input className="SettingInput" defaultValue={item.price} />
+                  <input
+                    className="SettingInput"
+                    defaultValue={item.price
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                  />
                 </div>
                 <div style={{ display: 'flex' }}>
                   <Header>월 납입금 </Header>{' '}
                   <input
                     className="SettingInput"
-                    defaultValue={item.monthlyPayment}
+                    defaultValue={item.monthlyPayment
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                   />
                 </div>
                 <h2 className="Font">

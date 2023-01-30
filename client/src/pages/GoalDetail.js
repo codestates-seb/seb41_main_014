@@ -149,7 +149,9 @@ const GoalDetail = () => {
             <TextField
               className="textField"
               id="standard-read-only-input"
-              defaultValue={detailData.price}
+              defaultValue={detailData.price
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               InputProps={{
                 readOnly: true,
               }}
@@ -161,7 +163,9 @@ const GoalDetail = () => {
             <TextField
               className="textField"
               id="standard-read-only-input"
-              defaultValue={detailData.monthlyPayment}
+              defaultValue={detailData.monthlyPayment
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               InputProps={{
                 readOnly: true,
               }}
