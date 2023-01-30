@@ -27,25 +27,25 @@ const GoalListGroup = ({ _list }) => {
             >
               <ComponentContain>
                 <div style={{ display: 'flex' }}>
-                  <Header>나의 목표: </Header>{' '}
+                  <Header>나의 목표 </Header>{' '}
                   <input
                     className="SettingInput"
                     defaultValue={item.goalName}
                   />
                 </div>
                 <div style={{ display: 'flex' }}>
-                  <Header>목표 금액: </Header>{' '}
+                  <Header>목표 금액 </Header>{' '}
                   <input className="SettingInput" defaultValue={item.price} />
                 </div>
                 <div style={{ display: 'flex' }}>
-                  <Header>월 납입금: </Header>{' '}
+                  <Header>월 납입금 </Header>{' '}
                   <input
                     className="SettingInput"
                     defaultValue={item.monthlyPayment}
                   />
                 </div>
                 <h2 className="Font">
-                  목표치에 도달하기 까지{' '}
+                  목표치에 도달하기까지{' '}
                   <span className="Hilight">
                     {Math.ceil(item.price / item.monthlyPayment)}개월
                   </span>{' '}
@@ -89,6 +89,13 @@ GoalListGroup.propTypes = {
 export default GoalListGroup;
 
 const ComponentContain = styled.div`
+  position: relative;
+  counter-increment: list;
+  padding: 2rem 1rem 1rem;
+  box-shadow: 0.05rem 0.05rem 1.5rem rgba(0, 0, 0, 0.2);
+  border-radius: 0.25rem;
+  overflow: hidden;
+  background-color: white;
   display: flex;
   flex-direction: column;
   display: inline-flex;
@@ -98,8 +105,15 @@ const ComponentContain = styled.div`
   max-width: 600px;
   width: 100%;
   height: auto;
-  border: 5px solid #aac4ff;
+  border-bottom: 12px solid #aac4ff;
+  /* border: 0px solid #aac4ff; */
   border-radius: 5px;
+  /* background: gradient(#ffffff, #aac4ff); */
+  .ComponentContain::hover {
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.4);
+    transform: scale(1.01);
+  }
+
   .trashicon {
     margin-left: 500px;
   }
@@ -122,9 +136,9 @@ const ComponentContain = styled.div`
     /* margin: px; */
     font-size: 16px;
     border: none;
-    border-radius: 6px;
-    border-bottom: solid 2px #b1b2ff;
-    margin: 20px 30px 0px 5px;
+    /* border-radius: 6px; */
+    border-bottom: solid 2px #aac4ff;
+    margin: 10px 30px 0px 5px;
     color: grey;
     &:focus {
       outline: none;
@@ -142,7 +156,7 @@ const ComponentContain = styled.div`
   /* 목표치 계산 폰트 */
   .Font {
     margin: 20px 0 20px 0;
-    color: #b1b2ff;
+    color: #aac4ff;
   }
   .Hilight {
     color: #ff6f6f;
@@ -155,4 +169,5 @@ const ComponentContain = styled.div`
 
 const Header = styled.h2`
   margin: 30px 20px 0px 20px;
+  color: #aac4ff;
 `;

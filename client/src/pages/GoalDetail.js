@@ -100,7 +100,7 @@ const GoalDetail = () => {
   return (
     <>
       <GDetailPage>
-        <h2 style={{ marginTop: '30px' }}>💜 상세 위시 정보 💜</h2>
+        <h2 style={{ marginTop: '30px' }}>✧ 상세 위시 정보 ✧</h2>
         <GDetail>
           <div>
             <button className="BackButton">

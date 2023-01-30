@@ -53,7 +53,7 @@ const GoalList = () => {
                 </p>
                 <br />
                 <p className="Text">
-                  - 상세 페이지에서 언제든 목표
+                  - 상세 페이지에서 언제든 목표{' '}
                   <span className="Hilight">수정, 삭제</span>가 가능합니다!
                 </p>
                 <br />
@@ -63,8 +63,14 @@ const GoalList = () => {
                 </p>
                 <br />
                 <p className="Text">
-                  - <span className="Hilightt">또 다른 물품</span>을 등록하고
-                  싶으신가요?
+                  -{' '}
+                  <span className="Hilightt">
+                    또 다른 물품
+                    <span className="tooltip-text">
+                      새로 등록하러 가기 버튼을 눌러보세요!
+                    </span>
+                  </span>
+                  을 등록하고 싶으신가요?
                 </p>
               </div>
             }
@@ -83,7 +89,7 @@ const GoalList = () => {
         </GuideBox>
 
         <TopButton>
-          <div>{<h2>💜 총 {list.length}개의 목표가 있습니다 💜</h2>}</div>
+          <div>{<h2>✧ 총 {list.length}개의 목표가 있습니다 ✧</h2>}</div>
         </TopButton>
         <GoalListGroup
           _list={list}
@@ -151,6 +157,20 @@ const GuideBox = styled.div`
   .Hilightt {
     color: #ff6f6f;
   }
+  .tooltip-text {
+    display: none;
+    position: absolute;
+    max-width: 200px;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 0.8em;
+    color: white;
+    background: gray;
+  }
+  .Hilightt:hover .tooltip-text {
+    display: block;
+  }
 
   .LinkButton {
     display: flex;
@@ -178,6 +198,13 @@ const GuideBox = styled.div`
     margin: 0 28px 12px 0px;
   }
 `;
+const TopButton = styled.div`
+  width: 600px;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+`;
 
 // const LinkButton = styled.button`
 //   margin: 10px 0 10px;
@@ -196,14 +223,6 @@ const GuideBox = styled.div`
 //     left: 20px;
 //   }
 // `;
-
-const TopButton = styled.div`
-  width: 600px;
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  margin-top: 30px;
-`;
 
 // import { useState } from 'react';
 // import { getLOCALE_MONEY } from '../helper/unitHelper';
