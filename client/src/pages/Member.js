@@ -105,10 +105,25 @@ const SummaryContainer = styled(Container)`
     margin-bottom: 8px;
     padding-bottom: 8px;
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    .oneData {
+      border: 2px solid ${(props) => props.theme.colors.mainHeavy};
+      justify-content: center;
+      text-align: center;
+      width: 20%;
+      margin: 4px;
+      margin-top: 8px;
       img {
-        width: 30%;
+        width: 65%;
         border-radius: 4px;
       }
+    }
+    .excessive {
+      font-size: 18px;
+      margin: 4px;
+      padding-top: 20%;
+    }
   }
   h3 {
     margin-top: 8px;
@@ -310,11 +325,12 @@ const Member = () => {
           <MemberDivider />
           <SummaryContainer>
             <h3>MY WISHLIST</h3>
-            <div className='Data'>
-              {list.length !== 0 && list.length <= 5 &&
+            <div className="Data">
+              {list.length !== 0 &&
+                list.length <= 5 &&
                 list.map((item, index) => {
                   return (
-                    <div key={index}>
+                    <div className="oneData" key={index}>
                       <div>{item.goalName}</div>
                       <img
                         src={item.url ? item.url : wish}
@@ -324,22 +340,24 @@ const Member = () => {
                   );
                 })}
               {list.length > 5 &&
-                list.map((item, index) => {
-                  return (
-                    <div key={index}>
-                      <div>{item.goalName}</div>
-                      <img
-                        src={item.url ? item.url : wish}
-                        alt={item.goalName}
-                      />
-                    </div>
-                  );
-                }).slice(0, 5)}
-              {list.length > 5 &&
-                <div className='excessive'>+{list.length - 1}</div>
-              }
+                list
+                  .map((item, index) => {
+                    return (
+                      <div className="oneData" key={index}>
+                        <div>{item.goalName}</div>
+                        <img
+                          src={item.url ? item.url : wish}
+                          alt={item.goalName}
+                        />
+                      </div>
+                    );
+                  })
+                  .slice(0, 5)}
+              {list.length > 5 && (
+                <div className="excessive">+{list.length - 5}</div>
+              )}
               {list.length === 0 && (
-                <div className="noData" >
+                <div className="noData">
                   <img src={empty} alt="빈데이터" />
                   <h4>희망 물품이 없어요</h4>
                 </div>
