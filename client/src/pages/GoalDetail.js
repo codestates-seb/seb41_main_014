@@ -20,7 +20,7 @@ const GoalDetail = () => {
   const location = useLocation();
   const detailData = location.state.data;
 
-  // 날짜 변환 =>  뭐가 다른거지?
+  // 날짜 변환 =>  뭐가 다른거지? => 일단 T 제외
   const date = new Date(detailData.createdAt);
   const createDate = date.toISOString().replace('T', ' ').substring(0, 19);
   const { enqueueSnackbar } = useSnackbar();

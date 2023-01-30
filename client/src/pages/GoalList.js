@@ -35,19 +35,46 @@ const GoalList = () => {
   return (
     <>
       <TotalListPage>
+        <GuideBox>
+          <h2 className="TextHeader">나만의 목표 한눈에 보기</h2>
+          <br />
+          <br />
+          <p className="Text">
+            - <span className="Hilight">목표 목록</span>에서 나의 목표와 금액을
+            한번에 확인할 수 있어요!
+          </p>
+          <br />
+          <p className="Text">
+            - 목표가 적힌 카드를 누르면,{' '}
+            <span className="Hilight">상세 페이지</span>를 볼 수 있어요!
+          </p>
+          <br />
+          <p className="Text">
+            - 상세 페이지에서 언제든{' '}
+            <span className="Hilight">목표 수정, 삭제</span>가 가능합니다!
+          </p>
+          <br />
+          <p className="Text">
+            - 한 달에 이 물건을 위해 모을 수 있는 돈을 기입해 보아요!
+          </p>
+          <br />
+          <p className="Text">
+            - 위시리스트는 최대 <span className="Hilight">5개</span>까지 등록
+            가능합니다.
+          </p>
+          <br />
+          <LinkButton>
+            <Link
+              to={ROUTE_PATH_GOAL_CREATE}
+              style={{ textDecoration: 'none' }}
+            >
+              {' '}
+              새로 등록하러 가기{' '}
+            </Link>
+          </LinkButton>
+        </GuideBox>
         <TopButton>
-          <div>
-            {<h2>💜 총 {list.length}개의 목표가 있습니다 💜</h2>}
-            <LinkButton>
-              <Link
-                to={ROUTE_PATH_GOAL_CREATE}
-                style={{ textDecoration: 'none' }}
-              >
-                {' '}
-                새로 등록하러 가기{' '}
-              </Link>
-            </LinkButton>
-          </div>
+          <div>{<h2>💜 총 {list.length}개의 목표가 있습니다 💜</h2>}</div>
         </TopButton>
         <GoalListGroup
           _list={list}
@@ -84,6 +111,34 @@ const TotalListPage = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const GuideBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 10px;
+  width: 600px;
+  height: auto;
+  text-align: left;
+  border-top: 5px solid #aac4ff;
+  border-bottom: 5px solid #aac4ff;
+  margin: 50px 0 50px;
+  color: grey;
+  .TextHeader {
+    text-align: center;
+    color: #aac4ff;
+    width: 600px;
+    font-size: 16pt;
+    margin-top: 20px;
+  }
+  .Text {
+    font-size: 12px;
+  }
+  .Hilight {
+    color: #aac4ff;
+  }
 `;
 
 const LinkButton = styled.button`
