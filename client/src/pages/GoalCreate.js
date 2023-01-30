@@ -67,7 +67,7 @@ const GoalCreatePage = () => {
     // console.log(postdata.url);
 
     axios
-      .post(getURL_GOALS(123), postdata, getWITH_TOKEN())
+      .post(getURL_GOALS(), postdata, getWITH_TOKEN())
       .then(() => {
         Swal.fire({
           text: '목표가 등록되었어요!',
