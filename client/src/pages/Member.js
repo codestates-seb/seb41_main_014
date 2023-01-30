@@ -109,20 +109,26 @@ const SummaryContainer = styled(Container)`
     flex-direction: row;
     .oneData {
       border: 2px solid ${(props) => props.theme.colors.mainHeavy};
+      border-radius: 4px;
       justify-content: center;
       text-align: center;
       width: 20%;
       margin: 4px;
       margin-top: 8px;
+      padding-left: 4px;
+      .dataName {
+        margin-top: 4px;
+      }
       img {
-        width: 65%;
+        width: 80%;
         border-radius: 4px;
+        margin-top: 4px;
       }
     }
     .excessive {
       font-size: 18px;
       margin: 4px;
-      padding-top: 20%;
+      padding-top: 8%;
     }
   }
   h3 {
@@ -331,7 +337,7 @@ const Member = () => {
                 list.map((item, index) => {
                   return (
                     <div className="oneData" key={index}>
-                      <div>{item.goalName}</div>
+                      <div className="dataName">{item.goalName}</div>
                       <img
                         src={item.url ? item.url : wish}
                         alt={item.goalName}
@@ -344,7 +350,7 @@ const Member = () => {
                   .map((item, index) => {
                     return (
                       <div className="oneData" key={index}>
-                        <div>{item.goalName}</div>
+                        <div className="dataName">{item.goalName}</div>
                         <img
                           src={item.url ? item.url : wish}
                           alt={item.goalName}
