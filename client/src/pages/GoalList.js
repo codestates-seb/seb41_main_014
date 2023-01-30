@@ -79,9 +79,12 @@ const GoalList = () => {
               <div className="LinkButton">
                 <Link
                   to={ROUTE_PATH_GOAL_CREATE}
-                  style={{ textDecoration: 'none', color: 'black' }}
+                  style={{
+                    textDecoration: 'none',
+                    color: 'black',
+                  }}
                 >
-                  <p className="CreateText">새로 등록하러 가기 </p>{' '}
+                  <p className="CreateText">새로 등록하기</p>{' '}
                 </Link>
               </div>
             }
