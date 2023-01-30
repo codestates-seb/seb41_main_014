@@ -39,40 +39,49 @@ const GoalList = () => {
           <h2 className="TextHeader">나만의 목표 한눈에 보기</h2>
           <br />
           <br />
-          <p className="Text">
-            - <span className="Hilight">목표 목록</span>에서 나의 목표와 금액을
-            한번에 확인할 수 있어요!
-          </p>
-          <br />
-          <p className="Text">
-            - 목표가 적힌 카드를 누르면,{' '}
-            <span className="Hilight">상세 페이지</span>를 볼 수 있어요!
-          </p>
-          <br />
-          <p className="Text">
-            - 상세 페이지에서 언제든 목표
-            <span className="Hilight">수정, 삭제</span>가 가능합니다!
-          </p>
-          <br />
-          <p className="Text">
-            - 검색으로 물품을 등록했다면, 상세 페이지에서{' '}
-            <span className="Hilight">이미지</span>도 확인할 수 있어요!
-          </p>
-          <br />
-          <p className="Text">- 또 다른 물품을 등록하고 싶으신가요?</p>
-          <br />
-          <div style={{ display: 'flex' }}>
-            <LinkButton>
-              <Link
-                to={ROUTE_PATH_GOAL_CREATE}
-                style={{ textDecoration: 'none' }}
-              >
-                {' '}
-                새로 등록하러 가기{' '}
-              </Link>
-            </LinkButton>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            {
+              <div>
+                <p className="Text">
+                  - <span className="Hilight">목표 목록</span>에서 나의 목표와
+                  금액을 한번에 확인할 수 있어요!
+                </p>
+                <br />
+                <p className="Text">
+                  - 목표가 적힌 카드를 누르면,{' '}
+                  <span className="Hilight">상세 페이지</span>를 볼 수 있어요!
+                </p>
+                <br />
+                <p className="Text">
+                  - 상세 페이지에서 언제든 목표
+                  <span className="Hilight">수정, 삭제</span>가 가능합니다!
+                </p>
+                <br />
+                <p className="Text">
+                  - 검색으로 물품을 등록했다면, 상세 페이지에서{' '}
+                  <span className="Hilight">이미지</span>도 확인할 수 있어요!
+                </p>
+                <br />
+                <p className="Text">
+                  - <span className="Hilightt">또 다른 물품</span>을 등록하고
+                  싶으신가요?
+                </p>
+              </div>
+            }
+            <br />
+            {
+              <div className="LinkButton">
+                <Link
+                  to={ROUTE_PATH_GOAL_CREATE}
+                  style={{ textDecoration: 'none', color: 'black' }}
+                >
+                  <p className="CreateText">새로 등록하러 가기 </p>{' '}
+                </Link>
+              </div>
+            }
           </div>
         </GuideBox>
+
         <TopButton>
           <div>{<h2>💜 총 {list.length}개의 목표가 있습니다 💜</h2>}</div>
         </TopButton>
@@ -139,25 +148,54 @@ const GuideBox = styled.div`
   .Hilight {
     color: #aac4ff;
   }
-`;
+  .Hilightt {
+    color: #ff6f6f;
+  }
 
-const LinkButton = styled.button`
-  margin: 10px 0 10px;
-  width: 214px;
-  height: 40px;
-  background: #aac4ff;
-  border-radius: 10px;
-  .balloon:after {
-    border-top: 0px solid transparent;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid #aac4ff;
+  .LinkButton {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: right;
+    margin: 54px 0 10px;
+    width: 150px;
+    height: 40px;
+    background: #aac4ff;
+    border-radius: 10px;
+  }
+  .LinkButton::before {
+    border-top: 5px solid transparent;
+    border-right: 20px solid #aac4ff;
+    border-bottom: 5px solid transparent;
     content: '';
-    position: absolute;
-    top: -10px;
-    left: 20px;
+    position: relative;
+    top: -15px;
+    left: -32px;
+  }
+  .CreateText {
+    font-size: 12px;
+    color: white;
+    margin: 0 28px 12px 0px;
   }
 `;
+
+// const LinkButton = styled.button`
+//   margin: 10px 0 10px;
+//   width: 214px;
+//   height: 40px;
+//   background: pink;
+//   border-radius: 10px;
+//   .LinkButton::before {
+//     border-top: 0px solid transparent;
+//     border-left: 10px solid transparent;
+//     border-right: 10px solid transparent;
+//     border-bottom: 10px solid #aac4ff;
+//     content: '';
+//     position: absolute;
+//     top: -10px;
+//     left: 20px;
+//   }
+// `;
 
 const TopButton = styled.div`
   width: 600px;
