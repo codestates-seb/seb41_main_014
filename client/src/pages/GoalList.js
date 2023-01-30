@@ -50,28 +50,28 @@ const GoalList = () => {
           </p>
           <br />
           <p className="Text">
-            - 상세 페이지에서 언제든{' '}
-            <span className="Hilight">목표 수정, 삭제</span>가 가능합니다!
+            - 상세 페이지에서 언제든 목표
+            <span className="Hilight">수정, 삭제</span>가 가능합니다!
           </p>
           <br />
           <p className="Text">
-            - 한 달에 이 물건을 위해 모을 수 있는 돈을 기입해 보아요!
+            - 검색으로 물품을 등록했다면, 상세 페이지에서{' '}
+            <span className="Hilight">이미지</span>도 확인할 수 있어요!
           </p>
           <br />
-          <p className="Text">
-            - 위시리스트는 최대 <span className="Hilight">5개</span>까지 등록
-            가능합니다.
-          </p>
+          <p className="Text">- 또 다른 물품을 등록하고 싶으신가요?</p>
           <br />
-          <LinkButton>
-            <Link
-              to={ROUTE_PATH_GOAL_CREATE}
-              style={{ textDecoration: 'none' }}
-            >
-              {' '}
-              새로 등록하러 가기{' '}
-            </Link>
-          </LinkButton>
+          <div style={{ display: 'flex' }}>
+            <LinkButton>
+              <Link
+                to={ROUTE_PATH_GOAL_CREATE}
+                style={{ textDecoration: 'none' }}
+              >
+                {' '}
+                새로 등록하러 가기{' '}
+              </Link>
+            </LinkButton>
+          </div>
         </GuideBox>
         <TopButton>
           <div>{<h2>💜 총 {list.length}개의 목표가 있습니다 💜</h2>}</div>
@@ -142,12 +142,21 @@ const GuideBox = styled.div`
 `;
 
 const LinkButton = styled.button`
-  width: 214px;
-  height: 36px;
-  border: 0;
-  background-color: #b1b2ff;
   margin: 10px 0 10px;
-  border-radius: 6px;
+  width: 214px;
+  height: 40px;
+  background: #aac4ff;
+  border-radius: 10px;
+  .balloon:after {
+    border-top: 0px solid transparent;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #aac4ff;
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+  }
 `;
 
 const TopButton = styled.div`
