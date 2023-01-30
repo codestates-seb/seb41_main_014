@@ -139,7 +139,7 @@ const Conditions = () => {
       <Divider />
       {/* rsrvType */}
       <Box sx={{ margin: 3 }}>
-        <h3>{saveTrm.fixed.title}</h3>
+        <h3>{rsrvType.fixed.title}</h3>
         <ToggleButtonGroup
           sx={() => ({
             pt: 2,
@@ -166,7 +166,7 @@ const Conditions = () => {
       <Divider />
       {/* intrRateType */}
       <Box sx={{ margin: 3 }}>
-        <h3>{saveTrm.fixed.title}</h3>
+        <h3>{intrRateType.fixed.title}</h3>
         <ToggleButtonGroup
           sx={() => ({
             pt: 2,

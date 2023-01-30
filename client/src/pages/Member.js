@@ -107,6 +107,7 @@ const SummaryContainer = styled(Container)`
     width: 100%;
     display: flex;
     flex-direction: row;
+    padding-left: 4px;
     .oneData {
       border: 2px solid ${(props) => props.theme.colors.mainHeavy};
       border-radius: 4px;
@@ -115,7 +116,6 @@ const SummaryContainer = styled(Container)`
       width: 20%;
       margin: 4px;
       margin-top: 8px;
-      padding-left: 4px;
       .dataName {
         margin-top: 4px;
       }
