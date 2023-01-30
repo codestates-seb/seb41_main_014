@@ -15,6 +15,7 @@ import {
 import { setGoalCreateInit } from '../reducer/goalCreateSlice';
 import { getERROR_TEXT } from '../helper/axiosHelper';
 import { useSnackbar } from 'notistack';
+import { useEffect } from 'react';
 
 const GuideBox = styled.div`
   display: flex;
@@ -56,6 +57,10 @@ const GoalCreatePage = () => {
   const dispatch = useDispatch();
   const goalData = useSelector((state) => state.goalCreate);
   const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    dispatch(setGoalCreateInit());
+  }, []);
 
   const goalPost = () => {
     const postdata = {
