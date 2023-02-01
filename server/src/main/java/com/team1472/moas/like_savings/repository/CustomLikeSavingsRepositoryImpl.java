@@ -39,6 +39,7 @@ public class CustomLikeSavingsRepositoryImpl implements CustomLikeSavingsReposit
 
         List<LikeSavingProductsRes> likeSavingProducts = jpaQueryFactory.select(Projections.constructor(LikeSavingProductsRes.class,
                         likeSavings.id,
+                        installmentSavings.finPrdtCd,
                         installmentSavings.korCoNm,
                         installmentSavings.finPrdtNm,
                         installmentSavings.joinWay,

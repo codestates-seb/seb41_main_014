@@ -8,6 +8,8 @@ import lombok.Getter;
 public class LikeSavingProductsRes {
     private long likeSavingId; //관심 적금 id
 
+    private String finPrdtCd; //금융 상품 코드
+
     private String korCoNm; //금융회사 명
 
     private String finPrdtNm; //금융상품명
