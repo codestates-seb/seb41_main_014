@@ -37,6 +37,7 @@ import { useNavigate } from 'react-router';
 import { ROUTE_PATH_LOGIN } from '../../store/routerStore';
 import { useSnackbar } from 'notistack';
 import { getERROR_TEXT } from '../../helper/axiosHelper';
+import { getUSER_INFORMATION } from '../../helper/cookieHelper';
 
 const FixedSavingContents = () => {
   const conditions = useSelector((state) => state.savingConditions.origin);
@@ -139,10 +140,10 @@ const FixedSavingContents = () => {
   const column = getFS_DATA();
   const fixedSavings = useSelector((state) => state.fixedSavings);
 
-  const userInfo = useSelector((state) => state.isLogin.userInfo);
+  const userInfo = getUSER_INFORMATION();
   const navigate = useNavigate();
   const handelInterestSavings = (e, saving) => {
-    if (userInfo.id === -1) {
+    if (userInfo) {
       enqueueSnackbar('로그인 후 시도해주세요.', {
         variant: 'warning',
       });
