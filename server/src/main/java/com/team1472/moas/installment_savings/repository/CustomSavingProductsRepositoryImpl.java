@@ -32,6 +32,7 @@ public class CustomSavingProductsRepositoryImpl implements CustomSavingProductsR
 
         List<SavingProductRes> savings = jpaQueryFactory.select(
                         Projections.constructor(SavingProductRes.class,
+                                installmentSavings.finPrdtCd,
                                 installmentSavings.korCoNm,
                                 installmentSavings.finPrdtNm,
                                 installmentSavings.joinWay,
