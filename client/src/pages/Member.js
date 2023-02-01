@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   Container,
   styled,
@@ -12,14 +11,9 @@ import {
   Typography,
 } from '@mui/material';
 import axios from 'axios';
-import {
-  removeACCESS_TOKEN,
-  removeREFRESH_TOKEN,
-} from '../helper/cookieHelper';
 import empty from '../asset/images/no_data.png';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH_BASE } from '../store/routerStore';
-import { logout } from '../reducer/isLoginSlice';
 import {
   URL_MEMBER_LOGOUT,
   URL_MEMBER,
@@ -29,6 +23,8 @@ import {
 import wish from '../asset/images/wish_list.png';
 import { useSnackbar } from 'notistack';
 import { getERROR_TEXT } from '../helper/axiosHelper';
+import { setLogout } from '../helper/memberHelper';
+import { getALIVE, getUSER_INFORMATION } from '../helper/cookieHelper';
 
 const MemberContainer = styled(Container)`
   display: flex;
@@ -182,13 +178,12 @@ const deleteStyle = {
 
 const Member = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state.isLogin.userInfo);
-  const isLogin = useSelector((state) => state.isLogin.isLogin);
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [list, setList] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
+
+  const userInfo = getUSER_INFORMATION();
 
   const changeEditHandler = () => {
     setEditOpen(!editOpen);
@@ -210,9 +205,7 @@ const Member = () => {
           variant: 'error',
         });
       });
-    removeACCESS_TOKEN();
-    removeREFRESH_TOKEN();
-    dispatch(logout());
+    setLogout();
     navigate(ROUTE_PATH_BASE);
   };
 
@@ -228,9 +221,7 @@ const Member = () => {
           variant: 'error',
         });
       });
-    removeACCESS_TOKEN();
-    removeREFRESH_TOKEN();
-    dispatch(logout());
+    setLogout();
     navigate(ROUTE_PATH_BASE);
   };
 
@@ -254,7 +245,7 @@ const Member = () => {
 
   return (
     <>
-      {isLogin && (
+      {getALIVE() && (
         <MemberContainer>
           <InfoContainer>
             <div className="userImage">
@@ -373,7 +364,7 @@ const Member = () => {
           <Button onClick={logoutHandler}>LOGOUT</Button>
         </MemberContainer>
       )}
-      {!isLogin && (
+      {!getALIVE() && (
         <MemberContainer>
           <div className="NotLogin">
             <CircularProgress />

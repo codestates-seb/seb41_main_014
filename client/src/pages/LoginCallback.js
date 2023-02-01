@@ -1,16 +1,17 @@
 import axios from 'axios';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setACCESS_TOKEN, setREFRESH_TOKEN } from '../helper/cookieHelper';
-import { login } from '../reducer/isLoginSlice';
+import {
+  setACCESS_TOKEN,
+  setREFRESH_TOKEN,
+  setUSER_INFORMATION,
+} from '../helper/cookieHelper';
 import { ROUTE_PATH_BASE } from '../store/routerStore';
 import { URL_MEMBER, getWITH_TOKEN } from '../store/urlStore';
 import { useSnackbar } from 'notistack';
 import { getERROR_TEXT } from '../helper/axiosHelper';
 
 const LoginCallback = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // 로그인 버튼을 누르고 이동한 URL에서 구글 로그인을 실행하면 이동되는 URL의 파라미터에 두 개의 토큰과 멤버 아이디가 나온다
@@ -31,23 +32,22 @@ const LoginCallback = () => {
       // 토큰을 쿠키에 저장한다.
       setACCESS_TOKEN(accessToken);
       setREFRESH_TOKEN(refreshToken);
-
       // 로그인을 통해 받은 토큰을 바로 헤더에 실어 유저 정보를 받아오는 요청을 보냄
       axios
         .get(URL_MEMBER, getWITH_TOKEN())
         .then((response) => {
           enqueueSnackbar('성공', { variant: 'success' });
           const { data } = response;
-          dispatch(login(data.data));
+          setUSER_INFORMATION(data.data);
+          navigate(ROUTE_PATH_BASE);
         })
         .catch((error) => {
           const { message } = error;
           enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
             variant: 'error',
           });
+          navigate(ROUTE_PATH_BASE);
         });
-
-      navigate(ROUTE_PATH_BASE);
     }
   }, []);
 

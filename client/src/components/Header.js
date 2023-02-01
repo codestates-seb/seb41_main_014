@@ -23,9 +23,8 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import logo from '../asset/images/logo_main_light.png';
 import moas from '../asset/images/logo_name.png';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { logout } from '../reducer/isLoginSlice';
 import {
   MODAL_TYPE_MAIN_MENU,
   setModalOpen,
@@ -34,8 +33,9 @@ import {
 import axios from 'axios';
 import { URL_MEMBER_LOGOUT, getWITH_TOKEN } from '../store/urlStore';
 import {
-  removeACCESS_TOKEN,
-  removeREFRESH_TOKEN,
+  getALIVE,
+  getUSER_INFORMATION,
+  setLogout,
 } from '../helper/cookieHelper';
 import { useSnackbar } from 'notistack';
 import { getERROR_TEXT } from '../helper/axiosHelper';
@@ -78,9 +78,8 @@ const styleMenuTypography = (theme) => {
 
 const Header = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const isLogin = useSelector((state) => state.isLogin);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
   const handleOpenUserMenu = (event) => {
@@ -89,6 +88,8 @@ const Header = () => {
 
   const member = 111;
   const memberLogout = 113;
+
+  const userInfo = getUSER_INFORMATION();
 
   const handleCloseUserMenu = (type) => {
     setAnchorElUser(null);
@@ -108,12 +109,7 @@ const Header = () => {
               variant: 'error',
             });
           });
-        removeACCESS_TOKEN();
-        removeREFRESH_TOKEN();
-        dispatch(logout());
-        navigate(ROUTE_PATH_BASE);
-        dispatch(logout());
-        navigate(ROUTE_PATH_BASE);
+        setLogout();
         break;
     }
   };
@@ -142,7 +138,7 @@ const Header = () => {
             <img src={moas} alt="logo" style={{ height: '48px' }} />
           </IconButton>
         </Link>
-        {isLogin.userInfo.id === -1 ? (
+        {!getALIVE() ? (
           <>
             <Link to={ROUTE_PATH_LOGIN} style={{ textDecoration: 'none' }}>
               {/* 비로그인시 */}
@@ -199,17 +195,14 @@ const Header = () => {
               </Typography>
             </Link>
             <Box>
-              <Tooltip title={isLogin.userInfo.name}>
+              <Tooltip title={userInfo.name}>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <StyledBadge
                     overlap="circular"
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                     variant="dot"
                   >
-                    <Avatar
-                      src={isLogin.userInfo.picture}
-                      alt={isLogin.userInfo.name}
-                    />
+                    <Avatar src={userInfo.picture} alt={userInfo.name} />
                   </StyledBadge>
                 </IconButton>
               </Tooltip>
