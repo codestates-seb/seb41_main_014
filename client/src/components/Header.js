@@ -83,7 +83,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
-  const matches = useMediaQuery('(min-width:450px)');
+  const matches = useMediaQuery('(min-width:500px)');
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -154,6 +154,17 @@ const Header = () => {
           </IconButton>
         ) : !getALIVE() ? (
           <>
+            <Link
+              to={ROUTE_PATH_FIXED_SAVINGS}
+              style={{ textDecoration: 'none', marginLeft: '30%' }}
+            >
+              <Typography
+                variant="h2"
+                sx={(theme) => styleMenuTypography(theme)}
+              >
+                적금추천
+              </Typography>
+            </Link>
             <Link to={ROUTE_PATH_LOGIN} style={{ textDecoration: 'none' }}>
               {/* 비로그인시 */}
               <Typography
@@ -161,17 +172,6 @@ const Header = () => {
                 sx={(theme) => styleMenuTypography(theme)}
               >
                 로그인
-              </Typography>
-            </Link>
-            <Link
-              to={ROUTE_PATH_FIXED_SAVINGS}
-              style={{ textDecoration: 'none' }}
-            >
-              <Typography
-                variant="h2"
-                sx={(theme) => styleMenuTypography(theme)}
-              >
-                적금추천
               </Typography>
             </Link>
           </>
