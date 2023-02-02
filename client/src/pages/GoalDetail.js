@@ -115,7 +115,7 @@ const GoalDetail = () => {
   };
 
   return (
-    <>
+    <div style={{ width: '100%' }}>
       <GDetailPage>
         <h2 style={{ marginTop: '30px' }}>✧ 상세 위시 정보 ✧</h2>
         <GDetail>
@@ -204,6 +204,18 @@ const GoalDetail = () => {
             />
           </div>
           <div style={{ display: 'flex' }}>
+            <Title>진행도(%) &nbsp;&nbsp;&nbsp;</Title>
+            <TextField
+              className="textField"
+              id="standard-read-only-input"
+              defaultValue={detailData.progress}
+              InputProps={{
+                readOnly: true,
+              }}
+              variant="standard"
+            />
+          </div>
+          <div style={{ display: 'flex' }}>
             <Title>생성 날짜&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Title>
             <TextField
               className="textField"
@@ -215,6 +227,7 @@ const GoalDetail = () => {
               variant="standard"
             />
           </div>
+
           <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
             {
               <Button>
@@ -282,7 +295,7 @@ const GoalDetail = () => {
           </div>
         </GDetail>
       </GDetailPage>
-    </>
+    </div>
   );
 };
 
@@ -305,8 +318,7 @@ const GDetailPage = styled.div`
 `;
 
 const GDetail = styled.div`
-  /* 여기서 width를 100% 나 max-width를 설정할시 박스가 찌그러지는데 왜그러는건지 모르곘어서 일단 600 */
-  width: 600px;
+  width: 100%;
   height: auto;
   border-radius: 6px;
   background-color: #eef1ff;
@@ -322,8 +334,8 @@ const GDetail = styled.div`
     color: #626262;
   }
   .textField {
-    width: 300px;
-    margin-top: 22px;
+    width: 70%;
+    margin: 22px 40px 10px 0px;
   }
   .postButton {
     background-color: white;
@@ -354,5 +366,5 @@ const GDetail = styled.div`
 `;
 
 const Title = styled.h2`
-  margin: 33px 50px 0px 50px;
+  margin: 33px 20px 0px 30px;
 `;

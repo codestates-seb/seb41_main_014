@@ -17,41 +17,6 @@ import { getERROR_TEXT } from '../helper/axiosHelper';
 import { useSnackbar } from 'notistack';
 import { useEffect } from 'react';
 
-const GuideBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  box-sizing: border-box;
-  padding: 10px;
-  width: 600px;
-  height: auto;
-  text-align: left;
-  border-top: 5px solid #aac4ff;
-  border-bottom: 5px solid #aac4ff;
-  margin: 50px 0 50px;
-  color: grey;
-  .TextHeader {
-    text-align: center;
-    color: #aac4ff;
-    width: 600px;
-    font-size: 16pt;
-    margin-top: 20px;
-  }
-  .Text {
-    font-size: 12px;
-  }
-  .Hilight {
-    color: #aac4ff;
-  }
-`;
-
-const CreatePage = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
 const GoalCreatePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -139,3 +104,39 @@ const GoalCreatePage = () => {
 };
 
 export default GoalCreatePage;
+
+const GuideBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 10px;
+  width: 100%;
+  height: auto;
+  text-align: left;
+  border-top: 5px solid #aac4ff;
+  border-bottom: 5px solid #aac4ff;
+  margin: 50px 0 50px;
+  color: grey;
+  .TextHeader {
+    text-align: center;
+    color: #aac4ff;
+    width: 100%;
+    font-size: 16pt;
+    margin-top: 20px;
+  }
+  .Text {
+    font-size: 12px;
+  }
+  .Hilight {
+    color: #aac4ff;
+  }
+`;
+
+const CreatePage = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
