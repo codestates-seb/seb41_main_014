@@ -37,6 +37,7 @@ import StarIcon from '@mui/icons-material/Star';
 import { useSnackbar } from 'notistack';
 import { getERROR_TEXT } from '../../helper/axiosHelper';
 import { getALIVE } from '../../helper/cookieHelper';
+import { getARRAY_CHANGE_VALUE } from '../../util/arrayUtil';
 
 const FixedSavingContents = () => {
   const conditions = useSelector((state) => state.savingConditions.origin);
@@ -144,7 +145,7 @@ const FixedSavingContents = () => {
   const column = getFS_DATA();
   const fixedSavings = useSelector((state) => state.fixedSavings);
 
-  const handelInterestSavings = (saving) => {
+  const handelInterestSavings = (saving, idx) => {
     if (!getALIVE()) {
       enqueueSnackbar('로그인 후 시도해주세요.', {
         variant: 'warning',
@@ -152,6 +153,7 @@ const FixedSavingContents = () => {
       return;
     }
     if (!saving.likeSavingId || saving.likeSavingId === 'null') {
+      //관심적금 등록시점
       const body = {
         finPrdtCd: saving.finPrdtCd,
         intrRateType: saving.intrRateType,
@@ -162,8 +164,13 @@ const FixedSavingContents = () => {
         .post(getURL_SAVINGS_INTEREST(), body, getWITH_TOKEN())
         .then((response) => {
           const { data } = response;
-          console.log(data.data);
-          //TODO likeId 갱신시켜 버튼 채워지도록해야됨.
+          const newSaving = { ...saving };
+          newSaving.likeSavingId = data.likeId;
+          dispatch(
+            setFixedSavings(
+              getARRAY_CHANGE_VALUE(fixedSavings.origin, idx, newSaving)
+            )
+          );
         })
         .catch((error) => {
           const { message } = error;
@@ -172,12 +179,17 @@ const FixedSavingContents = () => {
           });
         });
     } else {
+      //관심적금 삭제시점
       axios
         .delete(getURL_SAVINGS_INTEREST(saving.likeSavingId), getWITH_TOKEN())
-        .then((response) => {
-          const { data } = response;
-          console.log(data.data);
-          //TODO likeId 갱신시켜 버튼 비워지도록해야됨.
+        .then(() => {
+          const newSaving = { ...saving };
+          newSaving.likeSavingId = null;
+          dispatch(
+            setFixedSavings(
+              getARRAY_CHANGE_VALUE(fixedSavings.origin, idx, newSaving)
+            )
+          );
         })
         .catch((error) => {
           const { message } = error;
@@ -248,9 +260,9 @@ const FixedSavingContents = () => {
           </Box>
         }
       >
-        {fixedSavings.origin.map((fixedSaving, index) => (
+        {fixedSavings.origin.map((fixedSaving, idx) => (
           <Accordion
-            key={index}
+            key={fixedSaving.finPrdtCd}
             sx={(theme) => ({
               backgroundColor: theme.colors.mainLight,
               borderRadius: 1,
@@ -262,11 +274,13 @@ const FixedSavingContents = () => {
                 opacity: 0.6,
               },
             })}
-            expanded={expanded === index}
-            onChange={handleChange(index)}
+            expanded={expanded === idx}
+            onChange={handleChange(idx)}
           >
             <Stack direction="row">
-              <IconButton onClick={() => handelInterestSavings(fixedSaving)}>
+              <IconButton
+                onClick={() => handelInterestSavings(fixedSaving, idx)}
+              >
                 {!fixedSaving.likeSavingId ||
                 fixedSaving.likeSavingId === 'null' ||
                 fixedSaving.likeSavingId === '' ? (

@@ -2,19 +2,23 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initFixedSavings = [];
 
-const pageInfomation = {
+const initPageInfomation = {
   page: 1,
   size: 10,
   totalElements: -1,
   totalPages: -1,
 };
 
-const pageInfo = {
-  origin: pageInfomation,
+const initPageInfo = {
+  origin: initPageInfomation,
   hasMore: false,
 };
 
-const initialState = { origin: initFixedSavings, extendableId: -1, pageInfo };
+const initialState = {
+  origin: initFixedSavings,
+  extendableId: -1,
+  pageInfo: initPageInfo,
+};
 
 // 로그인, 로그아웃 리듀서 설정 => 로그인 상태 변경 및 유저 정보 추가 or 초기화
 const fixedSavingsSlice = createSlice({
@@ -26,6 +30,8 @@ const fixedSavingsSlice = createSlice({
     },
     setFixedSavingsInit: (state) => {
       state.origin = initFixedSavings;
+      state.pageInfo = initPageInfo;
+      state.extendableId = -1;
     },
     setFixedSavingsIsExtendable: (state, action) => {
       state.extendableId = action.payload;

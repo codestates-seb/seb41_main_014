@@ -32,6 +32,10 @@ import { useSnackbar } from 'notistack';
 import { getERROR_TEXT } from '../helper/axiosHelper';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import {
+  getARRAY_CHANGE_VALUE,
+  getARRAY_DELETE_VALUE,
+} from '../util/arrayUtil';
 
 const InterestFixedSaving = () => {
   const [interestSavings, setInterestSavings] = useState([]);
@@ -48,7 +52,6 @@ const InterestFixedSaving = () => {
       .get(getURL_SAVINGS_INTEREST(), getWITH_TOKEN(pageInfo))
       .then((response) => {
         const { data } = response;
-        console.log(data);
         if (data.data.length === 0) {
           enqueueSnackbar('해당 정보가 없습니다.', {
             variant: 'success',
@@ -105,9 +108,7 @@ const InterestFixedSaving = () => {
   };
 
   const handleExpandClick = (idx) => {
-    const head = expandeds.slice(0, idx);
-    const tail = expandeds.slice(idx + 1);
-    setExpandeds([...head, !expandeds[idx], ...tail]);
+    setExpandeds(getARRAY_CHANGE_VALUE(expandeds, idx, !expandeds[idx]));
   };
   const handleDelete = (likeSavingId, idx) => {
     axios
@@ -116,14 +117,8 @@ const InterestFixedSaving = () => {
         enqueueSnackbar('정상적으로 삭제되었습니다.', {
           variant: 'success',
         });
-        //값바꿔치기
-        const iHead = interestSavings.slice(0, idx);
-        const iTail = interestSavings.slice(idx + 1);
-        setInterestSavings([...iHead, ...iTail]);
-
-        const eHead = expandeds.slice(0, idx);
-        const eTail = expandeds.slice(idx + 1);
-        setExpandeds([...eHead, ...eTail]);
+        setInterestSavings(getARRAY_DELETE_VALUE(interestSavings, idx));
+        setExpandeds(getARRAY_DELETE_VALUE(expandeds, idx));
       })
       .catch((error) => {
         const { message } = error;

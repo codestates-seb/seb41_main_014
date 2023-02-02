@@ -97,8 +97,6 @@ const FixedSavingButtonGroup = () => {
     const configs = getALIVE()
       ? getWITH_TOKEN(pageInfo)
       : getWITH_PARAMS(pageInfo);
-
-    console.log(configs);
     axios
       .post(
         URL_SAVINGS,
@@ -123,7 +121,6 @@ const FixedSavingButtonGroup = () => {
       )
       .then((response) => {
         const { data } = response;
-        console.log(data);
         if (data.data.length === 0) {
           enqueueSnackbar('해당 정보가 없습니다.', {
             variant: 'success',
@@ -143,7 +140,6 @@ const FixedSavingButtonGroup = () => {
             }
           }
         }
-        console.log(data.data);
         dispatch(setFixedSavings(data.data));
         // accordion extendable boolean 세팅
         dispatch(setFixedSavingsIsExtendable(false));
