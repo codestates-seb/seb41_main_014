@@ -101,7 +101,8 @@ const Header = () => {
         axios
           .delete(URL_MEMBER_LOGOUT, getWITH_TOKEN())
           .then(() => {
-            //TODO
+            setLogout();
+            navigate(ROUTE_PATH_BASE);
           })
           .catch((error) => {
             const { message } = error;
@@ -109,7 +110,6 @@ const Header = () => {
               variant: 'error',
             });
           });
-        setLogout();
         break;
     }
   };

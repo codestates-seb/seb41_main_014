@@ -216,7 +216,8 @@ const Member = () => {
     axios
       .delete(URL_MEMBER_LOGOUT, getWITH_TOKEN())
       .then(() => {
-        //TODO
+        setLogout();
+        navigate(ROUTE_PATH_BASE);
       })
       .catch((error) => {
         const { message } = error;
@@ -224,8 +225,6 @@ const Member = () => {
           variant: 'error',
         });
       });
-    setLogout();
-    navigate(ROUTE_PATH_BASE);
   };
 
   useEffect(() => {
@@ -245,6 +244,11 @@ const Member = () => {
     };
     goalGet();
   }, []);
+
+  const handleEditModal = () => {
+    enqueueSnackbar('구현중입니다.');
+    setEditOpen(!editOpen);
+  };
 
   return (
     <>
@@ -283,7 +287,10 @@ const Member = () => {
                         style={{ margin: '24px', width: 300 }}
                       />
                       <br />
-                      <Button style={{ padding: '24px', textAlign: 'center' }}>
+                      <Button
+                        style={{ padding: '24px', textAlign: 'center' }}
+                        onClick={handleEditModal}
+                      >
                         CONFIRM
                       </Button>
                     </form>
