@@ -23,8 +23,11 @@ import {
 import wish from '../asset/images/wish_list.png';
 import { useSnackbar } from 'notistack';
 import { getERROR_TEXT } from '../helper/axiosHelper';
-import { setLogout } from '../helper/memberHelper';
-import { getALIVE, getUSER_INFORMATION } from '../helper/cookieHelper';
+import {
+  getALIVE,
+  getUSER_INFORMATION,
+  setLogout,
+} from '../helper/cookieHelper';
 
 const MemberContainer = styled(Container)`
   display: flex;

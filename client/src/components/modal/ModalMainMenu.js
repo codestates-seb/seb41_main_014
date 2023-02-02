@@ -1,7 +1,8 @@
 import { Stack, Typography } from '@mui/material';
 import { forwardRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { getALIVE } from '../../helper/cookieHelper';
 import { setModalClose } from '../../reducer/modalSlice';
 import {
   ROUTE_PATH_BASE,
@@ -13,7 +14,6 @@ import {
 } from '../../store/routerStore';
 
 const ModalMainMenu = forwardRef((props, ref) => {
-  const userInfo = useSelector((state) => state.isLogin.userInfo);
   const dispatch = useDispatch();
   const handleCloseModal = () => {
     dispatch(setModalClose());
@@ -45,7 +45,7 @@ const ModalMainMenu = forwardRef((props, ref) => {
           메인
         </Typography>
       </Link>
-      {userInfo.id === -1 ? (
+      {!getALIVE() ? (
         <Link
           to={ROUTE_PATH_LOGIN}
           style={{ textDecoration: 'none', padding: '24px' }}
