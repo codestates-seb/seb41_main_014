@@ -13,6 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.team1472.moas.exception.ExceptionCode.LIKE_SAVINGS_ALREADY_EXISTS;
+import static com.team1472.moas.exception.ExceptionCode.LIKE_SAVINGS_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -24,6 +27,8 @@ public class LikeSavingsService {
     public LikeSavings RegisterInterestInSavings(long memberId, LikeSavings likeSavings) {
         Member member = memberService.findMember(memberId);
         likeSavings.addMember(member);
+
+        checkDuplicatedInterest(memberId, likeSavings);
 
         return likeSavingsRepository.save(likeSavings);
     }
@@ -43,7 +48,14 @@ public class LikeSavingsService {
     private LikeSavings verifyExistsLikeSavingsOfMember(long interestId, long memberId) {
 
         return likeSavingsRepository.findByLikeSavingIdAndMemberId(interestId, memberId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.LIKE_SAVINGS_NOT_FOUND));
+                .orElseThrow(() -> new BusinessLogicException(LIKE_SAVINGS_NOT_FOUND));
+    }
+
+    //관심 적금 중복 등록 여부 확인
+    private void checkDuplicatedInterest(Long memberId, LikeSavings likeSavings) {
+        if (likeSavingsRepository.existsInterestSavings(memberId, likeSavings)) {
+            throw new BusinessLogicException(LIKE_SAVINGS_ALREADY_EXISTS);
+        }
     }
 
 }

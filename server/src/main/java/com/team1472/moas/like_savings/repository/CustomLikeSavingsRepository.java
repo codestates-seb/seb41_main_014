@@ -13,4 +13,7 @@ public interface CustomLikeSavingsRepository {
 
     //회원의 관심 적금 조회
     Page<LikeSavingProductsRes> findLikeSavingProductsByMemberId(long memberId, Pageable pageable);
+
+    //관심 적금 목록 존재 여부
+    boolean existsInterestSavings(long memberId, LikeSavings findLikeSaving);
 }
