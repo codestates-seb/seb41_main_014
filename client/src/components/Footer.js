@@ -51,7 +51,7 @@ StyledGithub.propTypes = {
 
 const Footer = () => {
   return (
-    <StyeldFooter as="footer">
+    <StyeldFooter>
       <Stack
         sx={(theme) => ({
           minWidth: '360px',
