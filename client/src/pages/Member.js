@@ -200,7 +200,8 @@ const Member = () => {
     axios
       .delete(URL_MEMBER, getWITH_TOKEN())
       .then(() => {
-        //TODO
+        setLogout();
+        navigate(ROUTE_PATH_BASE);
       })
       .catch((error) => {
         const { message } = error;
@@ -208,8 +209,6 @@ const Member = () => {
           variant: 'error',
         });
       });
-    setLogout();
-    navigate(ROUTE_PATH_BASE);
   };
 
   const logoutHandler = () => {
