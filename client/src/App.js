@@ -83,7 +83,7 @@ function App() {
           <Route path={ROUTE_PATH_NOT_FOUND} element={<NotFound />} />
         </Routes>
       </ContentContainer>
-      {footerVisibility ? <Footer /> : ''}
+      {footerVisibility && <Footer />}
       <Modal open={modal.open} onClose={() => dispatch(setModalClose())}>
         {modal.type === MODAL_TYPE_MAIN_MENU ? (
           <ModalMainMenu />

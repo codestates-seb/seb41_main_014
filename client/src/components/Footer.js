@@ -5,10 +5,8 @@ import start from '../asset/images/footer_start_man.svg';
 import github from '../asset/images/logo_github.png';
 import PropTypes from 'prop-types';
 
-const StyeldFooter = styled(Box)(() => ({
+const StyeldFooter = styled(Stack)(() => ({
   width: '100vw',
-  display: 'flex',
-  flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
 }));
@@ -80,15 +78,13 @@ const Footer = () => {
         <img src={codestates} alt="codestates" style={{ height: '60px' }} />
         <img src={start} alt="start" style={{ width: '300px' }} />
       </Stack>
-      <Box
+      <Stack
         sx={() => ({
-          p: 10,
           minWidth: '360px',
           maxWidth: '600px',
           width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
           justifyContent: 'center',
+          alignItems: 'center',
         })}
       >
         <Link
@@ -204,7 +200,7 @@ const Footer = () => {
           <Typography variant="h2"></Typography>
           <Typography variant="h3"></Typography>
         </Box>
-      </Box>
+      </Stack>
     </StyeldFooter>
   );
 };

@@ -73,10 +73,14 @@ const InterestFixedSaving = () => {
         originPageInfo.hasNext =
           originPageInfo.page < originPageInfo.totalPages;
         setPageInfo(data.pageInfo);
-        setExpandeds(new Array(originData.length).fill(false));
 
         setInterestSavings(
           !isInfiniteScroll ? originData : interestSavings.concat(originData)
+        );
+        setExpandeds(
+          !isInfiniteScroll
+            ? new Array(originData.length).fill(false)
+            : expandeds.concat(new Array(originData.length).fill(false))
         );
       })
       .catch((error) => {
@@ -104,7 +108,7 @@ const InterestFixedSaving = () => {
     const tail = expandeds.slice(idx + 1);
     setExpandeds([...head, !expandeds[idx], ...tail]);
   };
-  const handleDelete = (likeSavingId) => {
+  const handleDelete = (likeSavingId, idx) => {
     axios
       .delete(getURL_SAVINGS_INTEREST(likeSavingId), getWITH_TOKEN())
       .then(() => {
@@ -112,7 +116,10 @@ const InterestFixedSaving = () => {
           variant: 'success',
         });
         //값바꿔치기
-        //getInterestSavings(pageInfo);
+
+        const head = expandeds.slice(0, idx);
+        const tail = expandeds.slice(idx + 1);
+        setExpandeds([...head, ...tail]);
       })
       .catch((error) => {
         const { message } = error;
