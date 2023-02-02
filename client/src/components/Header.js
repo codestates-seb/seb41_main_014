@@ -39,6 +39,7 @@ import {
 } from '../helper/cookieHelper';
 import { useSnackbar } from 'notistack';
 import { getERROR_TEXT } from '../helper/axiosHelper';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -81,6 +82,8 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
+
+  const matches = useMediaQuery('(min-width:450px)');
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -138,7 +141,18 @@ const Header = () => {
             <img src={moas} alt="logo" style={{ height: '48px' }} />
           </IconButton>
         </Link>
-        {!getALIVE() ? (
+        {!matches ? (
+          <IconButton
+            size="large"
+            edge="start"
+            onClick={() => {
+              dispatch(setModalType(MODAL_TYPE_MAIN_MENU));
+              dispatch(setModalOpen());
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
+        ) : !getALIVE() ? (
           <>
             <Link to={ROUTE_PATH_LOGIN} style={{ textDecoration: 'none' }}>
               {/* 비로그인시 */}
@@ -232,16 +246,6 @@ const Header = () => {
             </Box>
           </>
         )}
-        <IconButton
-          size="large"
-          edge="start"
-          onClick={() => {
-            dispatch(setModalType(MODAL_TYPE_MAIN_MENU));
-            dispatch(setModalOpen());
-          }}
-        >
-          <MenuIcon />
-        </IconButton>
       </Toolbar>
     </AppBar>
   );

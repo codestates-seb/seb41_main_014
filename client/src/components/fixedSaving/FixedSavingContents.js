@@ -12,6 +12,7 @@ import {
   getFS_BANKS,
   getFS_DATA,
   getJOIN_DENY,
+  getRSRV_TYPE_CODE,
 } from '../../helper/fixedSavingHelper';
 import { useState } from 'react';
 import { getLOCALE_MONEY, getPERCENT_WITH_TEXT } from '../../helper/unitHelper';
@@ -33,11 +34,9 @@ import {
 } from '../../store/urlStore';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
-import { useNavigate } from 'react-router';
-import { ROUTE_PATH_LOGIN } from '../../store/routerStore';
 import { useSnackbar } from 'notistack';
 import { getERROR_TEXT } from '../../helper/axiosHelper';
-import { getUSER_INFORMATION } from '../../helper/cookieHelper';
+import { getALIVE } from '../../helper/cookieHelper';
 
 const FixedSavingContents = () => {
   const conditions = useSelector((state) => state.savingConditions.origin);
@@ -73,6 +72,14 @@ const FixedSavingContents = () => {
     };
 
     setTimeout(() => {
+      const pageInfo = {
+        page: fixedSavings.pageInfo.origin.page + 1,
+        size: fixedSavings.pageInfo.origin.size,
+      };
+      const configs = getALIVE()
+        ? getWITH_TOKEN(pageInfo)
+        : getWITH_PARAMS(pageInfo);
+
       axios
         .post(
           URL_SAVINGS,
@@ -93,10 +100,7 @@ const FixedSavingContents = () => {
                 ? undefined
                 : conditions.joinDeny.value,
           },
-          getWITH_PARAMS({
-            page: fixedSavings.pageInfo.origin.page + 1,
-            size: fixedSavings.pageInfo.origin.size,
-          })
+          configs
         )
         .then((response) => {
           const { data } = response;
@@ -140,27 +144,25 @@ const FixedSavingContents = () => {
   const column = getFS_DATA();
   const fixedSavings = useSelector((state) => state.fixedSavings);
 
-  const userInfo = getUSER_INFORMATION();
-  const navigate = useNavigate();
-  const handelInterestSavings = (e, saving) => {
-    if (userInfo) {
+  const handelInterestSavings = (saving) => {
+    if (!getALIVE()) {
       enqueueSnackbar('로그인 후 시도해주세요.', {
         variant: 'warning',
       });
-      navigate(ROUTE_PATH_LOGIN);
       return;
     }
-    if (
-      !saving.likeSavingId ||
-      saving.likeSavingId === '' ||
-      saving.likeSavingId === 'null'
-    ) {
+    if (!saving.likeSavingId || saving.likeSavingId === 'null') {
+      const body = {
+        finPrdtCd: saving.finPrdtCd,
+        intrRateType: saving.intrRateType,
+        rsrvType: getRSRV_TYPE_CODE(saving.rsrvTypeNm),
+        saveTrm: saving.saveTrm,
+      };
       axios
-        .post(getURL_SAVINGS_INTEREST(), saving, getWITH_TOKEN())
-        .then(() => {
-          // const { data } = response;
-          // alert('정상적으로 등록되었습니다.');
-          // console.log(data.data);
+        .post(getURL_SAVINGS_INTEREST(), body, getWITH_TOKEN())
+        .then((response) => {
+          const { data } = response;
+          console.log(data.data);
           //TODO likeId 갱신시켜 버튼 채워지도록해야됨.
         })
         .catch((error) => {
@@ -172,10 +174,9 @@ const FixedSavingContents = () => {
     } else {
       axios
         .delete(getURL_SAVINGS_INTEREST(saving.likeSavingId), getWITH_TOKEN())
-        .then(() => {
-          // const { data } = response;
-          // alert('정상적으로 등록되었습니다.');
-          // console.log(data.data);
+        .then((response) => {
+          const { data } = response;
+          console.log(data.data);
           //TODO likeId 갱신시켜 버튼 비워지도록해야됨.
         })
         .catch((error) => {
@@ -265,7 +266,7 @@ const FixedSavingContents = () => {
             onChange={handleChange(index)}
           >
             <Stack direction="row">
-              <IconButton onClick={handelInterestSavings}>
+              <IconButton onClick={() => handelInterestSavings(fixedSaving)}>
                 {!fixedSaving.likeSavingId ||
                 fixedSaving.likeSavingId === 'null' ||
                 fixedSaving.likeSavingId === '' ? (

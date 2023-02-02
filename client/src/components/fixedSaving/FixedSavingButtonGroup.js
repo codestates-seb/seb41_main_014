@@ -14,10 +14,15 @@ import {
   setFixedSavingsIsExtendable,
   setFixedSavingsPageInfo,
 } from '../../reducer/fixedSavingsSlice';
-import { getWITH_PARAMS, URL_SAVINGS } from '../../store/urlStore';
+import {
+  getWITH_PARAMS,
+  getWITH_TOKEN,
+  URL_SAVINGS,
+} from '../../store/urlStore';
 import { getFS_BANKS } from '../../helper/fixedSavingHelper';
 import { useSnackbar } from 'notistack';
 import { getERROR_TEXT } from '../../helper/axiosHelper';
+import { getALIVE } from '../../helper/cookieHelper';
 
 const StyledButton = styled(Button)`
   width: 100%;
@@ -85,6 +90,15 @@ const FixedSavingButtonGroup = () => {
       return finCodes;
     };
 
+    const pageInfo = {
+      page: 1,
+      size: 10,
+    };
+    const configs = getALIVE()
+      ? getWITH_TOKEN(pageInfo)
+      : getWITH_PARAMS(pageInfo);
+
+    console.log(configs);
     axios
       .post(
         URL_SAVINGS,
@@ -105,13 +119,11 @@ const FixedSavingButtonGroup = () => {
               ? undefined
               : conditions.joinDeny.value,
         },
-        getWITH_PARAMS({
-          page: 1,
-          size: 10,
-        })
+        configs
       )
       .then((response) => {
         const { data } = response;
+        console.log(data);
         if (data.data.length === 0) {
           enqueueSnackbar('해당 정보가 없습니다.', {
             variant: 'success',
@@ -131,6 +143,7 @@ const FixedSavingButtonGroup = () => {
             }
           }
         }
+        console.log(data.data);
         dispatch(setFixedSavings(data.data));
         // accordion extendable boolean 세팅
         dispatch(setFixedSavingsIsExtendable(false));

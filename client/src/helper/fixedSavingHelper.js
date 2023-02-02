@@ -293,6 +293,18 @@ export const getRSRV_TYPE = (value) => {
   return result;
 };
 
+export const getRSRV_TYPE_CODE = (name) => {
+  let result;
+  switch (name) {
+    case '정액적립식':
+      result = 'S';
+      break;
+    default:
+      result = 'F';
+  }
+  return result;
+};
+
 export const geINTR_RATE_TYPE = (value) => {
   let result;
   switch (value) {

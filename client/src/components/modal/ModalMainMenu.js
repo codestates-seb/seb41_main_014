@@ -1,8 +1,11 @@
-import { Stack, Typography } from '@mui/material';
-import { forwardRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { getALIVE } from '../../helper/cookieHelper';
+import { Button, Stack, Typography } from '@mui/material';
+import axios from 'axios';
+import { useSnackbar } from 'notistack';
+import { forwardRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { getERROR_TEXT } from '../../helper/axiosHelper';
+import { getALIVE, setLogout } from '../../helper/cookieHelper';
 import { setModalClose } from '../../reducer/modalSlice';
 import {
   ROUTE_PATH_BASE,
@@ -12,11 +15,39 @@ import {
   ROUTE_PATH_LOGIN,
   ROUTE_PATH_MEMBER,
 } from '../../store/routerStore';
+import { getWITH_TOKEN, URL_MEMBER_LOGOUT } from '../../store/urlStore';
+
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const ModalMainMenu = forwardRef((props, ref) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const enqueueSnackbar = useSnackbar();
+  const matches = useMediaQuery('(min-width:450px)');
+  const modal = useSelector((state) => state.modal);
+
+  useEffect(() => {
+    if (modal.open && matches) handleCloseModal();
+  }, [matches]);
+
   const handleCloseModal = () => {
     dispatch(setModalClose());
+  };
+
+  const handleLogout = () => {
+    axios
+      .delete(URL_MEMBER_LOGOUT, getWITH_TOKEN())
+      .then(() => {
+        setLogout();
+        handleCloseModal();
+        navigate(ROUTE_PATH_BASE);
+      })
+      .catch((error) => {
+        const { message } = error;
+        enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+          variant: 'error',
+        });
+      });
   };
   return (
     <Stack
@@ -40,7 +71,7 @@ const ModalMainMenu = forwardRef((props, ref) => {
         onClick={handleCloseModal}
       >
         <Typography
-          sx={{ fontSize: '3rem', fontWeight: '900', color: 'white' }}
+          sx={{ fontSize: '2.5rem', fontWeight: '900', color: 'white' }}
         >
           메인
         </Typography>
@@ -52,7 +83,7 @@ const ModalMainMenu = forwardRef((props, ref) => {
           onClick={handleCloseModal}
         >
           <Typography
-            sx={{ fontSize: '3rem', fontWeight: '900', color: 'white' }}
+            sx={{ fontSize: '2.5rem', fontWeight: '900', color: 'white' }}
           >
             로그인
           </Typography>
@@ -65,7 +96,7 @@ const ModalMainMenu = forwardRef((props, ref) => {
             onClick={handleCloseModal}
           >
             <Typography
-              sx={{ fontSize: '3rem', fontWeight: '900', color: 'white' }}
+              sx={{ fontSize: '2.5rem', fontWeight: '900', color: 'white' }}
             >
               희망목록
             </Typography>
@@ -76,7 +107,7 @@ const ModalMainMenu = forwardRef((props, ref) => {
             onClick={handleCloseModal}
           >
             <Typography
-              sx={{ fontSize: '3rem', fontWeight: '900', color: 'white' }}
+              sx={{ fontSize: '2.5rem', fontWeight: '900', color: 'white' }}
             >
               관심적금
             </Typography>
@@ -87,11 +118,18 @@ const ModalMainMenu = forwardRef((props, ref) => {
             onClick={handleCloseModal}
           >
             <Typography
-              sx={{ fontSize: '3rem', fontWeight: '900', color: 'white' }}
+              sx={{ fontSize: '2.5rem', fontWeight: '900', color: 'white' }}
             >
               회원정보
             </Typography>
           </Link>
+          <Button onClick={handleLogout}>
+            <Typography
+              sx={{ fontSize: '2.5rem', fontWeight: '900', color: 'white' }}
+            >
+              로그아웃
+            </Typography>
+          </Button>
         </>
       )}
       <Link
@@ -100,7 +138,7 @@ const ModalMainMenu = forwardRef((props, ref) => {
         onClick={handleCloseModal}
       >
         <Typography
-          sx={{ fontSize: '3rem', fontWeight: '900', color: 'white' }}
+          sx={{ fontSize: '2.5rem', fontWeight: '900', color: 'white' }}
         >
           적금추천
         </Typography>
