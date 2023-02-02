@@ -81,10 +81,16 @@ const GoalList = () => {
                   to={ROUTE_PATH_GOAL_CREATE}
                   style={{
                     textDecoration: 'none',
-                    color: 'black',
+                    color: 'white',
+                    fontSize: '12px',
+                    paddingBottom: '12px',
                   }}
                 >
-                  <p className="CreateText">새로 등록하기</p>{' '}
+                  {' '}
+                  새로 등록하기
+                  {/* <div className="TextButtonBox">
+                    <p className="CreateText">새로 등록하기</p>{' '}
+                  </div> */}
                 </Link>
               </div>
             }
@@ -112,6 +118,7 @@ GoalList.propTypes = {
 };
 
 const TotalListPage = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -135,7 +142,7 @@ const GuideBox = styled.div`
   .TextHeader {
     text-align: center;
     color: #aac4ff;
-    width: 600px;
+    width: 100%;
     font-size: 16pt;
     margin-top: 20px;
   }
@@ -175,7 +182,12 @@ const GuideBox = styled.div`
     background: #aac4ff;
     border-radius: 10px;
   }
-  .LinkButton::before {
+  @media (max-width: 600px) {
+    .LinkButton {
+      margin: 70px 0 10px 10px;
+    }
+  }
+  /* .LinkButton::before {
     border-top: 5px solid transparent;
     border-right: 20px solid #aac4ff;
     border-bottom: 5px solid transparent;
@@ -183,12 +195,15 @@ const GuideBox = styled.div`
     position: relative;
     top: -15px;
     left: -40px;
+  } */
+  /* .TextButtonBox {
+    width: 100%;
   }
   .CreateText {
     font-size: 12px;
     color: white;
     margin: 0 20px 13px 0px;
-  }
+  } */
 `;
 const TopButton = styled.div`
   flex-direction: column;
