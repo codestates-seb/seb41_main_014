@@ -147,6 +147,7 @@ const GuideBox = styled.div`
   }
   .Hilightt {
     color: #ff6f6f;
+    font-weight: 600;
   }
   .tooltip-text {
     display: none;
@@ -167,9 +168,9 @@ const GuideBox = styled.div`
     display: flex;
     flex-direction: row;
     align-items: flex-end;
-    justify-content: right;
+    justify-content: center;
     margin: 54px 0 10px;
-    width: 150px;
+    width: 25%;
     height: 40px;
     background: #aac4ff;
     border-radius: 10px;
@@ -181,12 +182,12 @@ const GuideBox = styled.div`
     content: '';
     position: relative;
     top: -15px;
-    left: -32px;
+    left: -40px;
   }
   .CreateText {
     font-size: 12px;
     color: white;
-    margin: 0 28px 12px 0px;
+    margin: 0 20px 13px 0px;
   }
 `;
 const TopButton = styled.div`
