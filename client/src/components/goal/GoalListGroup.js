@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { ROUTE_PATH_GOAL_DETAIL } from '../../store/routerStore';
 import PropTypes from 'prop-types';
 // import { color } from '@mui/system';
+import { PieChart } from 'react-minimal-pie-chart';
 
 const GoalListGroup = ({ _list }) => {
   const [list, setList] = useState([]);
@@ -27,7 +28,7 @@ const GoalListGroup = ({ _list }) => {
             >
               <ComponentContain>
                 <div style={{ display: 'flex' }}>
-                  <div>
+                  <div style={{ flex: '4' }}>
                     <div style={{ display: 'flex' }}>
                       <Header>나의 목표 </Header>{' '}
                       <input
@@ -54,15 +55,41 @@ const GoalListGroup = ({ _list }) => {
                       />
                     </div>
                   </div>
-                  <div>도넛</div>
+                  <div style={{ flex: '1' }}>
+                    <PieChart
+                      data={[
+                        {
+                          value: item.progress,
+                          color: '#aac4ff',
+                          name: 'progress',
+                        },
+                      ]}
+                      style={{ margin: '20px 10px 0 0' }}
+                      reveal={item.progress}
+                      lineWidth={18}
+                      background="#f3f3f3"
+                      lengthAngle={360}
+                      rounded
+                      animate
+                      label={({ dataEntry }) => dataEntry.value + '%'}
+                      labelStyle={{
+                        fontSize: '20px',
+                        fill: '#aac4ff',
+                      }}
+                      labelPosition={0}
+                    />
+                  </div>
                 </div>
-                <h2 className="Font">
-                  목표치에 도달하기까지{' '}
-                  <span className="Hilight">
-                    {Math.ceil(item.price / item.monthlyPayment)}개월
-                  </span>{' '}
-                  남았어요!
-                </h2>
+                <div className="h2">
+                  <h2 className="Font">
+                    목표치에 도달하기까지{' '}
+                    <span className="Hilight">
+                      {Math.ceil(item.price / item.monthlyPayment)}개월
+                    </span>{' '}
+                    남았어요!
+                  </h2>
+                </div>
+
                 {/* 버튼부분 */}
                 {/* <div style={{ display: 'flex', justifyContent: 'right' }}>
                 <Button>
@@ -103,18 +130,15 @@ export default GoalListGroup;
 const ComponentContain = styled.div`
   position: relative;
   counter-increment: list;
-  padding: 2rem 1rem 1rem;
+  padding: 2rem 2rem 1rem;
   box-shadow: 0.05rem 0.05rem 1.5rem rgba(0, 0, 0, 0.2);
   border-radius: 0.25rem;
   overflow: hidden;
   background-color: white;
-  display: flex;
   flex-direction: column;
-  display: inline-flex;
   align-items: center;
   margin: 30px 0 30px;
   box-sizing: border-box;
-  max-width: 600px;
   width: 100%;
   height: auto;
   border-bottom: 12px solid #aac4ff;
@@ -143,15 +167,14 @@ const ComponentContain = styled.div`
   .SettingInput {
     text-align: center;
     background-color: transparent;
-    width: 400px;
+    width: 100%;
     height: 30px;
-    /* margin: px; */
     font-size: 16px;
     border: none;
-    /* border-radius: 6px; */
     border-bottom: solid 2px #aac4ff;
-    margin: 10px 30px 0px 5px;
+    margin: 10px 20px 0px 5px;
     color: grey;
+    font-weight: 500;
     &:focus {
       outline: none;
       border-color: none;
@@ -165,9 +188,13 @@ const ComponentContain = styled.div`
     margin-top: 30px;
   }
 
-  /* 목표치 계산 폰트 */
+  /* 목표치 계산 */
+  .h2 {
+    display: flex;
+    justify-content: center;
+  }
   .Font {
-    margin: 20px 0 20px 0;
+    margin: 30px 0 20px 0;
     color: #aac4ff;
   }
   .Hilight {
@@ -180,6 +207,7 @@ const ComponentContain = styled.div`
 // `;
 
 const Header = styled.h2`
-  margin: 30px 20px 0px 20px;
+  margin: 30px 0px 0px 20px;
   color: #aac4ff;
+  width: 20%;
 `;

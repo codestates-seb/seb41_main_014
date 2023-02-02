@@ -94,20 +94,7 @@ const GoalList = () => {
         <TopButton>
           <div>{<h2>✧ 총 {list.length}개의 목표가 있습니다 ✧</h2>}</div>
         </TopButton>
-        <GoalListGroup
-          _list={list}
-          // goal={goal}
-          // goalPrice={goalPrice}
-          // monthPrice={monthPrice}
-          // setGoal={setGoal}
-          // setGoalPrice={setGoalPrice}
-          // setMonthPrice={setMonthPrice}
-          // // goalDelete={goalDelete}
-          // // handleDelete={handleDelete}
-          // // goalNameonChange={goalNameonChange}
-          // // goalPriceonChange={goalPriceonChange}
-          // // goalMonthlypaymentonChange={goalMonthlypaymentonChange}
-        />
+        <GoalListGroup _list={list} />
       </TotalListPage>
     </>
   );
@@ -137,7 +124,8 @@ const GuideBox = styled.div`
   justify-content: center;
   box-sizing: border-box;
   padding: 10px;
-  width: 600px;
+  max-width: 600px;
+  width: 100%;
   height: auto;
   text-align: left;
   border-top: 5px solid #aac4ff;
@@ -202,7 +190,6 @@ const GuideBox = styled.div`
   }
 `;
 const TopButton = styled.div`
-  width: 600px;
   flex-direction: column;
   display: flex;
   align-items: center;
@@ -226,19 +213,6 @@ const TopButton = styled.div`
 //     left: 20px;
 //   }
 // `;
-
-// import { useState } from 'react';
-// import { getLOCALE_MONEY } from '../helper/unitHelper';
-// import PropTypes from 'prop-types';
-// import Button from '@mui/material/Button';
-// import { Link } from 'react-router-dom';
-// import {
-//   ROUTE_PATH_GOAL_CREATE,
-//   ROUTE_PATH_GOAL_DETAIL,
-//   // ROUTE_PATH_GOAL_EDIT,
-//   ROUTE_PATH_FIXED_SAVING,
-// } from '../store/routerStore';
-// import styled from '@emotion/styled';
 
 // const Goal = ({ goal, handleDelete }) => {
 //   return (
@@ -331,84 +305,3 @@ const TopButton = styled.div`
 //     </>
 //   );
 // };
-
-// export default GoalList;
-
-// // const TempPageStyle = styled.div`
-// //   justify-content:center;
-// // `
-
-// const TempGoalTitle = styled.div`
-//   margin-top: 20px;
-//   width: 600px;
-//   height: 50px;
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-around;
-// `;
-
-// const TempUl = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   margin-bottom: 20px;
-//   margin-top: 20px;
-//   list-style: none;
-//   .tempstyle {
-//     background-color: #eef1ff;
-//     width: 568px;
-//     height: 220px;
-//     border-radius: 6px;
-//   }
-//   .SettingLine {
-//     display: flex;
-//     flex-direction: row;
-//     justify-content: left;
-//     margin-left: 20px;
-//   }
-//   .SettingInput {
-//     text-align: center;
-//     background-color: transparent;
-//     width: 400px;
-//     height: 30px;
-//     /* margin: px; */
-//     font-size: 16px;
-//     border: none;
-//     border-radius: 6px;
-//     border-bottom: solid 2px #b1b2ff;
-//     margin-top: 20px;
-//     color: grey;
-//     &:focus {
-//       outline: none;
-//       border-color: none
-//       box-shadow: 0px 0px 0px 4px hsla(206, 100%, 40%, 0.15);
-//     }
-//   }
-//
-`;
-
-// const Header = styled.h2`;
-//   margin: 30px 20px 0px 10px;
-// `;
-
-// const LinkButton = styled.button`
-//   width: 214px;
-//   height: 36px;
-//   border: 0;
-//   background-color: #b1b2ff;
-//   margin-bottom: 10px;
-//   border-radius: 6px;
-// `;
-
-// const ButtonSet = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-//   margin: 50px 0 100px 0;
-//   .tempstyle {
-//     background-color: aquamarine;
-//     width: 584px;
-//   }
-// `;
