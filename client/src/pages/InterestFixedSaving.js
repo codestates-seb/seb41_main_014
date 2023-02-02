@@ -103,6 +103,7 @@ const InterestFixedSaving = () => {
     }
     return '';
   };
+
   const handleExpandClick = (idx) => {
     const head = expandeds.slice(0, idx);
     const tail = expandeds.slice(idx + 1);
@@ -116,10 +117,13 @@ const InterestFixedSaving = () => {
           variant: 'success',
         });
         //값바꿔치기
+        const iHead = interestSavings.slice(0, idx);
+        const iTail = interestSavings.slice(idx + 1);
+        setInterestSavings([...iHead, ...iTail]);
 
-        const head = expandeds.slice(0, idx);
-        const tail = expandeds.slice(idx + 1);
-        setExpandeds([...head, ...tail]);
+        const eHead = expandeds.slice(0, idx);
+        const eTail = expandeds.slice(idx + 1);
+        setExpandeds([...eHead, ...eTail]);
       })
       .catch((error) => {
         const { message } = error;
@@ -159,7 +163,11 @@ const InterestFixedSaving = () => {
               <Typography variant="h2">불러올 정보가 없습니다.</Typography>
             ) : (
               interestSavings.map((interestSaving, idx) => (
-                <Grid item xs={matches ? 6 : 12} key={idx}>
+                <Grid
+                  item
+                  xs={matches ? 6 : 12}
+                  key={interestSaving.likeSavingId}
+                >
                   <Card>
                     <CardHeader
                       avatar={
@@ -181,7 +189,7 @@ const InterestFixedSaving = () => {
                           </Link>
                           <IconButton
                             onClick={() =>
-                              handleDelete(interestSaving.likeSavingId)
+                              handleDelete(interestSaving.likeSavingId, idx)
                             }
                           >
                             <DeleteIcon />
