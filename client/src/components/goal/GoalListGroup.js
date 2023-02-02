@@ -81,13 +81,17 @@ const GoalListGroup = ({ _list }) => {
                   </div>
                 </div>
                 <div className="h2">
-                  <h2 className="Font">
-                    목표치에 도달하기까지{' '}
-                    <span className="Hilight">
-                      {Math.ceil(item.price / item.monthlyPayment)}개월
-                    </span>{' '}
-                    남았어요!
-                  </h2>
+                  {item.status === 'PROGRESS' ? (
+                    <h2 className="Font">
+                      목표치에 도달하기까지{' '}
+                      <span className="Hilight">
+                        {Math.ceil(item.price / item.monthlyPayment)}개월
+                      </span>{' '}
+                      남았어요!
+                    </h2>
+                  ) : (
+                    <h2 className="Font"> 목표치에 도달하였어요!</h2>
+                  )}
                 </div>
 
                 {/* 버튼부분 */}

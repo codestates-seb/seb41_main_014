@@ -81,10 +81,16 @@ const GoalList = () => {
                   to={ROUTE_PATH_GOAL_CREATE}
                   style={{
                     textDecoration: 'none',
-                    color: 'black',
+                    color: 'white',
+                    fontSize: '12px',
+                    paddingBottom: '12px',
                   }}
                 >
-                  <p className="CreateText">새로 등록하기</p>{' '}
+                  {' '}
+                  새로 등록하기
+                  {/* <div className="TextButtonBox">
+                    <p className="CreateText">새로 등록하기</p>{' '}
+                  </div> */}
                 </Link>
               </div>
             }
@@ -112,6 +118,7 @@ GoalList.propTypes = {
 };
 
 const TotalListPage = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -135,7 +142,7 @@ const GuideBox = styled.div`
   .TextHeader {
     text-align: center;
     color: #aac4ff;
-    width: 600px;
+    width: 100%;
     font-size: 16pt;
     margin-top: 20px;
   }
@@ -147,6 +154,7 @@ const GuideBox = styled.div`
   }
   .Hilightt {
     color: #ff6f6f;
+    font-weight: 600;
   }
   .tooltip-text {
     display: none;
@@ -167,27 +175,35 @@ const GuideBox = styled.div`
     display: flex;
     flex-direction: row;
     align-items: flex-end;
-    justify-content: right;
+    justify-content: center;
     margin: 54px 0 10px;
-    width: 150px;
+    width: 25%;
     height: 40px;
     background: #aac4ff;
     border-radius: 10px;
   }
-  .LinkButton::before {
+  @media (max-width: 600px) {
+    .LinkButton {
+      margin: 70px 0 10px 10px;
+    }
+  }
+  /* .LinkButton::before {
     border-top: 5px solid transparent;
     border-right: 20px solid #aac4ff;
     border-bottom: 5px solid transparent;
     content: '';
     position: relative;
     top: -15px;
-    left: -32px;
+    left: -40px;
+  } */
+  /* .TextButtonBox {
+    width: 100%;
   }
   .CreateText {
     font-size: 12px;
     color: white;
-    margin: 0 28px 12px 0px;
-  }
+    margin: 0 20px 13px 0px;
+  } */
 `;
 const TopButton = styled.div`
   flex-direction: column;
