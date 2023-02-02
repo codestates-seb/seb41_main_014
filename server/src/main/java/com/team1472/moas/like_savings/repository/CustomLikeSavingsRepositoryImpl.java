@@ -80,4 +80,18 @@ public class CustomLikeSavingsRepositoryImpl implements CustomLikeSavingsReposit
 
         return new PageImpl<>(likeSavingProducts, pageable, totalCount);
     }
+
+    @Override
+    public boolean existsInterestSavings(long memberId, LikeSavings findLikeSaving) {
+        Integer findOne = jpaQueryFactory
+                .selectOne()
+                .from(likeSavings)
+                .where(likeSavings.finPrdtCd.eq(findLikeSaving.getFinPrdtCd()),
+                        likeSavings.intrRateType.eq(findLikeSaving.getIntrRateType()),
+                        likeSavings.rsrvType.eq(findLikeSaving.getRsrvType()),
+                        likeSavings.saveTrm.eq(findLikeSaving.getSaveTrm()),
+                        likeSavings.member.id.eq(findLikeSaving.getMember().getId()))
+                .fetchFirst();
+        return findOne != null;
+    }
 }

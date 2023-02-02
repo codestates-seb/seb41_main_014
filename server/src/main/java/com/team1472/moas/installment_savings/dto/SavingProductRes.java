@@ -31,6 +31,8 @@ public class SavingProductRes {
 
     private String intrRateTypeNm; // 저축 금리 유형명
 
+    private String rsrvType; //적립 유형
+
     private String rsrvTypeNm; //적립 유형명
 
     private String saveTrm; // 저축 기간(단위: 개월)
@@ -47,7 +49,7 @@ public class SavingProductRes {
     private long interestAmount; //세후 이자 금액 (세전 이자 금액 - 세금(15.4%))
 
     public SavingProductRes(String finPrdtCd, String korCoNm, String finPrdtNm, String joinWay, String spclCnd, String joinDeny,
-                            String joinMember, String etcNote, int maxLimit, String intrRateType, String intrRateTypeNm,
+                            String joinMember, String etcNote, int maxLimit, String intrRateType, String intrRateTypeNm, String rsrvType,
                             String rsrvTypeNm, String saveTrm, String mtrtInt, double intrRate, double intrRate2, Long likeSavingId) {
 
         this.finPrdtCd = finPrdtCd;
@@ -61,6 +63,7 @@ public class SavingProductRes {
         this.maxLimit = maxLimit;
         this.intrRateType = intrRateType;
         this.intrRateTypeNm = intrRateTypeNm;
+        this.rsrvType = rsrvType;
         this.rsrvTypeNm = rsrvTypeNm;
         this.saveTrm = saveTrm;
         this.mtrtInt = mtrtInt;

@@ -43,6 +43,7 @@ public class CustomSavingProductsRepositoryImpl implements CustomSavingProductsR
                                 installmentSavings.maxLimit,
                                 interestRate.intrRateType,
                                 interestRate.intrRateTypeNm,
+                                interestRate.rsrvType,
                                 interestRate.rsrvTypeNm,
                                 interestRate.saveTrm,
                                 installmentSavings.mtrtInt,
