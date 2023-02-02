@@ -42,32 +42,49 @@ const GoalDetail = () => {
     p: 4,
   };
 
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger',
+    },
+    buttonsStyling: true,
+  });
+
   const goalID = detailData.id;
   const goalDelete = () => {
-    Swal.fire({
-      title: '정말로 삭제하시겠습니까?',
-      text: '아직 달성하지 못했을 수도 있어요!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: '네, 삭제할래요!',
-    }).then((result) => {
-      axios
-        .delete(getURL_GOALS(goalID), getWITH_TOKEN())
-        .then(() => {
+    swalWithBootstrapButtons
+      .fire({
+        title: '정말로 삭제하시겠습니까?',
+        text: '아직 달성하지 못했을 수도 있어요!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '네, 삭제할래요!',
+        cancelButtonText: '아니요',
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          axios.delete(getURL_GOALS(goalID), getWITH_TOKEN());
+          swalWithBootstrapButtons.fire(
+            '삭제되었어요.',
+            'See You Again!',
+            'success'
+          );
           navigate('/goalList');
-        })
-        .catch((error) => {
-          const { message } = error;
-          enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
-            variant: 'error',
-          });
+        } else {
+          swalWithBootstrapButtons.fire(
+            '취소되었어요.',
+            '포기하지 마세요!',
+            'error'
+          );
+        }
+      })
+      .catch((error) => {
+        const { message } = error;
+        enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+          variant: 'error',
         });
-      if (result.isConfirmed) {
-        Swal.fire('삭제되었어요.', 'See You Again!', 'success');
-      }
-    });
+      });
   };
 
   const [goal, setGoal] = useState(detailData.goalName); // 수기 목표 이름
