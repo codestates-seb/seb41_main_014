@@ -35,7 +35,11 @@ public class GoalService{
         Optional.ofNullable(goal.getUrl()).ifPresent(url -> goal.setUrl(url));
 
         //납입 기간 자동 계산하여 저장
-        savePeriod(goal);
+        goal.savePeriod();
+        //진척도 자동 계산하여 저장
+        goal.saveProgress();
+        //완료 상태 자동 계산하여 저장
+        goal.saveStatus();
 
         return goalRepository.save(goal);
     }
@@ -49,27 +53,21 @@ public class GoalService{
         Optional.ofNullable(goal.getMonthlyPayment()).ifPresent(monthlyPayment -> findGoal.setMonthlyPayment(monthlyPayment));
         Optional.ofNullable(goal.getUrl()).ifPresent(url -> findGoal.setUrl(url));
 
-        savePeriod(goal);
-        saveProgress(goalId);
-        saveStatus(goalId);
+        findGoal.savePeriod();
+        findGoal.saveProgress();
+        findGoal.saveStatus();
 
         return goalRepository.save(findGoal);
     }
 
     //목표 상세 조회
     public Goal findGoal(long goalId, long memberId) {
-        saveProgress(goalId);
-        saveStatus(goalId);
         return findVerifiedGoalByMemberId(goalId, memberId);
     }
 
     //목표 전체 조회 (List)
     public List<GoalRes> findGoals(long memberId) {
         List<GoalRes> goals = goalRepository.findGoalsByMemberId(memberId);
-        for (GoalRes goal : goals) {
-            saveProgress(goal.getId());
-            saveStatus(goal.getId());
-        }
         return goals;
     }
 
@@ -89,50 +87,5 @@ public class GoalService{
     private Goal findVerifiedGoal(long goalId) {
         return goalRepository.findById(goalId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.GOAL_NOT_FOUND));
-    }
-
-    //납입기간 설정
-    private Goal savePeriod(Goal goal) {
-        //납입 기간(단위: 월) = {(목표금액)/월 납입금}
-        int period = (int) Math.ceil((double) goal.getPrice() / goal.getMonthlyPayment());
-        goal.setPeriod(period);
-        return goal;
-    }
-
-    //status 설정
-    private Goal saveStatus(long goalId) {
-        Goal findGoal = findVerifiedGoal(goalId);
-        if (findGoal.getProgress() == 100) {
-            findGoal.setStatus(Goal.GoalStatus.COMPLETED);
-        } else {
-            findGoal.setStatus(Goal.GoalStatus.PROGRESS);
-        }
-        return findGoal;
-    }
-
-    //진척도(%) 설정
-    private Goal saveProgress(long goalId) {
-        Goal findGoal = findVerifiedGoal(goalId);
-
-        LocalDate createdDate = findGoal.getCreatedAt().toLocalDate(); //목표 생성 시간
-        LocalDate localDate = LocalDate.now(); //현재 시간
-
-        double month = (double) ChronoUnit.MONTHS.between(createdDate, localDate); //경과한 시간 (단위: 월)
-        int goalPeriod = findGoal.getPeriod(); //설정된 납부 기간
-
-        //목표 생성 시간이 현재 시간 이전일 때
-        if (createdDate.isBefore(localDate)) {
-            //납부기간이 남았을 때
-            if (goalPeriod >= month) {
-                double progress = month / goalPeriod * 100;
-                int result = (int) Math.round(progress);
-                findGoal.setProgress(result);
-            }
-            //납부기간이 지났을때 (계속 100%로 나타냄)
-            else {
-                findGoal.setProgress(100);
-            }
-        }
-        return findGoal;
     }
 }
