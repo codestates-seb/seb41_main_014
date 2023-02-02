@@ -24,6 +24,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
 import {
   setFixedSavings,
+  setFixedSavingsIsFinishLaoding,
+  setFixedSavingsIsStartLaoding,
   setFixedSavingsPageInfo,
 } from '../../reducer/fixedSavingsSlice';
 import {
@@ -51,6 +53,7 @@ const FixedSavingContents = () => {
   };
 
   const nextHandle = () => {
+    dispatch(setFixedSavingsIsStartLaoding());
     const getBanksCode = () => {
       const finCodes = [];
       for (let index = 0; index < conditions.banks.isCheckeds.length; index++) {
@@ -139,6 +142,9 @@ const FixedSavingContents = () => {
           enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
             variant: 'error',
           });
+        })
+        .finally(() => {
+          dispatch(setFixedSavingsIsFinishLaoding());
         });
     }, 1500);
   };
@@ -148,6 +154,12 @@ const FixedSavingContents = () => {
   const handelInterestSavings = (saving, idx) => {
     if (!getALIVE()) {
       enqueueSnackbar('로그인 후 시도해주세요.', {
+        variant: 'warning',
+      });
+      return;
+    }
+    if (fixedSavings.isLoading) {
+      enqueueSnackbar('다 불러온 뒤 시도해주세요.', {
         variant: 'warning',
       });
       return;
@@ -174,7 +186,9 @@ const FixedSavingContents = () => {
         })
         .catch((error) => {
           const { message } = error;
-          enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+
+          const errorCode = getERROR_TEXT(Number(message.slice(-3)));
+          enqueueSnackbar(errorCode, {
             variant: 'error',
           });
         });
@@ -193,7 +207,8 @@ const FixedSavingContents = () => {
         })
         .catch((error) => {
           const { message } = error;
-          enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+          const errorCode = getERROR_TEXT(Number(message.slice(-3)));
+          enqueueSnackbar(errorCode, {
             variant: 'error',
           });
         });

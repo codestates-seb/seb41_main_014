@@ -18,6 +18,7 @@ const initialState = {
   origin: initFixedSavings,
   extendableId: -1,
   pageInfo: initPageInfo,
+  isLoading: false,
 };
 
 // 로그인, 로그아웃 리듀서 설정 => 로그인 상태 변경 및 유저 정보 추가 or 초기화
@@ -39,6 +40,12 @@ const fixedSavingsSlice = createSlice({
     setFixedSavingsPageInfo: (state, action) => {
       state.pageInfo = action.payload;
     },
+    setFixedSavingsIsStartLaoding: (state) => {
+      state.isLoading = true;
+    },
+    setFixedSavingsIsFinishLaoding: (state) => {
+      state.isLoading = false;
+    },
   },
 });
 
@@ -47,6 +54,8 @@ export const {
   setFixedSavingsInit,
   setFixedSavingsIsExtendable,
   setFixedSavingsPageInfo,
+  setFixedSavingsIsStartLaoding,
+  setFixedSavingsIsFinishLaoding,
 } = fixedSavingsSlice.actions;
 
 export default fixedSavingsSlice.reducer;
