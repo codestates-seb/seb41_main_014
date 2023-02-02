@@ -27,29 +27,34 @@ const GoalListGroup = ({ _list }) => {
             >
               <ComponentContain>
                 <div style={{ display: 'flex' }}>
-                  <Header>나의 목표 </Header>{' '}
-                  <input
-                    className="SettingInput"
-                    defaultValue={item.goalName}
-                  />
-                </div>
-                <div style={{ display: 'flex' }}>
-                  <Header>목표 금액 </Header>{' '}
-                  <input
-                    className="SettingInput"
-                    defaultValue={item.price
-                      .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                  />
-                </div>
-                <div style={{ display: 'flex' }}>
-                  <Header>월 납입금 </Header>{' '}
-                  <input
-                    className="SettingInput"
-                    defaultValue={item.monthlyPayment
-                      .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                  />
+                  <div>
+                    <div style={{ display: 'flex' }}>
+                      <Header>나의 목표 </Header>{' '}
+                      <input
+                        className="SettingInput"
+                        defaultValue={item.goalName}
+                      />
+                    </div>
+                    <div style={{ display: 'flex' }}>
+                      <Header>목표 금액 </Header>{' '}
+                      <input
+                        className="SettingInput"
+                        defaultValue={item.price
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                      />
+                    </div>
+                    <div style={{ display: 'flex' }}>
+                      <Header>월 납입금 </Header>{' '}
+                      <input
+                        className="SettingInput"
+                        defaultValue={item.monthlyPayment
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                      />
+                    </div>
+                  </div>
+                  <div>도넛</div>
                 </div>
                 <h2 className="Font">
                   목표치에 도달하기까지{' '}
