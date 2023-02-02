@@ -52,7 +52,7 @@ public class CustomSavingProductsRepositoryImpl implements CustomSavingProductsR
                                 likeSavings.id))
                 .from(interestRate)
                 .join(installmentSavings).on(interestRate.finPrdtCd.eq(installmentSavings.finPrdtCd)).fetchJoin()
-                .leftJoin(likeSavings).on(likeSavings.id.isNotNull().and(likeSavings.id.eq(memberId))
+                .leftJoin(likeSavings).on(likeSavings.member.id.eq(memberId)
                         .and(likeSavings.finPrdtCd.eq(installmentSavings.finPrdtCd))
                         .and(likeSavings.intrRateType.eq(interestRate.intrRateType))
                         .and(likeSavings.rsrvType.eq(interestRate.rsrvType))
