@@ -14,7 +14,7 @@ const AssetSetting = ({ goalPost }) => {
   };
   return (
     <>
-      <div style={{ display: 'flex', width: '100%' }}>
+      <div style={{ display: 'flex', width: '100%', maxWidth: '600px' }}>
         <ComponentContain>
           <br />
           <LineBox>
@@ -74,6 +74,7 @@ const ComponentContain = styled.div`
   align-items: center;
   margin: 30px 0 50px 0;
   box-sizing: border-box;
+  max-width: 600px;
   width: 100%;
   height: auto;
   border: 5px solid #aac4ff;
