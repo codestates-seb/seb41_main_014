@@ -204,7 +204,10 @@ const Member = () => {
         navigate(ROUTE_PATH_BASE);
       })
       .catch((/* error */) => {
+        //TODO 임시 미구현
         enqueueSnackbar('3개월 후 삭제됩니다.');
+        setLogout();
+        navigate(ROUTE_PATH_BASE);
         // const { message } = error;
         // enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
         //   variant: 'error',
