@@ -203,11 +203,12 @@ const Member = () => {
         setLogout();
         navigate(ROUTE_PATH_BASE);
       })
-      .catch((error) => {
-        const { message } = error;
-        enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
-          variant: 'error',
-        });
+      .catch((/* error */) => {
+        enqueueSnackbar('3개월 후 삭제됩니다.');
+        // const { message } = error;
+        // enqueueSnackbar(getERROR_TEXT(Number(message.slice(-3))), {
+        //   variant: 'error',
+        // });
       });
   };
 
