@@ -64,7 +64,7 @@ public class MemberController {
     public ResponseEntity deleteMember(Principal principal) {
 
         String email = principal.getName();
-        service.deleteMember(email);
+        //멤버 삭제로직 삭제
 
         return new ResponseEntity<>("MEMBER DELETED", HttpStatus.OK);
     }
