@@ -318,6 +318,7 @@ const GDetailPage = styled.div`
 `;
 
 const GDetail = styled.div`
+  max-width: 600px;
   width: 100%;
   height: auto;
   border-radius: 6px;
