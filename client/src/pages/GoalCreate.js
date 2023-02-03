@@ -89,7 +89,13 @@ const GoalCreatePage = () => {
         </p>
         <br />
       </GuideBox>
-      <Box width="100%" mr={18} display="flex" justifyContent="flex-end">
+      <Box
+        width="100%"
+        mr={18}
+        display="flex"
+        justifyContent="flex-end"
+        maxWidth="600px"
+      >
         <Button
           onClick={handleOpenSearchModal}
           variant="outlined"
@@ -111,6 +117,7 @@ const GuideBox = styled.div`
   justify-content: center;
   box-sizing: border-box;
   padding: 10px;
+  max-width: 600px;
   width: 100%;
   height: auto;
   text-align: left;
