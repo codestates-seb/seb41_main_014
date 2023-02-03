@@ -197,6 +197,7 @@ const Member = () => {
   };
 
   const deleteHandler = () => {
+    enqueueSnackbar('3개월 후 삭제됩니다.');
     axios
       .delete(URL_MEMBER, getWITH_TOKEN())
       .then(() => {
@@ -205,7 +206,6 @@ const Member = () => {
       })
       .catch((/* error */) => {
         //TODO 임시 미구현
-        enqueueSnackbar('3개월 후 삭제됩니다.');
         setLogout();
         navigate(ROUTE_PATH_BASE);
         // const { message } = error;
@@ -312,7 +312,13 @@ const Member = () => {
                       sx={{ mt: 2, fontSize: '2rem' }}
                       style={{ textDecoration: 'none', margin: '12px' }}
                     >
-                      회원 정보를 삭제하시겠습니까?
+                      3개월 후 삭제됩니다.
+                    </Typography>
+                    <Typography
+                      sx={{ mt: 2, fontSize: '2rem' }}
+                      style={{ textDecoration: 'none', margin: '12px' }}
+                    >
+                      회원 정보를 삭제하시겠습니까?.
                     </Typography>
                     <Button
                       onClick={deleteHandler}
