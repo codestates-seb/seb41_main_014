@@ -7,10 +7,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @NoArgsConstructor
 @Getter
+@Setter
 @Entity
 public class Goal extends Auditable {
     @Id
@@ -21,22 +23,19 @@ public class Goal extends Auditable {
     private String goalName; //목표명
 
     @Column(nullable = false)
-    private long price; //가격
+    private long price; //목표 금액
 
     @Column(nullable = false)
-    private long principle; //원금
+    private long monthlyPayment; //월 납입금
 
-    @Column(nullable = false)
-    private long monthly_payment; //월 납입금
+    @Column
+    private int period; //납입 기간 = 목표금액 / 월 납입금
 
-    @Column(nullable = false)
-    private LocalDateTime payment_start; //납입 시작일
+    @Column
+    private String url; //이미지 url
 
-    @Column(nullable = false)
-    private int period; //납입 기간
-
-    @Column(length = 1000)
-    private String url;
+    @Column
+    private int progress = 0; //진척도(%)
 
     @Enumerated(value = EnumType.STRING)
     private GoalStatus status = GoalStatus.PROGRESS; //진행중이 기본값
@@ -62,6 +61,55 @@ public class Goal extends Auditable {
 
         GoalStatus(String status) {
             this.status = status;
+        }
+    }
+
+    //납입기간 설정 = (목표금액)/월 납입금
+    //목표 등록하는 순간에 한 달치 입금되었다고 가정
+    public void savePeriod() {
+        //월 납입금이 목표 금액보다 크거나 같을 때 -> 0개월 걸림
+        if (this.getMonthlyPayment() >= this.getPrice()) {
+            this.setPeriod(0);
+        }
+        //목표 금액이 월 납입금보다 클 때
+        else {
+            int period = (int) Math.ceil((double) this.getPrice() / this.getMonthlyPayment());
+            if (period - 1 > 0) {
+                this.setPeriod(period - 1);
+            }
+        }
+    }
+
+    //status 설정
+    public void saveStatus() {
+        if (this.getProgress() == 100) {
+            this.setStatus(Goal.GoalStatus.COMPLETED);
+        } else {
+            this.setStatus(Goal.GoalStatus.PROGRESS);
+        }
+    }
+
+    //진척도(%) 설정
+    //목표 등록하는 순간에 한 달치 입금되었다고 가정
+    public void saveProgress() {
+        LocalDate createdDate;
+        if (this.getCreatedAt() == null) {
+            createdDate = LocalDate.now();
+        } else {
+            createdDate = this.getCreatedAt().toLocalDate(); //목표 생성 시간
+        }
+        LocalDate localDate = LocalDate.now(); //현재 시간
+
+        double month = (double) ChronoUnit.MONTHS.between(createdDate, localDate); //경과한 시간 (단위: 월)
+        int goalPeriod = this.getPeriod() + 1; //설정된 납부 기간 + 1
+
+        //만약 0개월 걸릴 때
+        if (goalPeriod == 1) {
+            this.setProgress(100);
+        } else {
+            double progress = (month + 1) / goalPeriod * 100;
+            int result = (int) Math.round(progress);
+            this.setProgress(result);
         }
     }
 }

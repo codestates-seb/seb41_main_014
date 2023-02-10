@@ -3,8 +3,10 @@ package com.team1472.moas.member.entity;
 
 import com.team1472.moas.goal.entity.Goal;
 import com.team1472.moas.util.audi.Auditable;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @Getter
+@Setter
 @Entity
 public class Member extends Auditable {
     @Id
@@ -24,8 +27,12 @@ public class Member extends Auditable {
     @Column(nullable = false, updatable = false)
     private String name; // 사용자 이름
 
-    @Column(nullable = false)
-    private String nickname; // 사용자 별명
+    @Column
+    private String picture;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private Role role;
 
     @Enumerated(EnumType.STRING)
     private MemberStatus status = MemberStatus.MEMBER_ACTIVE; // 사용자 활동중이 기본값
@@ -39,6 +46,16 @@ public class Member extends Auditable {
         }
     }
 
+    @Builder
+    public Member(Long memberId, String email, String name, String picture, Role role) {
+        this.id = memberId;
+        this.email = email;
+        this.name = name;
+        this.picture = picture;
+        this.role = role;
+
+    }
+
     public enum MemberStatus {
         MEMBER_EXIST("이미 존재하는 사용자"),
         MEMBER_ACTIVE("활동중"),
@@ -50,5 +67,10 @@ public class Member extends Auditable {
         MemberStatus(String status) {
             this.status = status;
         }
+    }
+
+    //getRoleKey메서드  (사용자 역할에 따른 key 조회용 )
+    public String getRoleKey() {
+        return this.role.getKey();
     }
 }
